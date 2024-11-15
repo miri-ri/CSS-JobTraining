@@ -1,0 +1,73 @@
+{
+  "id": "/UnityPackageMagicRoom",
+  "type": "object",
+  "properties": {
+    "myint": {
+      "description": "Questo intero è speciale",
+      "type": "System.Int32",
+      "minimum": 5,
+      "maximum": 30,
+      "multipleOf": 1
+    },
+    "myfloat": {
+      "description": "myfloat",
+      "type": "System.Single",
+      "minimum": 0,
+      "maximum": 20,
+      "multipleOf": 1
+    },
+    "mysecondstring": {
+      "description": "mysecondstring",
+      "type": "System.String",
+      "enum": [
+        "mysample1",
+        "mysample2"
+      ]
+    },
+    "mystring": {
+      "description": "mystring",
+      "type": "System.String"
+    },
+    "mystring3": {
+      "description": "mystring3",
+      "type": "System.String"
+    },
+    "mybool": {
+      "description": "mybool",
+      "type": "System.Boolean",
+      "oneOf": [
+        {
+          "const": true,
+          "description": "Si"
+        },
+        {
+          "const": false,
+          "description": "No"
+        }
+      ]
+    },
+    "mybool2": {
+      "description": "mybool2",
+      "type": "System.Boolean",
+      "oneOf": [
+        {
+          "const": true,
+          "description": "Si"
+        },
+        {
+          "const": false,
+          "description": "No"
+        }
+      ]
+    },
+    "enumvar": {
+      "description": "enumvar",
+      "type": "myenum",
+      "enum": [
+        "val1",
+        "val2",
+        "val3"
+      ]
+    }
+  }
+}
