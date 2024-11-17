@@ -357,7 +357,7 @@ GameObject:
   - component: {fileID: 282840815}
   m_Layer: 0
   m_Name: Front Camera
-  m_TagString: MainCamera
+  m_TagString: FrontCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -679,6 +679,129 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &649082329
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 649082333}
+  - component: {fileID: 649082332}
+  - component: {fileID: 649082331}
+  - component: {fileID: 649082330}
+  - component: {fileID: 649082334}
+  m_Layer: 0
+  m_Name: VegetableIsle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &649082330
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649082329}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.5137446, y: 2.7165017, z: 1}
+  m_Center: {x: -0.009513908, y: 0.85825086, z: 0}
+--- !u!23 &649082331
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649082329}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &649082332
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649082329}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &649082333
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649082329}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.45, y: 6.44, z: 409.33}
+  m_LocalScale: {x: 3.7588, y: 1, z: 2.6193}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &649082334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649082329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2455d28401a1c434ab2c647e82a59a6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  taskManager: {fileID: 0}
+  RefManager: {fileID: 1674972365}
 --- !u!1 &773190229
 GameObject:
   m_ObjectHideFlags: 0
@@ -805,99 +928,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4297580381980462679, guid: e12647fd11fd10141925e698d0f471ec, type: 3}
   m_PrefabInstance: {fileID: 4297580381172713059}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1163776597
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1163776598}
-  - component: {fileID: 1163776599}
-  m_Layer: 0
-  m_Name: Smart Toy ev
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1163776598
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1163776597}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.9972534, y: 3.7219849, z: 0.53271484}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1163776599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1163776597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa648dc110e718e4785a01f0f16a66f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  smartObjectName: 
-  rfid: 0
-  button: 0
-  touch: 0
-  accelerometer: 0
-  gyroscope: 0
-  readRFID:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 773190234}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: ping2
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: test
-          m_BoolArgument: 0
-        m_CallState: 1
-  detectButton:
-    m_PersistentCalls:
-      m_Calls: []
-  detectTouch:
-    m_PersistentCalls:
-      m_Calls: []
-  releaseRFID:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 773190234}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: ping
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
-  releaseButton:
-    m_PersistentCalls:
-      m_Calls: []
-  releaseTouch:
-    m_PersistentCalls:
-      m_Calls: []
-  toyobject: {fileID: 0}
 --- !u!1 &1488753694
 GameObject:
   m_ObjectHideFlags: 0
@@ -1339,15 +1369,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UserSimPref: {fileID: 5580406519762883125, guid: 44a4c9eac8207d74daa25ca87de1665d, type: 3}
-  User: {fileID: 0}
-  userSim: {fileID: 0}
-  Trainer: {fileID: 0}
-  trainerSim: {fileID: 0}
-  introduction: introduction lorem ipsummsmsmssmsmsm
-  instruction: instruction lorem ipspspspsspspsp
-  feedback: goodjob lorem ipsummmmm
-  userDialog: []
-  trainerDialog: []
+  dialog1: {fileID: 0}
+  dialog2: {fileID: 0}
+  dialog3: {fileID: 0}
+  bubblePrefab: {fileID: 6475021822173390259, guid: 85a56c1dedef33942a012d57ae3c601f, type: 3}
+  userInRightIsle: 0
 --- !u!4 &1674972366
 Transform:
   m_ObjectHideFlags: 0
@@ -1821,6 +1847,6 @@ SceneRoots:
   - {fileID: 773190233}
   - {fileID: 1667097009}
   - {fileID: 94643739}
-  - {fileID: 1163776598}
   - {fileID: 372844974}
   - {fileID: 1674972366}
+  - {fileID: 649082333}
