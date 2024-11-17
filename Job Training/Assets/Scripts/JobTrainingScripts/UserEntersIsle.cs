@@ -12,13 +12,13 @@ public class UserEntersIsle : MonoBehaviour
         
     }
     private void OnTriggerEnter(Collider other){
-        Debug.Log("entratooo");
-        RefManager.WriteOnBubble("utente in Isle");
+        
+        RefManager.WriteOnBubble("User in Isle");
         RefManager.userInRightIsle=true;
     }
     private void OnTriggerExit(Collider other){
         
-       // RefManager.WriteOnBubble("utente in Isle");
+        RefManager.WriteOnBubble("User out of Isle");
         RefManager.userInRightIsle=false;
     }
     // Update is called once per frame

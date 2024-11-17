@@ -24,6 +24,6 @@ public class BubbleBehaviour : MonoBehaviour
     void Update()
     {
         if(attachedToCharacter)
-            transform.position=new Vector3(follows.transform.position.x,11,400) ;
+            transform.position=new Vector3(follows.transform.position.x,11,follows.transform.position.z+0.5f) ;
     }
 }

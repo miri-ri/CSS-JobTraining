@@ -67,21 +67,36 @@ public class ProtoTaskManager : MonoBehaviour
         userInRightIsle=false;
         conversationState=0;
 
-        globalBubble= Instantiate(bubblePrefab , new Vector3(0,11,400) , Quaternion.identity).GetComponent<BubbleBehaviour>();
-        globalBubble.transform.position=new Vector3(-5,15,400);
+        CreateDummies();
+        CreateBubbles();
+       
+        
+        userBub.WriteInBubble("");
+        clientBub.WriteInBubble( "");
+        
 
-        User=Instantiate(UserSimPref, new Vector3(2,7,410), Quaternion.identity);
+        WriteOnBubble("Phase: 0");
+    }
+
+    private void CreateDummies(){
+        User=Instantiate(UserSimPref, new Vector3(6.3f,7.5f,410), new Quaternion(0,280f,0, (float)Space.Self));
         Rigidbody trig   =User.AddComponent<Rigidbody>();
         trig.useGravity=false;
         User.AddComponent<BoxCollider>();
         userSim=User.GetComponent<PlayerMovementSimultor>();
         userSim.Setup(1);
+        User.transform.rotation=new Quaternion(0,280f,0, (float)Space.Self);
 
-        Trainer=Instantiate(UserSimPref, new Vector3(-1,7,410), Quaternion.identity);
+        Trainer=Instantiate(UserSimPref, new Vector3(-1,7.5f,410), new Quaternion(0,95f,0, (float)Space.Self));
         trainerSim=Trainer.GetComponent<PlayerMovementSimultor>();
         trainerSim.Setup(2);
+        Trainer.transform.rotation=new Quaternion(0,95f,0, (float)Space.Self);
 
-        //
+    }
+    private void CreateBubbles(){
+        globalBubble= Instantiate(bubblePrefab , new Vector3(0,11,400) , Quaternion.identity).GetComponent<BubbleBehaviour>();
+        globalBubble.transform.position=new Vector3(-5,15,400);
+
         userBub= Instantiate(bubblePrefab , new Vector3(0,11,400) , Quaternion.identity).GetComponent<BubbleBehaviour>();
         userBub.SetDimension(2);
         userBub.SetFollow(User);
@@ -90,23 +105,13 @@ public class ProtoTaskManager : MonoBehaviour
         clientBub.SetDimension(2);
         clientBub.SetFollow(Trainer);
         
-        userBub.WriteInBubble( "");
-        clientBub.WriteInBubble( "");
-        
-        WriteOnBubble("prova");
     }
 
-
-    private void UserSays(string text){
-        userBub.WriteInBubble( text);
-    }
 
     private int conversationState;
     // Update is called once per frame
     void Update()
     {
-       
-        Interaction();
 
         
 
@@ -120,21 +125,27 @@ public class ProtoTaskManager : MonoBehaviour
 
     //move users in space toward target position and write smwr; could use events 
      private void Interaction(){//todo x proto :   switch gui text for audio(files on git)
-        if(currentPhase==1 && Input.GetKeyUp(KeyCode.Space)){
+    // Debug.Log(conversationState);
+        
             if(conversationState==0  ){
                  clientBub.WriteInBubble("Cliente: Buongiorno, sa dirmi dove sono le patate?");
+                 dialog1.Play();
                  conversationState++;
                  }
-            if(conversationState==1)
+            else if(conversationState==1 ){
                 userBub.WriteInBubble("Utente: Con piacere, seguitemi perfavore. Le patate sono nel reparto verdure");
-
-            if(userInRightIsle){
-                clientBub.WriteInBubble("Cliente: La ringrazio");
+                dialog3.Play();
                 conversationState++;
-                currentPhase++;
+            }
+            else if(conversationState==2 && userInRightIsle ){
+                clientBub.WriteInBubble("Cliente: Grazie mille");
+                userBub.WriteInBubble("");
+                dialog2.Play();
+                conversationState++;
+                
             }
                 
-        }
+        
     }
     // write smwr
      private void PlayFeedback(){
@@ -145,7 +156,7 @@ public class ProtoTaskManager : MonoBehaviour
     private void writeText(string textMsg){
        // Debug.Log(textMsg);
         WriteOnBubble(textMsg);
-
+        
     }
 
         void OnGUI() {
@@ -162,8 +173,8 @@ public class ProtoTaskManager : MonoBehaviour
                     break;
 
                     case 2:
-                        userBub.WriteInBubble( "");
-                        clientBub.WriteInBubble( "");
+                        userBub.WriteInBubble("");
+                        clientBub.WriteInBubble("");
                         PlayFeedback();
                     break;
                     //default:
@@ -171,11 +182,16 @@ public class ProtoTaskManager : MonoBehaviour
         }
         
     
-        if (GUILayout.Button("changePhase")){
+        if (GUILayout.Button("ChangePhase")){
+            userBub.WriteInBubble("");
+            clientBub.WriteInBubble("");
+
             currentPhase++;
-            writeText("changed Phase");
-                if(currentPhase==3)
-                    writeText("end of proto");
+            conversationState=0;
+            writeText("Phase: "+currentPhase);
+
+            if(currentPhase==3)
+                writeText("end of proto");
         }
     }
     public void WriteOnBubble(string text){
