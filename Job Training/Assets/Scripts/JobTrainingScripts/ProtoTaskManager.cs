@@ -25,9 +25,9 @@ public class ProtoTaskManager : MonoBehaviour
 
 
 
-     string introduction = "introduction";
-     string instruction = "instruction ";
-     string feedback = "goodjob ";
+     string introduction = "Intro: A customer will come into the supermarket and ask you to show them a certain product.\n Please, answer them by going to the correct product displayed on the floor. ";
+     string instruction = "instructions: Trainer- Ask where you can find potatoes ";
+     string feedback = "Very well, the response was correct and coincise...\n Score: 90/100.....etc... ";
 
 
 
@@ -37,11 +37,10 @@ public class ProtoTaskManager : MonoBehaviour
 
 
 
-    //public GameObject bubble;
-    //public TextMeshPro dialogText;
+    public GameObject bubblePrefab;
     private BubbleBehaviour globalBubble;
 
-    public GameObject bubblePrefab;
+ 
 
     private BubbleBehaviour userBub, clientBub;
 
@@ -66,6 +65,7 @@ public class ProtoTaskManager : MonoBehaviour
         currentPhase=0;
         userInRightIsle=false;
         conversationState=0;
+        introduced=false;
 
         CreateDummies();
         CreateBubbles();
@@ -109,7 +109,7 @@ public class ProtoTaskManager : MonoBehaviour
 
 
     private int conversationState;
-    // Update is called once per frame
+
     void Update()
     {
 
@@ -118,9 +118,13 @@ public class ProtoTaskManager : MonoBehaviour
     }
 
 
-    // write stuff somewhere
+    private bool introduced;
     private void PlayIntroduction(){
-        writeText(introduction); 
+        if(!introduced){
+            writeText(introduction); 
+            introduced=true;
+        }
+        else writeText(instruction);
     }
 
     //move users in space toward target position and write smwr; could use events 
