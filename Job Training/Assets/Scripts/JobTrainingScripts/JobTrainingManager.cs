@@ -10,11 +10,10 @@ public class JobTrainingManager:MonoBehaviour{
     private TaskManagerScript TaskManager;
 
     void Start(){
-        ActivityManager=new ActivityManager();
+        ActivityManager=new ActivityManager(); //make both SerializeField instead
         TaskManager=new TaskManagerScript();
 
         ActivityManager.StartActivity();
-        // subscribe to ActivityManager's event
     }
 
     GameObject FrontWall,Floor;
@@ -26,10 +25,6 @@ public class JobTrainingManager:MonoBehaviour{
         
     }
 
-    public void OnActivityProgress(ActivityState nextState) {
-        // progress to next activity state
-    }
-//etc
 }
 
 

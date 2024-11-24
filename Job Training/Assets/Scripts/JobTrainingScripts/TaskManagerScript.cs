@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class TaskManagerScript : MonoBehaviour
@@ -5,6 +6,7 @@ public class TaskManagerScript : MonoBehaviour
     //[SerializeField] ContextMachine StateMachine;
     
     public Task CurrentTask;
+    public event Action onTaskCompleted; // Todo: Implement
     //reference to objects in gameScene
 
     public void StartTask(Task chosen){

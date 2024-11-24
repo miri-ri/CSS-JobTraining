@@ -1,6 +1,7 @@
 
 using System;
 using System.Drawing.Text;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.iOS;
 
@@ -13,17 +14,35 @@ public class ActivityManager:MonoBehaviour{
 
     //the following methods should be implemented inside the various activity states ( for list of activity states relate to "activity structure" in design document)
     public void StartActivity(){
+        if(TaskManager == null){
+            throw new ArgumentNullException(nameof(TaskManager), "TaskManager not asigned!");
+        }
+
         stateMachine = new ActivityStateMachine();
-        stateMachine.SetState(new ExplanationOfActivity());
+        stateMachine.OnActivityStateComplete += HandleActivityStateCompleted;
+
+        stateMachine.SetState(new ExplanationOfActivity(stateMachine));
     }
 
     private void getAvailableTasks(){
-
+        
     }
 
     //to be chosen between each task or from the start
     private void setChosenTask(){
         TaskManager.StartTask(new TaskLocateProduct());
+    }
+
+    private void HandleActivityStateCompleted(ActivityState state){
+        switch(state) {
+        case ExplanationOfActivity:
+            stateMachine.SetState(new TaskState(stateMachine, TaskManager));
+            break;
+        case TaskState:
+            break;
+        default:
+            throw new System.NotImplementedException();
+        }
     }
     
 }
@@ -32,14 +51,16 @@ public class ActivityManager:MonoBehaviour{
 public class ActivityStateMachine{
 
     private ActivityState currentState;
-    public event Action<ActivityState> OnStateChanged;
+    public event Action<ActivityState> OnActivityStateComplete;
 
     public void SetState(ActivityState state){
         currentState?.Dismantle();
         currentState = state;
         currentState?.Setup();
+    }
 
-        OnStateChanged?.Invoke(currentState);
+    public void CompleteState(){
+        OnActivityStateComplete?.Invoke(currentState);
     }
 
 }
@@ -53,28 +74,51 @@ public abstract class ActivityState{
 class ExplanationOfActivity : ActivityState
 {
 
+    private ActivityStateMachine stateMachine;
+
+    public ExplanationOfActivity(ActivityStateMachine machine){
+        stateMachine = machine;
+    }
+
     public override void Setup()
     {
-        //show intro UI, play background audio
+        // Todo: Show intro UI
+        // Todo: Start background audio
+        // await trainer task selection
 
-        throw new System.NotImplementedException();
+        stateMachine.CompleteState();
     }
+
     public override void Dismantle()
     {
         throw new System.NotImplementedException();
     }
 }
 
-class TaskStartState : ActivityState
+class TaskState : ActivityState
 {
+    private ActivityStateMachine stateMachine;
+    private TaskManagerScript taskManager;
+
+    public TaskState(ActivityStateMachine machine, TaskManagerScript TaskManager){
+        stateMachine = machine;
+        taskManager = TaskManager;
+    }
 
     public override void Setup()
     {
-        throw new System.NotImplementedException();
+        taskManager.StartTask(new TaskLocateProduct()); // Todo: add task choice input here
+        taskManager.onTaskCompleted += HandleTaskComplete;
     }
+
+    private void HandleTaskComplete(){
+        taskManager.onTaskCompleted -= HandleTaskComplete;
+        stateMachine.CompleteState();
+    }
+
     public override void Dismantle()
     {
-        throw new System.NotImplementedException();
+        taskManager.onTaskCompleted -= HandleTaskComplete;
     }
 }
 
