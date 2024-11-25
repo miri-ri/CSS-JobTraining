@@ -83,7 +83,11 @@ class ExplanationOfActivity : ActivityState
     public override void Setup()
     {
         // Todo: Show intro UI
+        JobTrainingManager.instance.WriteOnUi("testtesttesttesttest");
+
         // Todo: Start background audio
+        JobTrainingManager.instance.PlaySound();
+        JobTrainingManager.instance.ChangeFrontWallBackground("not a bkg");
         // await trainer task selection
 
         stateMachine.CompleteState();
