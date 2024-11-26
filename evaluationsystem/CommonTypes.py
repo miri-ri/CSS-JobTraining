@@ -1,5 +1,6 @@
 from enum import Enum
 from pydantic import BaseModel
+from typing import Union
 
 class Role(str, Enum):
     assistant = "assistant"
@@ -33,29 +34,34 @@ class MovementTimingBehavior(TimingBehavior):
 
 
 class PositioningBehavior(BaseModel):
-    start_pos: Position | None
-    user_pos: Position | None
-    target_pos: Position | None
+    start_pos: Union[Position, None]
+    user_pos: Union[Position, None]
+    target_pos: Union[Position, None]
     ok_radius: float 
     area: Size
 
 class SpeechBehavior(BaseModel):
     semantic: SemanticBehavior
-    timing: SpeechTimingBehavior | None = None
+    timing: Union[SpeechTimingBehavior, None]= None
 
 class MovementBehavior(BaseModel):
     positioning: PositioningBehavior
-    timing: MovementTimingBehavior | None = None
+    timing: Union[MovementTimingBehavior, None] = None
 
 class Behavior(BaseModel):
     speech: SpeechBehavior
-    movement: MovementBehavior | None = None
+    movement: Union[MovementTimingBehavior, None] = None
 
 
 class Evaluation(BaseModel):
     score: float
-    description: str | None = None
+    description: Union[str, None] = None
 
 class ComplexEvaluation(BaseModel):
     total: float
     evaluations: dict[str, Evaluation] = {}
+
+class GeneratedText(BaseModel):
+    s_before_action: float
+    s_duration: float
+    text: str
