@@ -15,6 +15,10 @@ public class JobTrainingManager:MonoBehaviour{
         ActivityManager.StartActivity();
     }
 
+    public TaskManagerScript GetTaskManager(){
+        return TaskManager;
+    }
+
     [SerializeField] GameObject FrontWall,Floor;
     [SerializeField] AudioSource RoomSpeaker;
     [SerializeField] GameObject TextCloudPrefab;

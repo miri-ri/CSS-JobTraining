@@ -36,8 +36,25 @@ public class TaskManagerScript : MonoBehaviour
    //     StateMachine.HandleStateLogic();
     }
 
-        
+    public void TriggerTaskCompleted()
+    {
+        onTaskCompleted?.Invoke();
+    } 
 }
 
+public class UserInput{
+    public static event Action<string> OnUserSpoke;
+    public static event Action<Vector3> OnUserMoved; // Movement action probably has more input
 
+    public static void HandleSpeechInput(string spokenText)
+    {
+        OnUserSpoke?.Invoke(spokenText);
+    }
+
+    public static void HandleMovementInput(Vector3 newPosition)
+    {
+        OnUserMoved?.Invoke(newPosition);
+    }
+
+}
 
