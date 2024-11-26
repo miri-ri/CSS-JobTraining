@@ -8,9 +8,9 @@ public class TextCloud : MonoBehaviour
     {
         
     }
-    public RectTransform background;
+    
     //public GameObject background;
-    public TextMeshPro text;
+    public TextMeshProUGUI text;
  
     void Update() { 
       

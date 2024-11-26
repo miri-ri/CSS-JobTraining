@@ -27,7 +27,7 @@ public class JobTrainingManager:MonoBehaviour{
     //here go all the functions that act on the scene, change background, change audio, etch
     public void ChangeFrontWallBackground(string bkgName){
         Renderer ren= FrontWall.GetComponent<Renderer>();
-        ren.material=Resources.Load<Material>("background/background2");
+        ren.material=Resources.Load<Material>("background/"+bkgName);
     }
     public void PlaySound(){
         //streaming audio seems a bit sketchy in unity
@@ -36,6 +36,7 @@ public class JobTrainingManager:MonoBehaviour{
     public void WriteOnUi(string text){
         TextCloudPrefab.GetComponent<TextCloud>().WriteText(text);
     }
+    
 
 }
 

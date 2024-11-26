@@ -87,7 +87,7 @@ class ExplanationOfActivity : ActivityState
 
         // Todo: Start background audio
         JobTrainingManager.instance.PlaySound();
-        JobTrainingManager.instance.ChangeFrontWallBackground("not a bkg");
+        JobTrainingManager.instance.ChangeFrontWallBackground("background1");
         // await trainer task selection
 
         stateMachine.CompleteState();
