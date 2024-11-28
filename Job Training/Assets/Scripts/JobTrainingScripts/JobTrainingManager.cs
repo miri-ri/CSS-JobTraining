@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -39,7 +38,9 @@ public class JobTrainingManager:MonoBehaviour{
         TextCloudPrefab.GetComponent<TextCloud>().WriteText(text);
     }
     
-
+    public void StopJobTraining(){
+        // stop audio
+    }
 }
 
 

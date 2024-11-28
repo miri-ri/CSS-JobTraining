@@ -1,5 +1,6 @@
 
 using System;
+using System.Threading;
 using UnityEngine;
 
 public class ActivityManager:MonoBehaviour{
@@ -14,7 +15,7 @@ public class ActivityManager:MonoBehaviour{
 
         stateMachine = new ActivityStateMachine(TaskManager);
 
-        stateMachine.SetState(new ExplanationOfActivity(stateMachine));
+        stateMachine.SetState(new ExplanationOfActivity(stateMachine, TaskManager));
     }
 
     //this class uses a state machine for the entire activity, and loads tasks
@@ -27,7 +28,7 @@ public class ActivityManager:MonoBehaviour{
 
     //to be chosen between each task or from the start
     private void setChosenTask(){
-        TaskManager.StartTask(new TaskLocateProduct());
+        //TaskManager.StartTask(new TaskLocateProduct());
     }
 
     
@@ -49,12 +50,19 @@ public class ActivityStateMachine{
         currentState?.Setup();
     }
     
-    public void CompleteState(){
+    public void CompleteState(ActivityState nextState = null){
         switch(currentState) {
         case ExplanationOfActivity:
             SetState(new TaskState(this, taskManager));
             break;
         case TaskState:
+            SetState(new TaskCompleteState(this, taskManager));
+            break;
+        case TaskCompleteState:
+            SetState(nextState);
+            break;
+        case WaitingState:
+            SetState(new TaskCompleteState(this, taskManager));
             break;
         default:
             throw new System.NotImplementedException();
@@ -63,6 +71,16 @@ public class ActivityStateMachine{
 }
 
 public abstract class ActivityState{
+
+    public ActivityStateMachine stateMachine;
+    public TaskManagerScript taskManager;
+
+    protected ActivityState(ActivityStateMachine machine, TaskManagerScript TaskManager)
+    {
+        stateMachine = machine;
+        taskManager = TaskManager;
+    }
+
     public abstract void Setup();
     public abstract void Dismantle();
 
@@ -71,12 +89,8 @@ public abstract class ActivityState{
 //user is informed
 class ExplanationOfActivity : ActivityState
 {
-
-    private ActivityStateMachine stateMachine;
-
-    public ExplanationOfActivity(ActivityStateMachine machine){
-        stateMachine = machine;
-    }
+    public ExplanationOfActivity(ActivityStateMachine machine, TaskManagerScript TaskManager) : base(machine, TaskManager)
+    {}
 
     public override void Setup()
     {
@@ -99,18 +113,13 @@ class ExplanationOfActivity : ActivityState
 
 class TaskState : ActivityState
 {
-    private ActivityStateMachine stateMachine;
-    private TaskManagerScript taskManager;
-
-    public TaskState(ActivityStateMachine machine, TaskManagerScript TaskManager){
-        stateMachine = machine;
-        taskManager = TaskManager;
-    }
+    public TaskState(ActivityStateMachine machine, TaskManagerScript TaskManager) : base(machine, TaskManager)
+    {}
 
     public override void Setup()
     {
         taskManager.StartTask(new TaskLocateProduct()); // Todo: add task choice input here
-        taskManager.onTaskCompleted += CompleteTask;
+        taskManager.onTaskCompleted += CompleteTask; // onTaskCompleted only triggered when no problem appeared
     }
 
     private void CompleteTask(){
@@ -124,5 +133,65 @@ class TaskState : ActivityState
     }
 }
 
-//other states: Activity Start, Task Start(uses the taskManager), end of task,
-// waitingState, advancingTask, assesProblem, repeatActivity(basically just task start w/ same task)
+class TaskCompleteState : ActivityState
+{
+    public TaskCompleteState(ActivityStateMachine machine, TaskManagerScript TaskManager) : base(machine, TaskManager)
+    {}
+
+    public override void Dismantle()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void Setup()
+    {
+        JobTrainingManager.instance.WriteOnUi("Do you want to proceed to the next task, take a break or stop the activity?");
+        string userInput = "";// user selection input
+        if(userInput=="next"){
+            stateMachine.CompleteState(new TaskState(stateMachine, new TaskManagerScript()));
+        } else if (userInput == "wait"){
+            stateMachine.CompleteState(new WaitingState(stateMachine, taskManager));
+        } else if (userInput == "stop"){
+            stateMachine.CompleteState(new StopActivity(stateMachine, taskManager));
+        } else {
+            throw new ArgumentException("TaskCompleteState: invalid user selection");
+        }
+    }
+}
+
+class WaitingState : ActivityState
+{
+    public WaitingState(ActivityStateMachine machine, TaskManagerScript TaskManager) : base(machine, TaskManager)
+    {}
+
+    public override void Dismantle()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void Setup()
+    {
+        JobTrainingManager.instance.WriteOnUi("Alright, let's take a short break of 3 minutes!");
+        Thread.Sleep(3*1000); // maybe async needed?
+        stateMachine.CompleteState();
+    }
+}
+
+class StopActivity : ActivityState
+{
+    public StopActivity(ActivityStateMachine machine, TaskManagerScript TaskManager) : base(machine, TaskManager)
+    {}
+
+    public override void Dismantle()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void Setup()
+    {
+        JobTrainingManager.instance.WriteOnUi("Goodbye!");
+        // final logging (wait till finished)
+        JobTrainingManager.instance.StopJobTraining();
+
+    }
+}
