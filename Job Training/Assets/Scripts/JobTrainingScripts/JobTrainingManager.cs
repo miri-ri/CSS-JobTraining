@@ -10,13 +10,15 @@ public class JobTrainingManager:MonoBehaviour{
     [SerializeField] ActivityManager ActivityManager;
     [SerializeField] TaskManagerScript TaskManager;
 
-    void Start(){
+    public JobTrainingManager(){
         instance=this;
-        ActivityManager.StartActivity();
     }
 
     public TaskManagerScript GetTaskManager(){
         return TaskManager;
+    }
+    public ActivityManager GetActivityManager(){
+        return ActivityManager;
     }
 
     [SerializeField] GameObject FrontWall,Floor;

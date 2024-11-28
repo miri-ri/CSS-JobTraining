@@ -5,11 +5,12 @@ public class TaskLocateProduct : Task
 {
     private InteractionMachine interactionMachine;
     private JobTrainingManager JTManager;
-     
-    void Start(){
+
+    public TaskLocateProduct(){
         Introduction();
         JTManager = JobTrainingManager.instance;
     }
+    
     public override void Feedback()
     {
         //send data logged during states, or only user responses to feedback api
@@ -19,7 +20,6 @@ public class TaskLocateProduct : Task
         // log data
         // send extensive evaluation to trainer
         
-        JTManager.GetTaskManager().TriggerTaskCompleted();
         CompleteTask();
     }
 
