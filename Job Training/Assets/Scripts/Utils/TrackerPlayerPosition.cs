@@ -199,7 +199,7 @@ public class TrackerPlayerPosition : MonoBehaviour
             skelPosition = skel[closestId];
         }
         else {
-            Debug.Log(System.Convert.ToUInt64(playerIdentifier));
+            //Debug.Log(System.Convert.ToUInt64(playerIdentifier));
             foreach (ulong id in skel.Keys)
             {
                 if (id == System.Convert.ToUInt64(playerIdentifier))

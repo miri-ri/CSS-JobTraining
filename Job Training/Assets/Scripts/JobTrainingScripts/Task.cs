@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class Task:MonoBehaviour{
+public abstract class Task{
     public string Description;//no need to have this here, better to have a enum
     public Task(){
 

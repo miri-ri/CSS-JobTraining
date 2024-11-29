@@ -10,11 +10,17 @@ public class TextCloud : MonoBehaviour
     }
     
     //public GameObject background;
-    public TextMeshProUGUI text;
+    [SerializeField] TextMeshProUGUI text;
  
     void Update() { 
       
   
+    }
+    public void ShowTextUI(){
+        this.enabled=true;
+    }
+    public void HideTextUI(){
+        this.enabled=false;
     }
     public void WriteText(string txt){
         text.text=txt;

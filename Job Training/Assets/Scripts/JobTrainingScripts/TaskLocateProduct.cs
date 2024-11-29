@@ -7,8 +7,13 @@ public class TaskLocateProduct : Task
     private JobTrainingManager JTManager;
 
     public TaskLocateProduct(){
-        Introduction();
+        if(JobTrainingManager.instance==null){
+            throw new System.Exception("The job training manager isn't instantiated yet");
+        }
         JTManager = JobTrainingManager.instance;
+        
+        Introduction();
+
     }
     
     public override void Feedback()
@@ -31,6 +36,7 @@ public class TaskLocateProduct : Task
     public override void Introduction()
     {
         JTManager.WriteOnUi("In this task you will have to show the product to the customer."); // maybe replace with Task Description later
+        JTManager.ChangeFrontWallBackground("PlaceholderMarket");
 
         Interaction();  
     }

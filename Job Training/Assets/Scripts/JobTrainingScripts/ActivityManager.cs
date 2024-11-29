@@ -8,10 +8,12 @@ public class ActivityManager:MonoBehaviour{
     private ActivityStateMachine stateMachine;
     private TaskManagerScript TaskManager;
 
-    public ActivityManager(){
+    void Start(){
+        TaskManager=JobTrainingManager.instance.GetTaskManager();
         if(TaskManager == null){
             throw new ArgumentNullException(nameof(TaskManager), "TaskManager not asigned!");
         }
+        
 
         stateMachine = new ActivityStateMachine(TaskManager);
 
@@ -99,7 +101,6 @@ class ExplanationOfActivity : ActivityState
 
         // Todo: Start background audio
         JobTrainingManager.instance.PlaySound();
-        JobTrainingManager.instance.ChangeFrontWallBackground("background1");
         // await trainer task selection
 
         stateMachine.CompleteState();
@@ -107,7 +108,7 @@ class ExplanationOfActivity : ActivityState
 
     public override void Dismantle()
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 }
 
