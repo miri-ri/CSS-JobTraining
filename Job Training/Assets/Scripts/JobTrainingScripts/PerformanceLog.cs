@@ -1,18 +1,19 @@
 using UnityEngine;
 using UnityEditor;
 using System.IO;
-using System.DateTime;
+using System.Collections.Generic;
+using System;
 public class PerformanceLog{
 
     public List<TaskData> TasksData{
-        get;add;
+        get;
     }
     private string UserIdentifier;
     private DateTime ActivityStart, ActivityEnd;
 
     public PerformanceLog(string userName){
         UserIdentifier=userName;
-        TasksData= new List<TaskData>;
+        TasksData= new List<TaskData>();
         ActivityStart=DateTime.Now;
     }
     public void EndLog(){
@@ -21,7 +22,7 @@ public class PerformanceLog{
     } 
     private void LogData(){
         StreamWriter writer= new StreamWriter("Assets/Resources/LogData.txt",true);
-        string log="Log: User - "+UserIdentifier+ "\nStart - "+ActivityStart+" \n End - "+ActivityEnd+"\nDuration - "+ActivityStart-ActivityEnd;
+        string log = "Log: User - " + UserIdentifier + "\nStart - " + ActivityStart + " \n End - " + ActivityEnd + "\nDuration - " + ActivityStart.Subtract( ActivityEnd).TotalMinutes;
         int i=1;
         foreach (TaskData task in TasksData)
         {
@@ -32,11 +33,11 @@ public class PerformanceLog{
             {
                 log+=dial+"\n";
             }
-            log+"\nFeedback - "+task.feedbackMessage;
+            log+="\nFeedback - "+task.feedbackMessage;
         }
         writer.Write(log);
         writer.Close();
-        TextAsset logFile=Resources.Load("LogData");
+        TextAsset logFile= (TextAsset)Resources.Load("LogData");
         Debug.Log(logFile.text);
 
     }
@@ -44,23 +45,23 @@ public class PerformanceLog{
 }
 public class TaskData{//to be created in Activity manager on new task
 
-    string taskName;
-    List<string> dialogTranscript;
-    int score;
-    string feedbackMessage;
-    DateTime taskStart, taskEnd;
+    public string taskName;
+    public List<string> dialogTranscript;
+    public int score;
+    public string feedbackMessage;
+    public DateTime taskStart, taskEnd;
 
     public TaskData(string taskName){ 
-        this.taskName=taskName
-        dialogTranscript=new List<string>;
+        this.taskName=taskName;
+        dialogTranscript=new List<string>();
         }
 
     public void addResponse(string text, bool isUser){
-        if(isUser) dialogTranscript.add("user -> "text);
-        else dialogTranscript.add("customer -> "text);
+        if(isUser) dialogTranscript.Add("user -> "+text);
+        else dialogTranscript.Add("customer -> "+text);
     }
     public void addConversationError(string errorMessage){
-        dialogTranscript.add("ERROR -> "text);
+        dialogTranscript.Add("ERROR -> "+ errorMessage);
     }
 
 
