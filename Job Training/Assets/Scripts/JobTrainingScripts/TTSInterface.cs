@@ -6,10 +6,11 @@ using System.Collections;
 public class TTSInterface : MonoBehaviour
 {
     void Start()
-    {
+    { 
+       // PlayAudio("piosposdoas"); works!
     }
     public void PlayAudio(string text){
-        StartCoroutine(GetData("http://localhost:9000/TTS?"+text));//to api
+        StartCoroutine(GetData("https://e7860e6c-7a73-4998-a664-8611b99efe03.mock.pstmn.io/TTS"));//to api
     }
     IEnumerator GetData(string url)
     {
@@ -18,9 +19,8 @@ public class TTSInterface : MonoBehaviour
         if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
         { Debug.LogError(www.error); }
         else
-        { // Show results as text 
-            Debug.Log(www.downloadHandler.text); // Or retrieve results as binary
-            byte[] results = www.downloadHandler.data;
+        { 
+            Debug.Log(www.downloadHandler.text);
         }
     }
 }

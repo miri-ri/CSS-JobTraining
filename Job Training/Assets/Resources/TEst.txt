@@ -1,0 +1,1 @@
+questo è un test per vedere come funzia la scrittura a file in Resourcesquesto è un test per vedere come funzia la scrittura a file in Resources

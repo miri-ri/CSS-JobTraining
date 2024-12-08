@@ -23,7 +23,6 @@ public class PerformanceLog{
     private void LogData(){
         StreamWriter writer= new StreamWriter("Assets/Resources/LogData.txt",true);
         string log = "Log: User - " + UserIdentifier + "\nStart - " + ActivityStart + " \n End - " + ActivityEnd + "\nDuration - " + ActivityStart.Subtract( ActivityEnd).TotalMinutes;
-        int i=1;
         foreach (TaskData task in TasksData)
         {
             log+=1+":  Task "+task.taskName+"\n";

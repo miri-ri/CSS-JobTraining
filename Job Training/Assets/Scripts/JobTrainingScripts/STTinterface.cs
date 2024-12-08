@@ -3,6 +3,8 @@ using UnityEngine.Networking;
 using System.Collections;
 public class STTInterface : MonoBehaviour
 {
+    public delegate void OnSTTReady(string response);
+    public event OnSTTReady RequestComplete;
     void Start()
     {
     }
@@ -17,10 +19,10 @@ public class STTInterface : MonoBehaviour
         if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
         { Debug.LogError(www.error); }
         else
-        { // Show results as text 
-            Debug.Log(www.downloadHandler.text); // Or retrieve results as binary
-            byte[] results = www.downloadHandler.data;
-            //launch event and attach text from api
+        {
+            Debug.Log(www.downloadHandler.text); 
+            RequestComplete?.Invoke(www.downloadHandler.text);
+        
         }
     }
 }
