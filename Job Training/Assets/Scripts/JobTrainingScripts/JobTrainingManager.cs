@@ -12,6 +12,7 @@ public class JobTrainingManager:MonoBehaviour{
    
     void Awake(){
         instance=this;
+        ActivityManager.Start();
         FeedbackUIRef.HideFeedbackUI(); 
     }
 
@@ -37,7 +38,6 @@ public class JobTrainingManager:MonoBehaviour{
         Material backG=Resources.Load<Material>("Backgrounds/"+bkgName);
         if(backG==null){
             throw new System.Exception("backg: "+bkgName+" not found");
-            return;
         }
         ren.material=backG;
     }

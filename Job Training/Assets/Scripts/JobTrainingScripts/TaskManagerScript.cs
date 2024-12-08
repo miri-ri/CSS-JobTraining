@@ -10,8 +10,11 @@ public class TaskManagerScript : MonoBehaviour
     //reference to objects in gameScene
 
     public void StartTask(Task chosen){
+        if(CurrentTask!=null){
+            throw new Exception("Another task is already running!");
+        }
         CurrentTask=chosen;
-        CurrentTask.Introduction();
+        CurrentTask.TaskSetup();
 
     }
 
@@ -38,6 +41,7 @@ public class TaskManagerScript : MonoBehaviour
 
     public void TriggerTaskCompleted()
     {
+        CurrentTask=null;
         onTaskCompleted?.Invoke();
     } 
 }

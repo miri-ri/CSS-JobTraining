@@ -3,17 +3,11 @@ using UnityEngine;
 
 public class TaskLocateProduct : Task
 {
-    private InteractionMachine interactionMachine;
-    private JobTrainingManager JTManager;
 
     public TaskLocateProduct(){
         if(JobTrainingManager.instance==null){
             throw new System.Exception("The job training manager isn't instantiated yet");
         }
-        JTManager = JobTrainingManager.instance;
-        
-        Introduction();
-
     }
     
     public override void Feedback()
@@ -21,34 +15,33 @@ public class TaskLocateProduct : Task
         //send data logged during states, or only user responses to feedback api
 
         // Evaluation
-        JTManager.WriteOnUi("Well done! You solved the task in x seconds");
+        JobTrainingManager.instance.WriteOnUi("Well done! You solved the task in x seconds");
         // log data
         // send extensive evaluation to trainer
         
         CompleteTask();
     }
 
-    public override void Interaction()
+    public override void TaskSetup()
     {
-        interactionMachine=new InteractionMachine(new FirstDialog());
+        JobTrainingManager.instance.WriteOnUi("In this task you will have to show the product to the customer."); // maybe replace with Task Description later
+        JobTrainingManager.instance.ChangeFrontWallBackground("PlaceholderMarket");
+
+        
+        SetInteractionMachine(new InteractionMachine());
+        GetInteractionMachine().ChangeState(new FirstDialog());
     }
 
-    public override void Introduction()
-    {
-        JTManager.WriteOnUi("In this task you will have to show the product to the customer."); // maybe replace with Task Description later
-        JTManager.ChangeFrontWallBackground("PlaceholderMarket");
-
-        Interaction();  
-    }
+    
 }
 
 class FirstDialog:InteractionState{
     //play audio from virtual client
-    public override void Setup(JobTrainingManager JTManager)
+    public override void Setup()
     {
         // playing speech sound (in API?)
         
-        JTManager.WriteOnUi("FirstDialogInput"); // for dynamic first dialogue input from LLM API
+        JobTrainingManager.instance.WriteOnUi("FirstDialogInput"); // for dynamic first dialogue input from LLM API
     }
     public override void Dismantle()
     {
@@ -65,7 +58,7 @@ class AwaitUserDirectionForProductLocation : InteractionState
         throw new System.NotImplementedException();
     }
 
-    public override void Setup(JobTrainingManager JTManager)
+    public override void Setup()
     {
         UserInput.OnUserSpoke += HandleUserSpoke;
         UserInput.OnUserMoved += HandleUserMoved;
@@ -88,7 +81,7 @@ class ClientEndsDialog : InteractionState
         throw new System.NotImplementedException();
     }
 
-    public override void Setup(JobTrainingManager JTManager)
+    public override void Setup()
     {
         throw new System.NotImplementedException();
     }
