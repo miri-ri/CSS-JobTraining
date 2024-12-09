@@ -12,7 +12,6 @@ public class JobTrainingManager:MonoBehaviour{
    
     void Awake(){
         instance=this;
-        ActivityManager.Start();
         FeedbackUIRef.HideFeedbackUI(); 
     }
 

@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections;
 using System.Threading;
 using UnityEngine;
 
@@ -13,10 +14,8 @@ public class ActivityManager:MonoBehaviour{
         if(TaskManager == null){
             throw new ArgumentNullException(nameof(TaskManager), "TaskManager not asigned!");
         }
-        
 
         stateMachine = new ActivityStateMachine();
-
         stateMachine.SetState(new ExplanationOfActivity());
     }
 
@@ -40,22 +39,30 @@ public class ActivityManager:MonoBehaviour{
 }
 
 //the states in this SA handle the interaction during the activity 
-public class ActivityStateMachine{
+public class ActivityStateMachine {
 
     private ActivityState currentState;
-    private TaskManagerScript taskManager;
-
-    public ActivityStateMachine(){
-        taskManager = JobTrainingManager.instance.GetTaskManager();
-    }
 
     public void SetState(ActivityState state){
         currentState?.Dismantle();
         currentState = state;
         currentState?.Setup();
     }
+
+    public void CompleteState(ActivityState nextState = null, int delaySeconds = 0)
+    {
+        if (delaySeconds > 0)
+        {
+            JobTrainingManager.instance.GetActivityManager()
+                .StartCoroutine(CompleteStateAfterWait(delaySeconds, nextState));
+        }
+        else
+        {
+            SetNextState(nextState);
+        }
+    }
     
-    public void CompleteState(ActivityState nextState = null){
+    public void SetNextState(ActivityState nextState = null){
         switch(currentState) {
         case ExplanationOfActivity:
             SetState(new TaskState());
@@ -64,6 +71,9 @@ public class ActivityStateMachine{
             SetState(new TaskCompleteState());
             break;
         case TaskCompleteState:
+            if(nextState==null){
+                throw new Exception("Change state: invalid next state!");
+            }
             SetState(nextState);
             break;
         case WaitingState:
@@ -73,9 +83,15 @@ public class ActivityStateMachine{
             throw new System.NotImplementedException();
         }
     }
+
+    public IEnumerator CompleteStateAfterWait(int waitingSeconds, ActivityState nextState = null){
+        Debug.Log($"Waiting for {waitingSeconds} seconds before changing state.");
+        yield return new WaitForSeconds(waitingSeconds);
+        if(nextState==null){SetNextState();} else {SetNextState(nextState);}
+    }
 }
 
-public abstract class ActivityState{
+public abstract class ActivityState {
 
     public ActivityStateMachine stateMachine;
     public TaskManagerScript taskManager;
@@ -102,16 +118,16 @@ class ExplanationOfActivity : ActivityState
         // Todo: Start background audio
         JobTrainingManager.instance.PlaySound();
         // await trainer task selection
-
-        stateMachine.CompleteState();
+        
+        stateMachine.CompleteState(null, 5);
     }
+
 
     public override void Dismantle()
     {
         //throw new System.NotImplementedException();
     }
 }
-
 class TaskState : ActivityState
 {
 
@@ -167,8 +183,9 @@ class WaitingState : ActivityState
     public override void Setup()
     {
         JobTrainingManager.instance.WriteOnUi("Alright, let's take a short break of 3 minutes!");
-        Thread.Sleep(3*1000); // maybe async needed?
-        stateMachine.CompleteState();
+        // continue instead of timer
+        //Thread.Sleep(3*1000); // maybe async needed?
+        stateMachine.CompleteState(null, 3*60);
     }
 }
 

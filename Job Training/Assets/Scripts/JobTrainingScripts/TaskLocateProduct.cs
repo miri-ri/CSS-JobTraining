@@ -40,7 +40,7 @@ class FirstDialog:InteractionState{
     public override void Setup()
     {
         // playing speech sound (in API?)
-        
+
         JobTrainingManager.instance.WriteOnUi("FirstDialogInput"); // for dynamic first dialogue input from LLM API
     }
     public override void Dismantle()
@@ -51,7 +51,7 @@ class FirstDialog:InteractionState{
 }
 
 // add eventListener For UserPosition and Audio user response, on rsponse arrival then send response of user to the llm
-class AwaitUserDirectionForProductLocation : InteractionState
+class AwaitUserUserInput : InteractionState
 {
     public override void Dismantle()
     {

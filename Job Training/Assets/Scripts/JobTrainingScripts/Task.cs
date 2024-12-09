@@ -7,7 +7,7 @@ using UnityEngine;
 
 public abstract class Task{
     public string Description;//no need to have this here, better to have a enum
-    private static InteractionMachine interactionMachine;
+    public static InteractionMachine interactionMachine;
 
     protected void CompleteTask()
     {
@@ -31,7 +31,7 @@ public enum TaskList{
 
 }
 
-public class InteractionMachine{
+public class InteractionMachine {
 
     private InteractionState CurrentState;
 
