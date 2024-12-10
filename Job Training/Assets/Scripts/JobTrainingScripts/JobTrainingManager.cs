@@ -32,6 +32,7 @@ public class JobTrainingManager:MonoBehaviour{
    // private GameObject txtCloud;
 
     //here go all the functions that act on the scene, change background, change audio, etch
+    public PerformanceLog PerformanceLog;
     public void ChangeFrontWallBackground(string bkgName){
         Renderer ren= FrontWall.GetComponent<Renderer>();
         Material backG=Resources.Load<Material>("Backgrounds/"+bkgName);
@@ -57,6 +58,13 @@ public class JobTrainingManager:MonoBehaviour{
     public void StopJobTraining(){
         // stop audio
     }
+    public void GetUserDialog(){
+        STTInterface speechTT=gameObject.AddComponent<STTInterface>();
+       // speechTT.RequestComplete+=handleDialogResponse; ->>>> when using this api subscribe a method as a handler to receive response
+        speechTT.GetUserDialog();
+    }
+    
+    
 }
 
 

@@ -7,14 +7,14 @@ public class DemoTestApi :MonoBehaviour{
 
     void Start(){
        
-testLogg();
-    }
+//callLLMevaluate("");  
+  }
     
     
     void callTTS(){
-        TTSInterface ttsReq=new();
+        TTSInterface ttsReq=gameObject.AddComponent<TTSInterface>();
         ttsReq.PlayAudio("questo è un super test");
-
+        
     }
 
 
@@ -23,7 +23,7 @@ testLogg();
 
 
     void callStt(){
-        STTInterface speechTT=new();
+        STTInterface speechTT=gameObject.AddComponent<STTInterface>();
         speechTT.RequestComplete+=handleSTTresponse;
         speechTT.GetUserDialog();
     }
@@ -37,18 +37,19 @@ testLogg();
 
 
     void callLLMDialog(string userResp){
-        LLMinterface LLM=new();
+        LLMinterface LLM=gameObject.AddComponent<LLMinterface>();
         LLM.ResponseReady+=handleLLMDialogResp;
         LLM.PrepareResponseToUser(userResp);
     }
      void callLLMevaluate(string userTranscript){
-        LLMinterface LLM=new();
+        LLMinterface LLM=gameObject.AddComponent<LLMinterface>();
         LLM.EvaluationComplete+=handleLLMEvaluate;
         LLM.evaluateDialog(userTranscript);
     }
 
     void InterpreteSystemInteraction(string userRes){
-        LLMinterface LLM=new();
+        LLMinterface LLM=gameObject.AddComponent<LLMinterface>();
+        //=new();
         LLM.SystemResponseInterpreted+=handleInterpretation;
         LLM.evaluateSystemAnswer(userRes);
     

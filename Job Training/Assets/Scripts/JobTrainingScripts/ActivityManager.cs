@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
@@ -8,13 +9,14 @@ public class ActivityManager:MonoBehaviour{
 
     private ActivityStateMachine stateMachine;
     private TaskManagerScript TaskManager;
+    
 
     public void Start(){
         TaskManager=JobTrainingManager.instance.GetTaskManager();
         if(TaskManager == null){
             throw new ArgumentNullException(nameof(TaskManager), "TaskManager not asigned!");
         }
-
+        JobTrainingManager.instance.PerformanceLog =new("testUser");
         stateMachine = new ActivityStateMachine();
         stateMachine.SetState(new ExplanationOfActivity());
     }
@@ -133,6 +135,8 @@ class TaskState : ActivityState
 
     public override void Setup()
     {
+        TaskData taskPerformanceData=new("taskName");
+        JobTrainingManager.instance.PerformanceLog.TasksData.Add(taskPerformanceData);
         taskManager.StartTask(new TaskLocateProduct()); // Todo: add task choice input here
         taskManager.onTaskCompleted += CompleteTask; // onTaskCompleted only triggered when no problem appeared
     }
@@ -158,6 +162,7 @@ class TaskCompleteState : ActivityState
 
     public override void Setup()
     {
+        JobTrainingManager.instance.PerformanceLog.TasksData[^1].EndTask();
         JobTrainingManager.instance.WriteOnUi("Do you want to proceed to the next task, take a break or stop the activity?");
         string userInput = "";// user selection input
         if(userInput=="next"){
@@ -199,6 +204,7 @@ class StopActivity : ActivityState
 
     public override void Setup()
     {
+        JobTrainingManager.instance.PerformanceLog.EndLog();
         JobTrainingManager.instance.WriteOnUi("Goodbye!");
         // final logging (wait till finished)
         JobTrainingManager.instance.StopJobTraining();

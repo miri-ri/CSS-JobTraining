@@ -70,6 +70,7 @@ class AwaitUserUserInput : InteractionState
     }
 
     private void HandleUserSpoke(string spokenText){
+        JobTrainingManager.instance.PerformanceLog.TasksData[^1].addResponse(spokenText,true);
 
     }
 }

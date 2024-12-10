@@ -28,3 +28,4 @@ class PositioningEvaluator:
 
         
         return CommonTypes.Evaluation(score = score, description = description)
+print("posd")

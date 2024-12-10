@@ -13,13 +13,12 @@ public class LLMinterface : MonoBehaviour
 
 
 
-     public delegate void OnSystemInteractionReady(bool res);
+    public delegate void OnSystemInteractionReady(bool res);
     public event OnSystemInteractionReady SystemResponseInterpreted;
 
-    void Start(){ 
-    }
-   
-   IEnumerator PostData(string url, string jsonData){
+
+
+    IEnumerator PostData(string url, string jsonData){
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = new System.Text.UTF8Encoding().GetBytes(jsonData);
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
@@ -36,13 +35,26 @@ public class LLMinterface : MonoBehaviour
         }
     }
 
+    //!!!!!works with stub!!! however adapt and check with the correct api
     public void evaluateDialog(string ConvoTranscript){//give transcript of conversation
-        StartCoroutine(PostData("https://api.example.com/data", "{\" key \":\"value\"}"));
+       /* string question="sadasdasd", answer="sdfsdfbsdf";
+        string userPos, target, range, floor;
+        userPos="{\"x\":0,\"y\":0}";
+        range="{\"w\":0,\"h\":0}";
+
+        string json="{ \"question\":\" "+question+"\", \"reply\":\""+answer+"\", \"user_pos\": "+userPos+", \"target_pos\": "+userPos+", \"range\": "+range+", \"floor\": "+range+"}";
+        Debug.Log(json);*/
+
+        StartCoroutine(PostData("http://127.0.0.1:8000/evaluate/assistant", "json"));
+
+                
     }
+    //need api
     public void evaluateSystemAnswer(string answer){//interaction user - system
-        StartCoroutine(GetData("http://localhost:9000/answer?",true));
+        StartCoroutine(GetData("http://localhost:8000/",true));
 
     }
+    //need api
     public void PrepareResponseToUser(string lastUserResponse){
         StartCoroutine(GetData("http://localhost:9000/respond?",false));
     }

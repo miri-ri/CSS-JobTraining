@@ -21,7 +21,7 @@ public class PerformanceLog{
         LogData();
     } 
     private void LogData(){
-        StreamWriter writer= new StreamWriter("Assets/Resources/LogData.txt",true);
+        StreamWriter writer= new StreamWriter("Assets/Resources/logData_"+UserIdentifier+".txt",true);
         string log = "Log: User - " + UserIdentifier + "\nStart - " + ActivityStart + " \n End - " + ActivityEnd + "\nDuration - " + ActivityStart.Subtract( ActivityEnd).TotalMinutes;
         foreach (TaskData task in TasksData)
         {
@@ -43,7 +43,7 @@ public class PerformanceLog{
 
 }
 public class TaskData{//to be created in Activity manager on new task
-
+//TODO add timings of response time and movement time
     public string taskName;
     public List<string> dialogTranscript;
     public int score;
@@ -52,9 +52,12 @@ public class TaskData{//to be created in Activity manager on new task
 
     public TaskData(string taskName){ 
         this.taskName=taskName;
+        taskStart=DateTime.Now;
         dialogTranscript=new List<string>();
         }
-
+    public void EndTask(){
+        taskEnd=DateTime.Now;
+    }
     public void addResponse(string text, bool isUser){
         if(isUser) dialogTranscript.Add("user -> "+text);
         else dialogTranscript.Add("customer -> "+text);
