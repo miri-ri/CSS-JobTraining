@@ -165,7 +165,8 @@ cython_debug/
 
 
 model/
-.vsconfig/
+.vscode/
 Job Training/ProjectSettings/ProjectVersion.txt
 Job Training/UpgradeLog.htm
 .gguf
+.vsconfig
