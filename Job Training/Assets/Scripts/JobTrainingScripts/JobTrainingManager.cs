@@ -8,11 +8,17 @@ public class JobTrainingManager:MonoBehaviour{
     public static Vector3 roomCenter=new (0,7,412);
     [SerializeField] ActivityManager ActivityManager;
     [SerializeField] TaskManagerScript TaskManager;
-
+    public LLMinterface LLM{get;private set;}
+    
+    public STTInterface speechTT{get;private set;}
+    public TTSInterface TTS{get; private set;}
    
     void Awake(){
         instance=this;
         FeedbackUIRef.HideFeedbackUI(); 
+        speechTT=gameObject.AddComponent<STTInterface>();
+        LLM=gameObject.AddComponent<LLMinterface>();
+        TTS=gameObject.AddComponent<TTSInterface>();
     }
 
     public TaskManagerScript GetTaskManager(){
@@ -29,6 +35,8 @@ public class JobTrainingManager:MonoBehaviour{
     //[SerializeField] AudioSource RoomSpeaker;
     [SerializeField] TextCloud TextCloudUI;
     [SerializeField] FeedbackUI FeedbackUIRef;
+    [SerializeField] AudioSource RoomSpeakers;
+
    // private GameObject txtCloud;
 
     //here go all the functions that act on the scene, change background, change audio, etch
@@ -42,7 +50,7 @@ public class JobTrainingManager:MonoBehaviour{
         ren.material=backG;
     }
     public void PlaySound(){
-        //call TTS api, which plays text to audio
+        RoomSpeakers.Play();
     }
 
     public void WriteOnUi(string text){
@@ -58,10 +66,28 @@ public class JobTrainingManager:MonoBehaviour{
     public void StopJobTraining(){
         // stop audio
     }
-    public void GetUserDialog(){
-        STTInterface speechTT=gameObject.AddComponent<STTInterface>();
-       // speechTT.RequestComplete+=handleDialogResponse; ->>>> when using this api subscribe a method as a handler to receive response
+      public void PlayDialog(string textToTTS, OnTTSPlaying handler){
+        TTS.TTsPlaying+=handler;
+        TTS.PlayAudio(textToTTS);
+    }
+  
+    public void GetUserDialog(OnSTTReady handler){
+        speechTT.RequestComplete+=handler;
         speechTT.GetUserDialog();
+    }
+    
+    public void GetEvaluation(DataForEvaluation dataForEvaluation,  OnEvaluationReady handler)
+    {
+        LLM.EvaluationComplete+=handler;
+        LLM.evaluateDialog(dataForEvaluation);
+    }    
+
+    public DataForEvaluation getCurrentTasksFeedbackData(){
+        return TaskManager.CurrentTask.dataForEvaluation;
+    }
+    public void GenerateLLMCustomerResponse(string transcript, OnLLMresponseToUserReady handler){
+        LLM.ResponseReady+=handler;
+        LLM.PrepareResponseToUser(transcript);
     }
     
     

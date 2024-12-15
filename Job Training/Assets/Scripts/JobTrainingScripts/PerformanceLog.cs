@@ -48,12 +48,15 @@ public class TaskData{//to be created in Activity manager on new task
     public List<string> dialogTranscript;
     public int score;
     public string feedbackMessage;
+    public DataForEvaluation dataForEvaluation;
     public DateTime taskStart, taskEnd;
 
     public TaskData(string taskName){ 
         this.taskName=taskName;
         taskStart=DateTime.Now;
         dialogTranscript=new List<string>();
+        dataForEvaluation=new();
+        
         }
     public void EndTask(){
         taskEnd=DateTime.Now;

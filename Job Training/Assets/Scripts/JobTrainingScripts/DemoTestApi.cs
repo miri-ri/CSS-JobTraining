@@ -24,7 +24,7 @@ public class DemoTestApi :MonoBehaviour{
 
     void callStt(){
         STTInterface speechTT=gameObject.AddComponent<STTInterface>();
-        speechTT.RequestComplete+=handleSTTresponse;
+       // speechTT.RequestComplete+=handleSTTresponse;
         speechTT.GetUserDialog();
     }
     public void handleSTTresponse(string yye){
@@ -41,12 +41,12 @@ public class DemoTestApi :MonoBehaviour{
         LLM.ResponseReady+=handleLLMDialogResp;
         LLM.PrepareResponseToUser(userResp);
     }
-     void callLLMevaluate(string userTranscript){
+    /* void callLLMevaluate(DataForEvaluation data){
         LLMinterface LLM=gameObject.AddComponent<LLMinterface>();
         LLM.EvaluationComplete+=handleLLMEvaluate;
-        LLM.evaluateDialog(userTranscript);
+        LLM.evaluateDialog(data);
     }
-
+*/
     void InterpreteSystemInteraction(string userRes){
         LLMinterface LLM=gameObject.AddComponent<LLMinterface>();
         //=new();

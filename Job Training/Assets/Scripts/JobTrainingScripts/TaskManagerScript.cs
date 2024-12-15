@@ -14,7 +14,9 @@ public class TaskManagerScript : MonoBehaviour
             throw new Exception("Another task is already running!");
         }
         CurrentTask=chosen;
+        CurrentTask.dataForEvaluation=new();
         CurrentTask.TaskSetup();
+        
 
     }
 
@@ -28,22 +30,19 @@ public class TaskManagerScript : MonoBehaviour
     }
 
     //onEventUserAcceptsToStartAfterIntroduction(){ CurrentTask.Interaction}
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-   //     StateMachine.HandleStateLogic();
-    }
 
     public void TriggerTaskCompleted()
     {
         CurrentTask=null;
         onTaskCompleted?.Invoke();
     } 
+    void handleTTS(int sec){
+
+    }
+    public void CallTTS(){
+        
+
+    }
 }
 
 public class UserInput{

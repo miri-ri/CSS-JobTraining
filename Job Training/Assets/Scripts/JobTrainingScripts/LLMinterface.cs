@@ -1,19 +1,27 @@
 using UnityEngine; 
 using UnityEngine.Networking; 
 using System.Collections;
+using Newtonsoft.Json;
+using Unity.VisualScripting;
+using System.Security.Cryptography;
+
+
+public delegate void OnLLMresponseToUserReady(string response);
+public delegate void OnEvaluationReady(EvaluationResponse response);
+public delegate void OnSystemInteractionReady(bool res);
+
+
+
 public class LLMinterface : MonoBehaviour
 {
 
-    public delegate void OnLLMresponseToUserReady(string response);
     public event OnLLMresponseToUserReady ResponseReady;
 
 
-    public delegate void OnEvaluationReady(string response);
     public event OnEvaluationReady EvaluationComplete;
 
 
 
-    public delegate void OnSystemInteractionReady(bool res);
     public event OnSystemInteractionReady SystemResponseInterpreted;
 
 
@@ -31,21 +39,17 @@ public class LLMinterface : MonoBehaviour
             Debug.LogError(request.error);
         }
         else { 
+            EvaluationComplete?.Invoke(JsonConvert.DeserializeObject<EvaluationResponse>(  request.downloadHandler.text));
             Debug.Log("Response: " + request.downloadHandler.text); 
         }
     }
 
     //!!!!!works with stub!!! however adapt and check with the correct api
-    public void evaluateDialog(string ConvoTranscript){//give transcript of conversation
-       /* string question="sadasdasd", answer="sdfsdfbsdf";
-        string userPos, target, range, floor;
-        userPos="{\"x\":0,\"y\":0}";
-        range="{\"w\":0,\"h\":0}";
-
-        string json="{ \"question\":\" "+question+"\", \"reply\":\""+answer+"\", \"user_pos\": "+userPos+", \"target_pos\": "+userPos+", \"range\": "+range+", \"floor\": "+range+"}";
-        Debug.Log(json);*/
-
-        StartCoroutine(PostData("http://127.0.0.1:8000/evaluate/assistant", "json"));
+    public void evaluateDialog(DataForEvaluation dataTask){//give transcript of conversation
+      
+        var jsonData=Newtonsoft.Json.Linq.JObject.FromObject(dataTask);
+        Debug.Log(jsonData.ToString());
+        StartCoroutine(PostData("http://127.0.0.1:8000/evaluate/assistant", jsonData.ToString()));
 
                 
     }
@@ -79,4 +83,43 @@ public class LLMinterface : MonoBehaviour
             //launch event and attach text from api
         }
     }
+}
+public class EvaluationResponse{
+    public string description;
+    public int Score;
+}
+
+//to json
+public class DataForEvaluation
+{
+    public Speech speech { get; set; }
+    public Movement movement { get; set; }
+}
+
+public class Speech
+{
+    public Semantic semantic { get; set; }
+    public Timing timing { get; set; }
+}
+
+public class Semantic
+{
+    public string question { get; set; }
+    public string reply { get; set; }
+}
+
+public class Timing
+{
+    public float s_before_action { get; set; }
+    public float s_duration { get; set; }
+    public float s_before_action_target { get; set; }
+    public float s_duration_per_unit_target { get; set; }
+}
+
+public class Movement
+{
+    public float s_before_action { get; set; }
+    public float s_duration { get; set; }
+    public float s_before_action_target { get; set; }
+    public float s_duration_per_unit_target { get; set; }
 }
