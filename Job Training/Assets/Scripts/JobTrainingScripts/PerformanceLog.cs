@@ -20,6 +20,9 @@ public class PerformanceLog{
         ActivityEnd=DateTime.Now;
         LogData();
     } 
+    public TaskData getCurrentTaskData(){
+        return TasksData[^1];
+    }
     private void LogData(){
         StreamWriter writer= new StreamWriter("Assets/Resources/logData_"+UserIdentifier+".txt",true);
         string log = "Log: User - " + UserIdentifier + "\nStart - " + ActivityStart + " \n End - " + ActivityEnd + "\nDuration - " + ActivityStart.Subtract( ActivityEnd).TotalMinutes;
@@ -50,6 +53,15 @@ public class TaskData{//to be created in Activity manager on new task
     public string feedbackMessage;
     public DataForEvaluation dataForEvaluation;
     public DateTime taskStart, taskEnd;
+
+    public void setFeedback(EvaluationResponse eval){
+        score= (int)eval.total;
+        feedbackMessage="";
+        foreach (string item in eval.evaluations)
+        {
+            feedbackMessage+=item+"\n";
+        }
+    }
 
     public TaskData(string taskName){ 
         this.taskName=taskName;

@@ -4,7 +4,7 @@ using System.Collections;
 using System;
 using Newtonsoft.Json;
 
-public delegate void OnSTTReady(UserResponseDialog response);
+public delegate void OnSTTReady(Speech response);
 
 public class STTInterface : MonoBehaviour
 {
@@ -24,15 +24,9 @@ public class STTInterface : MonoBehaviour
         { Debug.LogError(www.error); }
         else
         {
-            Debug.Log(www.downloadHandler.text); 
-            RequestComplete?.Invoke(JsonConvert.DeserializeObject<UserResponseDialog>( www.downloadHandler.text));
+            //Debug.Log(www.downloadHandler.text); 
+            RequestComplete?.Invoke(JsonConvert.DeserializeObject<Speech>( www.downloadHandler.text));
         
         }
     }
-}
-public class UserResponseDialog{
-    public string transcript;
-    public DateTime startListening;
-    public DateTime StartedSpeaking;
-    public DateTime EndedSpeaking;
 }

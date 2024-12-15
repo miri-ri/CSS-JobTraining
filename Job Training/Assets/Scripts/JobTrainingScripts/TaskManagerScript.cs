@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class TaskManagerScript : MonoBehaviour
@@ -39,10 +40,15 @@ public class TaskManagerScript : MonoBehaviour
     void handleTTS(int sec){
 
     }
-    public void CallTTS(){
-        
-
+    public void ChangeStateOnTimer(int sec, InteractionState next){
+        StartCoroutine(CompleteStateAfterWait(sec,next));
     }
+    IEnumerator CompleteStateAfterWait(int sec, InteractionState next){
+        yield return new WaitForSeconds(sec);
+        Task.interactionMachine.ChangeState(next);
+    }
+    
+    
 }
 
 public class UserInput{

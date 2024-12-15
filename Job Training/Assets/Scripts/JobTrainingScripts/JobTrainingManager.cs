@@ -9,7 +9,6 @@ public class JobTrainingManager:MonoBehaviour{
     [SerializeField] ActivityManager ActivityManager;
     [SerializeField] TaskManagerScript TaskManager;
     public LLMinterface LLM{get;private set;}
-    
     public STTInterface speechTT{get;private set;}
     public TTSInterface TTS{get; private set;}
    
@@ -70,17 +69,31 @@ public class JobTrainingManager:MonoBehaviour{
         TTS.TTsPlaying+=handler;
         TTS.PlayAudio(textToTTS);
     }
+    public void RemoveTTShandler(OnTTSPlaying handler){
+        TTS.TTsPlaying-=handler;
+       
+    }
   
+
+
     public void GetUserDialog(OnSTTReady handler){
         speechTT.RequestComplete+=handler;
         speechTT.GetUserDialog();
     }
-    
+    public void RemoveSTThandler(OnSTTReady handler){
+        speechTT.RequestComplete-=handler;  
+    }
+
+
+
     public void GetEvaluation(DataForEvaluation dataForEvaluation,  OnEvaluationReady handler)
     {
         LLM.EvaluationComplete+=handler;
         LLM.evaluateDialog(dataForEvaluation);
-    }    
+    }  
+    public void RemoveEvaluationHandler(OnEvaluationReady handler){
+        LLM.EvaluationComplete-=handler;  
+    }  
 
     public DataForEvaluation getCurrentTasksFeedbackData(){
         return TaskManager.CurrentTask.dataForEvaluation;
@@ -88,6 +101,9 @@ public class JobTrainingManager:MonoBehaviour{
     public void GenerateLLMCustomerResponse(string transcript, OnLLMresponseToUserReady handler){
         LLM.ResponseReady+=handler;
         LLM.PrepareResponseToUser(transcript);
+    }
+    public void RemoveLLMCustomerResponse(OnLLMresponseToUserReady handler){
+        LLM.ResponseReady-=handler;
     }
     
     

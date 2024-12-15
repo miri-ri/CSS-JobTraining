@@ -15,19 +15,18 @@ public class TaskLocateProduct : Task
     {
         //send data logged during states, or only user responses to feedback api
         JobTrainingManager.instance.GetEvaluation(JobTrainingManager.instance.getCurrentTasksFeedbackData(),ShowFeedback);
-
-        // Evaluation
-        // log data
-        // send extensive evaluation to trainer
         
         
     }
     void ShowFeedback(EvaluationResponse eval){
-        JobTrainingManager.instance.WriteOnUi(eval.evaluations[0]);//todo  ->show all info and send to TTS
-        JobTrainingManager.instance.PerformanceLog.TasksData[^1].score= (int)eval.total;
-        JobTrainingManager.instance.PerformanceLog.TasksData[^1].feedbackMessage=eval.evaluations[0];
+
+        JobTrainingManager.instance.WriteOnUi(eval.evaluations[0]);//todo  ->show all info and send to TTS and graphic of evaluation screen
+
+        JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().setFeedback(eval);//logs feedback
+        JobTrainingManager.instance.RemoveEvaluationHandler(ShowFeedback);
 
         CompleteTask();
+        
     }
 
     public override void TaskSetup()
@@ -49,16 +48,17 @@ class FirstDialog:InteractionState{
     {
         JobTrainingManager.instance.PlayDialog("FirstDialogInput",handleTTS);
         JobTrainingManager.instance.WriteOnUi("FirstDialogInput"); // for dynamic first dialogue input from LLM API
-        JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question="FirstDialogInput";
+        //JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question="FirstDialogInput";
          
     }
     public void handleTTS(int secondsNeeded){
-        //set waiting time before change state
+        //set waiting time before change state TODO
+        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded,new AwaitUserUserInput());
     }
     public override void Dismantle()
     {
         // logging first dialog
-        throw new System.NotImplementedException();
+       JobTrainingManager.instance.RemoveTTShandler(handleTTS);
     }
 }
 
@@ -67,7 +67,7 @@ class AwaitUserUserInput : InteractionState
 {
     public override void Dismantle()
     {
-        throw new System.NotImplementedException();
+        JobTrainingManager.instance.RemoveSTThandler(HandleUserSpoke);
     }
 
     public override void Setup()
@@ -82,15 +82,12 @@ class AwaitUserUserInput : InteractionState
         JobTrainingManager.instance.getCurrentTasksFeedbackData().movement=userMovement;
     }
 
-    private void HandleUserSpoke(UserResponseDialog spokenText){//if domenico can output an object from the tts of the same type as those needed by LLM it would make this simpler -> TODO
+    private void HandleUserSpoke(Speech spokenResponse){//if domenico can output an object from the tts of the same type as those needed by LLM it would make this simpler -> TODO
         //evaluation data
-        JobTrainingManager.instance.PerformanceLog.TasksData[^1].addResponse(spokenText.transcript,true);
-        JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.reply=spokenText.transcript;
-        float timeBeforeResponse= (float)spokenText.startListening.Subtract(spokenText.StartedSpeaking).TotalSeconds;
-        float responseTime= (float)spokenText.StartedSpeaking.Subtract(spokenText.EndedSpeaking).TotalSeconds;
-        JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.timing.s_before_action=timeBeforeResponse;
-        JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.timing.s_duration=responseTime;
+        JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().addResponse(spokenResponse.semantic.reply,true);
 
+        JobTrainingManager.instance.getCurrentTasksFeedbackData().speech=spokenResponse ;
+        
 
     }   
 }
@@ -99,7 +96,7 @@ class ClientEndsDialog : InteractionState
 {
     public override void Dismantle()
     {
-        throw new System.NotImplementedException();
+        JobTrainingManager.instance.RemoveLLMCustomerResponse(PLayGeneratedResponse);
     }
 
     public override void Setup()
