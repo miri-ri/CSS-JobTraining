@@ -23,9 +23,9 @@ public class TaskLocateProduct : Task
         
     }
     void ShowFeedback(EvaluationResponse eval){
-        JobTrainingManager.instance.WriteOnUi(eval.description);
-        JobTrainingManager.instance.PerformanceLog.TasksData[^1].score=eval.Score;
-        JobTrainingManager.instance.PerformanceLog.TasksData[^1].feedbackMessage=eval.description;
+        JobTrainingManager.instance.WriteOnUi(eval.evaluations[0]);//todo  ->show all info and send to TTS
+        JobTrainingManager.instance.PerformanceLog.TasksData[^1].score= (int)eval.total;
+        JobTrainingManager.instance.PerformanceLog.TasksData[^1].feedbackMessage=eval.evaluations[0];
 
         CompleteTask();
     }

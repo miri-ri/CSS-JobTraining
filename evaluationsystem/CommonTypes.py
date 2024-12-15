@@ -50,7 +50,7 @@ class MovementBehavior(BaseModel):
 
 class Behavior(BaseModel):
     speech: SpeechBehavior
-    movement: Union[MovementTimingBehavior, None] = None
+    movement: Union[MovementBehavior, None] = None
 
 
 class Evaluation(BaseModel):

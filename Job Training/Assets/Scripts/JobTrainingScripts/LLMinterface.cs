@@ -4,6 +4,7 @@ using System.Collections;
 using Newtonsoft.Json;
 using Unity.VisualScripting;
 using System.Security.Cryptography;
+using System.Collections.Generic;
 
 
 public delegate void OnLLMresponseToUserReady(string response);
@@ -85,8 +86,8 @@ public class LLMinterface : MonoBehaviour
     }
 }
 public class EvaluationResponse{
-    public string description;
-    public int Score;
+    public List<string> evaluations;
+    public float total;
 }
 
 //to json
@@ -118,8 +119,29 @@ public class Timing
 
 public class Movement
 {
-    public float s_before_action { get; set; }
-    public float s_duration { get; set; }
-    public float s_before_action_target { get; set; }
-    public float s_duration_per_unit_target { get; set; }
+    public Positioning positioning;
+    public Timing timing;
 }
+public class Positioning
+{
+    public Position start_pos { get; set; }
+    public Position user_pos { get; set; }
+    public Position target_pos { get; set; }
+    public float ok_radius { get; set; }
+    public Area area { get; set; }
+}
+
+public class Position
+{
+    public float x { get; set; }
+    public float y { get; set; }
+}
+
+public class Area
+{
+    public float w { get; set; }
+    public float h { get; set; }
+}
+
+
+
