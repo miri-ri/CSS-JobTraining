@@ -49,7 +49,7 @@ public class JobTrainingManager:MonoBehaviour{
         ren.material=backG;
     }
     public void PlaySound(){
-        RoomSpeakers.Play();
+        RoomSpeakers?.Play();
     }
 
     public void WriteOnUi(string text){
@@ -78,7 +78,7 @@ public class JobTrainingManager:MonoBehaviour{
 
     public void GetUserDialog(OnSTTReady handler){
         speechTT.RequestComplete+=handler;
-        speechTT.GetUserDialog();
+        speechTT?.GetUserDialog();
     }
     public void RemoveSTThandler(OnSTTReady handler){
         speechTT.RequestComplete-=handler;  
