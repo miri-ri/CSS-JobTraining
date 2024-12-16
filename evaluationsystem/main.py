@@ -9,7 +9,7 @@ from speechToText import stt
 app = FastAPI()
 
 
-
+ 
 
 @app.post("/evaluate/{role}")
 async def evaluate_role( role: CommonTypes.Role, behavior: CommonTypes.Behavior) -> CommonTypes.ComplexEvaluation:

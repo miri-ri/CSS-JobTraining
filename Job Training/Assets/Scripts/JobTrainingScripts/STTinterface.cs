@@ -1,9 +1,13 @@
 using UnityEngine; 
 using UnityEngine.Networking; 
 using System.Collections;
+using System;
+using Newtonsoft.Json;
+
+public delegate void OnSTTReady(Speech response);
+
 public class STTInterface : MonoBehaviour
 {
-    public delegate void OnSTTReady(string response);
     public event OnSTTReady RequestComplete;
     void Start()
     {
@@ -20,8 +24,8 @@ public class STTInterface : MonoBehaviour
         { Debug.LogError(www.error); }
         else
         {
-            Debug.Log(www.downloadHandler.text); 
-            RequestComplete?.Invoke(www.downloadHandler.text);
+            //Debug.Log(www.downloadHandler.text); 
+            RequestComplete?.Invoke(JsonConvert.DeserializeObject<Speech>( www.downloadHandler.text));
         
         }
     }

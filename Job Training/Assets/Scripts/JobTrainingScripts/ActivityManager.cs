@@ -136,6 +136,7 @@ class TaskState : ActivityState
     public override void Setup()
     {
         TaskData taskPerformanceData=new("taskName");
+        
         JobTrainingManager.instance.PerformanceLog.TasksData.Add(taskPerformanceData);
         taskManager.StartTask(new TaskLocateProduct()); // Todo: add task choice input here
         taskManager.onTaskCompleted += CompleteTask; // onTaskCompleted only triggered when no problem appeared
