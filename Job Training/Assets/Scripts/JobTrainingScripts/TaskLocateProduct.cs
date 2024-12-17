@@ -46,8 +46,8 @@ class FirstDialog:InteractionState{
     //play audio from virtual client
     public override void Setup()
     {
-        JobTrainingManager.instance.PlayDialog("FirstDialogInput",handleTTS);
-        JobTrainingManager.instance.WriteOnUi("FirstDialogInput"); // for dynamic first dialogue input from LLM API
+        JobTrainingManager.instance.PlayDialog("Ciao! Can you show me the tomatoes?",handleTTS);
+        JobTrainingManager.instance.WriteOnUi("Ciao! Can you show me the tomatoes?"); // for dynamic first dialogue input from LLM API
         //JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question="FirstDialogInput";
          
     }
@@ -73,6 +73,7 @@ class AwaitUserInput : InteractionState
     public override void Setup()
     {
         Debug.Log("Setting up AwaitUserInputState");
+        JobTrainingManager.instance.ToggleSpeakerButton(true);
         JobTrainingManager.instance.GetUserDialog(HandleUserSpoke);
     }
 

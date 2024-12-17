@@ -19,6 +19,7 @@ public class ActivityManager:MonoBehaviour{
         JobTrainingManager.instance.PerformanceLog = new("testUser");
         stateMachine = new ActivityStateMachine();
         stateMachine.SetState(new ExplanationOfActivity());
+        JobTrainingManager.instance.ToggleSpeakerButton(false);
     }
 
     //this class uses a state machine for the entire activity, and loads tasks
@@ -169,7 +170,7 @@ class TaskCompleteState : ActivityState
     {
         JobTrainingManager.instance.PerformanceLog.TasksData[^1].EndTask();
         JobTrainingManager.instance.WriteOnUi("Do you want to proceed to the next task, take a break or stop the activity?");
-        string userInput = "";// user selection input
+        string userInput = "next";// user selection input
         if(userInput=="next"){
             stateMachine.CompleteState(new TaskState());
         } else if (userInput == "wait"){
