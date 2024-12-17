@@ -81,16 +81,16 @@ class AwaitUserInput : InteractionState
         JobTrainingManager.instance.getCurrentTasksFeedbackData().movement=userMovement;
     }
 
-    private async void HandleUserSpoke(Speech spokenResponse){//if domenico can output an object from the tts of the same type as those needed by LLM it would make this simpler -> TODO
+    private void HandleUserSpoke(Speech spokenResponse){//if domenico can output an object from the tts of the same type as those needed by LLM it would make this simpler -> TODO
         //evaluation data
         
-        Debug.Log("Adding Response");
-        JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().addResponse(spokenResponse.semantic.reply, true);
+        Debug.Log("Trying to add response");
+        var task1 = PerformEvaluation(spokenResponse);
         
         Debug.Log("Getting Feedback Data");
-        JobTrainingManager.instance.getCurrentTasksFeedbackData().speech=spokenResponse ;
+        var task2 = PerformLoggingAsync(spokenResponse);
 
-        // wait for both calls to finish, throw event to change state
+        System.Threading.Tasks.Task.WaitAll(task1, task2);
         
         bool IsResponsePositive = true; // todo: proper adaptation
 
@@ -104,15 +104,27 @@ class AwaitUserInput : InteractionState
 
     }
 
-    private Task PerformEvaluation()
+    private static async System.Threading.Tasks.Task PerformEvaluation(Speech spokenResponse)
     {
-        throw new NotImplementedException();
+        await System.Threading.Tasks.Task.Run(()=>
+        {
+        JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().addResponse(spokenResponse.semantic.reply, true);
+        
+        Debug.Log("Response added");
+        });
+
     }
 
-    private Task PerformLoggingAsync()
+    private static async System.Threading.Tasks.Task PerformLoggingAsync(Speech spokenResponse)
     {
-        throw new NotImplementedException();
-    }   
+        await System.Threading.Tasks.Task.Run(()=>
+        {
+        JobTrainingManager.instance.getCurrentTasksFeedbackData().speech=spokenResponse ;
+        
+        Debug.Log("Feedback Data set");
+        });
+
+    }  
 }
 
 
