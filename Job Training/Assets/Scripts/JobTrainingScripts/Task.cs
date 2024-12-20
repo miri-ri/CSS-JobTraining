@@ -1,3 +1,8 @@
+
+using System;
+using System.Collections;
+using UnityEngine;
+
 public abstract class Task{
     public string Description;//no need to have this here, better to have a enum
     public static InteractionMachine interactionMachine;
@@ -15,7 +20,7 @@ public abstract class Task{
         interactionMachine = InteractionMachine;
         return;
     }
-    public static InteractionMachine GetInteractionMachine(){
+    public InteractionMachine GetInteractionMachine(){
         return interactionMachine;
     }
 
@@ -30,6 +35,7 @@ public class InteractionMachine {
     private InteractionState CurrentState;
 
     public void ChangeState(InteractionState next){
+        Debug.Log($"InteractionMachine: Changing from {CurrentState?.GetType().Name} to {next?.GetType().Name}");
         CurrentState?.Dismantle();
         CurrentState=next;
         CurrentState.Setup();

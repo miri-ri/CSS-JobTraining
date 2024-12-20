@@ -7,7 +7,7 @@ public class TaskLocateProduct : Task
 
     public TaskLocateProduct(){
         if(JobTrainingManager.instance==null){
-            throw new System.Exception("The job training manager isn't instantiated yet");
+            throw new Exception("The job training manager isn't instantiated yet");
         }
     }
     
@@ -29,9 +29,9 @@ public class TaskLocateProduct : Task
         
     }
 
-    public override void TaskSetup()
+    public override void TaskSetup() // maybe making introduction a proper state for consistency
     {//add tts use
-        JobTrainingManager.instance.WriteOnUi("In this task you will have to show the product to the customer."); // maybe replace with Task Description later
+        JobTrainingManager.instance.WriteOnUi("In this task, you will have to show the product to the customer."); // maybe replace with Task Description later
         JobTrainingManager.instance.ChangeFrontWallBackground("PlaceholderMarket");
 
         
@@ -46,14 +46,14 @@ class FirstDialog:InteractionState{
     //play audio from virtual client
     public override void Setup()
     {
-        JobTrainingManager.instance.PlayDialog("FirstDialogInput",handleTTS);
-        JobTrainingManager.instance.WriteOnUi("FirstDialogInput"); // for dynamic first dialogue input from LLM API
+        JobTrainingManager.instance.PlayDialog("Ciao! Can you show me the tomatoes?",handleTTS);
+        JobTrainingManager.instance.WriteOnUi("Ciao! Can you show me the tomatoes?"); // for dynamic first dialogue input from LLM API
         //JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question="FirstDialogInput";
          
     }
     public void handleTTS(int secondsNeeded){
         //set waiting time before change state TODO
-        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded,new AwaitUserUserInput());
+        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded,new AwaitUserInput());
     }
     public override void Dismantle()
     {
@@ -63,7 +63,7 @@ class FirstDialog:InteractionState{
 }
 
 // add eventListener For UserPosition and Audio user response, on rsponse arrival then send response of user to the llm
-class AwaitUserUserInput : InteractionState
+class AwaitUserInput : InteractionState
 {
     public override void Dismantle()
     {
@@ -72,9 +72,9 @@ class AwaitUserUserInput : InteractionState
 
     public override void Setup()
     {
+        Debug.Log("Setting up AwaitUserInputState");
+        JobTrainingManager.instance.ToggleSpeakerButton(true);
         JobTrainingManager.instance.GetUserDialog(HandleUserSpoke);
-        //UserInput.OnUserSpoke += HandleUserSpoke;
-        //UserInput.OnUserMoved += HandleUserMoved; 
     }
 
     private void HandleUserMoved(Movement userMovement)
@@ -84,15 +84,53 @@ class AwaitUserUserInput : InteractionState
 
     private void HandleUserSpoke(Speech spokenResponse){//if domenico can output an object from the tts of the same type as those needed by LLM it would make this simpler -> TODO
         //evaluation data
-        JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().addResponse(spokenResponse.semantic.reply,true);
+        
+        Debug.Log("Trying to add response");
+        var task1 = PerformEvaluation(spokenResponse);
+        
+        Debug.Log("Getting Feedback Data");
+        var task2 = PerformLoggingAsync(spokenResponse);
 
+        System.Threading.Tasks.Task.WaitAll(task1, task2);
+        
+        bool IsResponsePositive = true; // todo: proper adaptation
+
+        if(IsResponsePositive) {
+            
+            Debug.Log("Positive response, switching to the next state");
+            JobTrainingManager.instance.GetTaskManager().CurrentTask.GetInteractionMachine().ChangeState(new PositiveTurnout());
+        } else {
+            JobTrainingManager.instance.GetTaskManager().CurrentTask.GetInteractionMachine().ChangeState(new NegativeTurnout());
+        }
+
+    }
+
+    private static async System.Threading.Tasks.Task PerformEvaluation(Speech spokenResponse)
+    {
+        await System.Threading.Tasks.Task.Run(()=>
+        {
+        JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().addResponse(spokenResponse.semantic.reply, true);
+        
+        Debug.Log("Response added");
+        });
+
+    }
+
+    private static async System.Threading.Tasks.Task PerformLoggingAsync(Speech spokenResponse)
+    {
+        await System.Threading.Tasks.Task.Run(()=>
+        {
         JobTrainingManager.instance.getCurrentTasksFeedbackData().speech=spokenResponse ;
         
+        Debug.Log("Feedback Data set");
+        });
 
-    }   
+    }  
 }
+
+
 //listener for response from llm (is response acceptable and/or understood) and check if user is in right position
-class ClientEndsDialog : InteractionState
+class PositiveTurnout : InteractionState
 {
     public override void Dismantle()
     {
@@ -104,16 +142,54 @@ class ClientEndsDialog : InteractionState
         JobTrainingManager.instance.GenerateLLMCustomerResponse("last transcript",PLayGeneratedResponse);
     }
     public void PLayGeneratedResponse(string reply){
-        JobTrainingManager.instance.PlayDialog("FirstDialogInput",handleTTS);
-        JobTrainingManager.instance.WriteOnUi("FirstDialogInput"); // for dynamic first dialogue input from LLM API
+        JobTrainingManager.instance.PlayDialog("Thanks for your help!",handleTTS);
+        JobTrainingManager.instance.WriteOnUi("Thanks for your help!"); // for dynamic first dialogue input from LLM API
         JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question="FirstDialogInput";
         
     }
     public void handleTTS(int secondsNeeded){
         //set waiting time before change state
+        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded, new FeedbackState());
     }
 }
 
+
+class NegativeTurnout : InteractionState
+{
+    public override void Setup(){
+        JobTrainingManager.instance.GenerateLLMCustomerResponse("last transcript",PlayGeneratedResponse);
+    }
+
+    public override void Dismantle(){
+        JobTrainingManager.instance.RemoveLLMCustomerResponse(PlayGeneratedResponse);
+    }
+    public void PlayGeneratedResponse(string reply){
+        JobTrainingManager.instance.PlayDialog("I didn't quite understand, can you try again?",handleTTS);
+        JobTrainingManager.instance.WriteOnUi("I didn't quite understand, can you try again?"); 
+        JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question="FirstDialogInput";
+        
+    }
+    public void handleTTS(int secondsNeeded){
+        //set waiting time before change state
+        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded, new AwaitUserInput());
+    }
+}
+
+class FeedbackState : InteractionState
+{
+    public override void Setup(){
+        JobTrainingManager.instance.WriteOnUi("Well done! Task completed.");
+        JobTrainingManager.instance.PlayDialog("WellDone", handleTTS);
+    }
+
+    public override void Dismantle(){
+        JobTrainingManager.instance.RemoveTTShandler(handleTTS);
+    }
+
+    public void handleTTS(int secondsNeeded){
+        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded, null);
+    }
+}
 
 
 

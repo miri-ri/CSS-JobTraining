@@ -41,6 +41,8 @@ public class TaskManagerScript : MonoBehaviour
 
     }
     public void ChangeStateOnTimer(int sec, InteractionState next){
+        
+        Debug.Log($"Waiting {sec} seconds before going to {next}");
         StartCoroutine(CompleteStateAfterWait(sec,next));
     }
     IEnumerator CompleteStateAfterWait(int sec, InteractionState next){

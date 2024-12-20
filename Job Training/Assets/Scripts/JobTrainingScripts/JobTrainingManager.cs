@@ -35,6 +35,7 @@ public class JobTrainingManager:MonoBehaviour{
     [SerializeField] TextCloud TextCloudUI;
     [SerializeField] FeedbackUI FeedbackUIRef;
     [SerializeField] AudioSource RoomSpeakers;
+    [SerializeField] GameObject SpeakerButton;
 
    // private GameObject txtCloud;
 
@@ -48,8 +49,15 @@ public class JobTrainingManager:MonoBehaviour{
         }
         ren.material=backG;
     }
+
+    public void ToggleSpeakerButton(bool show){
+        SpeakerButton.SetActive(show);
+
+    }
     public void PlaySound(){
-        RoomSpeakers.Play();
+        if(RoomSpeakers != null){
+            RoomSpeakers.Play();
+        }
     }
 
     public void WriteOnUi(string text){
@@ -78,7 +86,7 @@ public class JobTrainingManager:MonoBehaviour{
 
     public void GetUserDialog(OnSTTReady handler){
         speechTT.RequestComplete+=handler;
-        speechTT.GetUserDialog();
+        speechTT?.GetUserDialog();
     }
     public void RemoveSTThandler(OnSTTReady handler){
         speechTT.RequestComplete-=handler;  

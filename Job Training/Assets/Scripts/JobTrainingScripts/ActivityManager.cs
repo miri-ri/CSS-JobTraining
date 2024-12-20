@@ -16,9 +16,10 @@ public class ActivityManager:MonoBehaviour{
         if(TaskManager == null){
             throw new ArgumentNullException(nameof(TaskManager), "TaskManager not asigned!");
         }
-        JobTrainingManager.instance.PerformanceLog =new("testUser");
+        JobTrainingManager.instance.PerformanceLog = new("testUser");
         stateMachine = new ActivityStateMachine();
         stateMachine.SetState(new ExplanationOfActivity());
+        JobTrainingManager.instance.ToggleSpeakerButton(false);
     }
 
     //this class uses a state machine for the entire activity, and loads tasks
@@ -46,6 +47,8 @@ public class ActivityStateMachine {
     private ActivityState currentState;
 
     public void SetState(ActivityState state){
+        
+        Debug.Log($"StateMachine: Changing from {currentState?.GetType().Name} to {state?.GetType().Name}");
         currentState?.Dismantle();
         currentState = state;
         currentState?.Setup();
@@ -55,6 +58,7 @@ public class ActivityStateMachine {
     {
         if (delaySeconds > 0)
         {
+            Debug.Log($"StateMachine: Changing states in {delaySeconds} seconds.");
             JobTrainingManager.instance.GetActivityManager()
                 .StartCoroutine(CompleteStateAfterWait(delaySeconds, nextState));
         }
@@ -86,7 +90,7 @@ public class ActivityStateMachine {
         }
     }
 
-    public IEnumerator CompleteStateAfterWait(int waitingSeconds, ActivityState nextState = null){
+    IEnumerator CompleteStateAfterWait(int waitingSeconds, ActivityState nextState = null){
         Debug.Log($"Waiting for {waitingSeconds} seconds before changing state.");
         yield return new WaitForSeconds(waitingSeconds);
         if(nextState==null){SetNextState();} else {SetNextState(nextState);}
@@ -114,14 +118,14 @@ class ExplanationOfActivity : ActivityState
 {
     public override void Setup()
     {
-        // Todo: Show intro UI
-        JobTrainingManager.instance.WriteOnUi("testtesttesttesttest");
+        // Show intro UI
+        JobTrainingManager.instance.WriteOnUi("Welcome to the Job Training! In this activity you will be practice different tasks that will help you learn to work in a supermarket.");
 
-        // Todo: Start background audio
+        // Start background audio
         JobTrainingManager.instance.PlaySound();
         // await trainer task selection
         
-        stateMachine.CompleteState(null, 5);
+        stateMachine.CompleteState(null, 7);
     }
 
 
@@ -136,6 +140,7 @@ class TaskState : ActivityState
     public override void Setup()
     {
         TaskData taskPerformanceData=new("taskName");
+        Debug.Log("Tast state started");
         
         JobTrainingManager.instance.PerformanceLog.TasksData.Add(taskPerformanceData);
         taskManager.StartTask(new TaskLocateProduct()); // Todo: add task choice input here
@@ -165,7 +170,7 @@ class TaskCompleteState : ActivityState
     {
         JobTrainingManager.instance.PerformanceLog.TasksData[^1].EndTask();
         JobTrainingManager.instance.WriteOnUi("Do you want to proceed to the next task, take a break or stop the activity?");
-        string userInput = "";// user selection input
+        string userInput = "next";// user selection input
         if(userInput=="next"){
             stateMachine.CompleteState(new TaskState());
         } else if (userInput == "wait"){
