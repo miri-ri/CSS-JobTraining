@@ -68,9 +68,9 @@ class MovementTimingEvaluator:
             if(score < 3):
                 description = "Devi migliorare di molto la tua velocità di movimento"
             if(meters_per_second < behavior.timing.s_duration_per_unit_target):
-                description += " (Serve diminuire)"
-            else:
                 description += " (Serve aumentare)"
+            else:
+                description += " (Serve diminuire)"
 
         
         return CommonTypes.Evaluation(score = score, description = description)

@@ -60,8 +60,4 @@ class Evaluation(BaseModel):
 class ComplexEvaluation(BaseModel):
     total: float
     evaluations: dict[str, Evaluation] = {}
-
-class GeneratedText(BaseModel):
-    s_before_action: float
-    s_duration: float
-    text: str
+ 

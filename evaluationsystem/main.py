@@ -1,15 +1,21 @@
 import CommonTypes
-# import Evaluators.LlmEvaluator as llme
+import Evaluators.LlmEvaluator as llme
 import Evaluators.TimingEvaluator as te
 import Evaluators.PositioningEvaluator as pe
+
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, BackgroundTasks
+
 
 from speechToText import stt
 
-app = FastAPI()
 
+app_stt = stt.Stt()
 
  
+
+app = FastAPI()
+
 
 @app.post("/evaluate/{role}")
 async def evaluate_role( role: CommonTypes.Role, behavior: CommonTypes.Behavior) -> CommonTypes.ComplexEvaluation:
@@ -18,7 +24,7 @@ async def evaluate_role( role: CommonTypes.Role, behavior: CommonTypes.Behavior)
     evaluations:dict[str, CommonTypes.Evaluation] = {}
 
     if(role is CommonTypes.Role.assistant):
-        # evaluations["speech.semantic"] = llme.LlmEvaluator.assistant(behavior.speech.semantic)
+        evaluations["speech.semantic"] = llme.LlmEvaluator.assistant(behavior.speech.semantic)
 
         evaluations["speech.timing_before"] = te.TimingBeforeEvaluator.evaluate_before(behavior.speech.timing)
 
@@ -37,7 +43,6 @@ async def evaluate_role( role: CommonTypes.Role, behavior: CommonTypes.Behavior)
     return CommonTypes.ComplexEvaluation(total = scoresum / len(evaluations), evaluations = evaluations)
 
 
-generated_text: CommonTypes.GeneratedText = CommonTypes.GeneratedText(s_before_action = -1, s_duration = -1, text="")
 
 def generateText() -> None:
     global generated_text
@@ -53,20 +58,31 @@ def generateText() -> None:
 
 @app.get("/start-stt")
 async def startStt(background_tasks: BackgroundTasks) -> str:
-    global generated_text
+    global app_stt
 
-    generated_text = CommonTypes.GeneratedText(s_before_action = -1, s_duration = -1, text="")
+    app_stt.start()
 
-    background_tasks.add_task(generateText)
-
-    return "Ok"
+    return "Finished"
 
 
 
 @app.get("/get-stt")
-async def getStt() ->  CommonTypes.GeneratedText:
-    global generated_text
-    return generated_text
+async def getStt() ->  CommonTypes.SpeechBehavior:
+    global app_stt 
+
+    app_stt.analyze()
+ 
+
+    return CommonTypes.SpeechBehavior(
+        semantic= CommonTypes.SemanticBehavior(
+            question="", 
+            reply=app_stt.text
+        ),
+        timing= CommonTypes.SpeechTimingBehavior(
+            s_before_action = app_stt.s_before_start,
+            s_duration = app_stt.s_duration
+        )
+    ) 
 
 
     
