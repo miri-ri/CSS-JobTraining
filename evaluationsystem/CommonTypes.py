@@ -57,6 +57,11 @@ class Evaluation(BaseModel):
     score: float
     description: Union[str, None] = None
 
+class Truth(BaseModel):
+    value: bool
+    score: Union[float, None] = None
+    description: Union[str, None] = None
+
 class ComplexEvaluation(BaseModel):
     total: float
     evaluations: dict[str, Evaluation] = {}

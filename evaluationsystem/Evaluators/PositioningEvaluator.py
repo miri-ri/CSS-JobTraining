@@ -1,4 +1,4 @@
-from .utilities import *
+from utilities import *
 import CommonTypes
 class PositioningEvaluator:
 

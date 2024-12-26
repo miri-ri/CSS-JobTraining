@@ -3,28 +3,38 @@ import Evaluators.LlmEvaluator as llme
 import Evaluators.TimingEvaluator as te
 import Evaluators.PositioningEvaluator as pe
 
+from llama_cpp import Llama
+
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, BackgroundTasks
 
 
-from speechToText import stt
+from speechToText import stt, willing
 
 
 app_stt = stt.Stt()
+ 
+LLM =  Llama(verbose=False, model_path="model.gguf", chat_format="chatml") 
 
  
 
 app = FastAPI()
 
+@app.get("/willing")
+async def willing_response() -> CommonTypes.Truth:
+    global LLM, app_stt
+    willChecker = willing.Willing(LLM, app_stt)
+    return willChecker.evaluate()
 
+#NOTA IMP: forse con async il sistema rimane in grado di rispondere AD ATLTRE COSE! PER VEDERE STATO DEL DISCORSO!
 @app.post("/evaluate/{role}")
 async def evaluate_role( role: CommonTypes.Role, behavior: CommonTypes.Behavior) -> CommonTypes.ComplexEvaluation:
-
+    global LLM
 
     evaluations:dict[str, CommonTypes.Evaluation] = {}
 
     if(role is CommonTypes.Role.assistant):
-        evaluations["speech.semantic"] = llme.LlmEvaluator.assistant(behavior.speech.semantic)
+        evaluations["speech.semantic"] = llme.LlmEvaluator.assistant(LLM, behavior.speech.semantic)
 
         evaluations["speech.timing_before"] = te.TimingBeforeEvaluator.evaluate_before(behavior.speech.timing)
 
@@ -43,18 +53,12 @@ async def evaluate_role( role: CommonTypes.Role, behavior: CommonTypes.Behavior)
     return CommonTypes.ComplexEvaluation(total = scoresum / len(evaluations), evaluations = evaluations)
 
 
-
-def generateText() -> None:
-    global generated_text
-    stt_data = stt.stt()
-
-
-    generated_text =  CommonTypes.GeneratedText(
-        s_before_action= stt_data["s_before"],
-        s_duration= stt_data["s_duration"],
-        text=stt_data["text"]
-    )
- 
+##THIS function does not work. It should return a the status of stt, but the stt is still blocking.
+#That's better because we avoid conflicts, but it can be improved for giving the user more feedback
+# @app.get("/get-stt-status")
+# async def sttStatus() -> str:
+#     global app_stt
+#     return app_stt.status
 
 @app.get("/start-stt")
 async def startStt(background_tasks: BackgroundTasks) -> str:

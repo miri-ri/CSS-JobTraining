@@ -1,5 +1,5 @@
 import CommonTypes
-from .utilities import *
+from utilities import *
 
 
 class TimingBeforeEvaluator:

@@ -22,6 +22,8 @@ class Stt:
     s_TIMEOUT_BEFORE_SPEAKING = 8
     s_TIMEOUT_INTERRUPTING_SPEAKING = 2
 
+    status = "off"
+
     def __init__(self):
         
         # Initialize Vosk Model
@@ -41,10 +43,52 @@ class Stt:
         self.text = ""
         
         self.recording = b''
+
+        self.status = "ready"
         
         print("Ready!")
 
+    def listen_first_non_empty(self) -> str:
+        
+        self.status = "starting"
+        self.p = pyaudio.PyAudio()
+        
+        stream = self.p.open(
+            format=self.FORMAT, 
+            channels=self.CHANNELS, 
+            rate=self.RATE, 
+            input=True, 
+            frames_per_buffer=self.FRAMES_PER_BUFFER
+        )
+
+        all_empty = True
+        print("Listening...")
+        
+        self.status = "listening"
+        while True:
+            chunk = stream.read(self.RECOGNITION_FRAME, exception_on_overflow=False)
+             
+
+            # Perform transcription using Vosk
+            if self.slow_recognizer.AcceptWaveform(chunk):
+                result = self.slow_recognizer.Result()
+                value = json.loads(result)["text"]
+
+                print(value) 
+
+                if len(value) > 0:
+                    all_empty = False
+                
+                    break
+        
+        self.status = "ready"
+        return value
+
+
+
+
     def start(self):
+        self.status = "starting"
                 
         # PyAudio Setup
         self.p = pyaudio.PyAudio()
@@ -70,6 +114,8 @@ class Stt:
         start_time = time.time()
 
         print("Listening...")
+        
+        self.status = "listening"
         while True:
 
             chunk = stream.read(self.RECOGNITION_FRAME, exception_on_overflow=False)
@@ -103,6 +149,8 @@ class Stt:
                 break
         
         print("Stop...")
+        
+        self.status = "stopped"
 
         
         # wavefile = wave.open("original.wav", "wb")
@@ -118,6 +166,7 @@ class Stt:
 
     def analyze(self):
         
+        self.status = "elaborating"
         self.text = ""
 
         print("copying data...")
@@ -167,6 +216,8 @@ class Stt:
             print(text_sure+" "+unsure)
         
         self.text = text_sure+" "+unsure
+        
+        self.status = "ready"
             
             
         
@@ -186,9 +237,11 @@ class Stt:
 if __name__ == '__main__':
     stt = Stt()
 
-    stt.start()
+    print(stt.listen_first_non_empty())
 
-    stt.analyze()
+    # stt.start()
+
+    # stt.analyze()
 
         
 
