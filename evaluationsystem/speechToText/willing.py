@@ -46,7 +46,7 @@ class Willing:
 def check_truth(reply):
     reply = reply.upper()
     positive = ["SÌ", "SI", "OK", "OKAY", "OKEY", "VA", "VÀ", "CERT", "SENZA DUBBIO", "ADESSO", "SUBITO"]
-    doubtful = ["FORSE", "CRED", "PENS", "SAPREI"]
+    doubtful = ["FORSE", "CRED", "PENS", "SAPREI", "SO"]
     negative = ["NO", "IMPOSSIBILE" ]
  
 
