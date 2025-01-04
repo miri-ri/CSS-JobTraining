@@ -7,49 +7,7 @@ public class DemoTestApi :MonoBehaviour{
     
 
     void Start(){
-        DataForEvaluation test=new();
-    
-       test = new DataForEvaluation
-        {
-            speech = new Speech
-            {
-                semantic = new Semantic
-                {
-                    question = "string",
-                    reply = "string"
-                },
-                timing = new Timing
-                {
-                    s_before_action = 0,
-                    s_duration = 0,
-                    s_before_action_target = 0.2f,
-                    s_duration_per_unit_target = 4.75f
-                }
-            },
-            movement = new Movement
-            {
-                positioning = new Positioning
-                {
-                    start_pos = new Position { x = 0, y = 0 },
-                    user_pos = new Position { x = 0, y = 0 },
-                    target_pos = new Position { x = 0, y = 0 },
-                    ok_radius = 1,
-                    area = new Area { w = 2, h = 2 }
-                },
-                timing = new Timing
-                {
-                    s_before_action = 0,
-                    s_duration = 0,
-                    s_before_action_target = 0,
-                    s_duration_per_unit_target = 0.9625f
-                }
-            }
-        };
-        
-        // Serialize the object to JSON
-        var jsonString = Newtonsoft.Json.Linq.JObject.FromObject(test);
-        Debug.Log(jsonString.ToString());
-    callLLMevaluate(test);  
+       
   }
   
 

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -11,14 +12,23 @@ public class JobTrainingManager:MonoBehaviour{
     public LLMinterface LLM{get;private set;}
     public STTInterface speechTT{get;private set;}
     public TTSInterface TTS{get; private set;}
-   
+    public List<AreaTriggerScript> TriggerableAreas;
+
     void Awake(){
         instance=this;
+        TriggerableAreas=new();
         FeedbackUIRef.HideFeedbackUI(); 
+
         speechTT=gameObject.AddComponent<STTInterface>();
         LLM=gameObject.AddComponent<LLMinterface>();
         TTS=gameObject.AddComponent<TTSInterface>();
+
+        HideMicrophoneFeedback();
+        speechTT.ListeningComplete+=HideMicrophoneFeedback;
+
     }
+    
+    //used to show on the wall that the system is actively listening to the user speech
 
     public TaskManagerScript GetTaskManager(){
         return TaskManager;
@@ -36,11 +46,9 @@ public class JobTrainingManager:MonoBehaviour{
     [SerializeField] FeedbackUI FeedbackUIRef;
     [SerializeField] AudioSource RoomSpeakers;
     [SerializeField] GameObject SpeakerButton;
-
-   // private GameObject txtCloud;
+    public PerformanceLog PerformanceLog;
 
     //here go all the functions that act on the scene, change background, change audio, etch
-    public PerformanceLog PerformanceLog;
     public void ChangeFrontWallBackground(string bkgName){
         Renderer ren= FrontWall.GetComponent<Renderer>();
         Material backG=Resources.Load<Material>("Backgrounds/"+bkgName);
@@ -54,6 +62,14 @@ public class JobTrainingManager:MonoBehaviour{
         SpeakerButton.SetActive(show);
 
     }
+    void ShowMicrophoneFeedback(){
+        ToggleSpeakerButton(true);
+    }   
+
+    void HideMicrophoneFeedback(){
+        ToggleSpeakerButton(false);
+    }
+
     public void PlaySound(){
         if(RoomSpeakers != null){
             RoomSpeakers.Play();
@@ -69,31 +85,42 @@ public class JobTrainingManager:MonoBehaviour{
     public FeedbackUI GetFeedbackUI(){
         return FeedbackUIRef;
     }
-    
+    public void SubscribeToAreaTrigger(string areaName, OnUserEnteredArea handler){
+        foreach (var item in TriggerableAreas){
+            if(item.AreaName==areaName){
+                item.UserIn+=handler;
+                return;
+            }
+        }
+        Debug.LogError("no area called '"+areaName+"' found");
+    }
     public void StopJobTraining(){
         // stop audio
     }
-      public void PlayDialog(string textToTTS, OnTTSPlaying handler){
+    
+  
+//-------TextToSpeech calls 
+    public void PlayDialog(string textToTTS, OnTTSPlaying handler){
         TTS.TTsPlaying+=handler;
         TTS.PlayAudio(textToTTS);
     }
     public void RemoveTTShandler(OnTTSPlaying handler){
         TTS.TTsPlaying-=handler;
-       
     }
   
 
-
+//-------SpeachToText calls
     public void GetUserDialog(OnSTTReady handler){
         speechTT.RequestComplete+=handler;
-        speechTT?.GetUserDialog();
+        ShowMicrophoneFeedback();
+        speechTT.StartTTSListening();
     }
     public void RemoveSTThandler(OnSTTReady handler){
         speechTT.RequestComplete-=handler;  
     }
 
 
-
+//-------LLM calls
     public void GetEvaluation(DataForEvaluation dataForEvaluation,  OnEvaluationReady handler)
     {
         LLM.EvaluationComplete+=handler;

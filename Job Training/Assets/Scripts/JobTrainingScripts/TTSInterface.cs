@@ -3,6 +3,7 @@
 using UnityEngine; 
 using UnityEngine.Networking; 
 using System.Collections;
+using System.Linq;
 public class TTSInterface : MonoBehaviour
 {
     public event OnTTSPlaying TTsPlaying;
@@ -17,9 +18,14 @@ public class TTSInterface : MonoBehaviour
         { Debug.LogError(www.error); }
         else
         { 
-            TTsPlaying?.Invoke(10);//find if we can get lenght from api, otherwise just count n of words and approximate;
+            TTsPlaying?.Invoke(ApproximateTimeToSpeach(www.downloadHandler.text));//find if we can get lenght from api, otherwise just count n of words and approximate;
             Debug.Log(www.downloadHandler.text);
         }
     }
+    public float ApproximateTimeToSpeach(string text){
+        int words=text.Split().Length;
+        float secondsPerWord=0.2f;
+        return words*secondsPerWord;
+    }
 }
-    public delegate void OnTTSPlaying(int lenghtInSeconds);
+    public delegate void OnTTSPlaying(float lenghtInSeconds);

@@ -40,12 +40,12 @@ public class TaskManagerScript : MonoBehaviour
     void handleTTS(int sec){
 
     }
-    public void ChangeStateOnTimer(int sec, InteractionState next){
+    public void ChangeStateOnTimer(float sec, InteractionState next){
         
         Debug.Log($"Waiting {sec} seconds before going to {next}");
         StartCoroutine(CompleteStateAfterWait(sec,next));
     }
-    IEnumerator CompleteStateAfterWait(int sec, InteractionState next){
+    IEnumerator CompleteStateAfterWait(float sec, InteractionState next){
         yield return new WaitForSeconds(sec);
         Task.interactionMachine.ChangeState(next);
     }

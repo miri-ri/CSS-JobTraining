@@ -45,7 +45,6 @@ public class LLMinterface : MonoBehaviour
         }
     }
 
-    //!!!!!works with stub!!! however adapt and check with the correct api
     public void evaluateDialog(DataForEvaluation dataTask){//give transcript of conversation
       
         var jsonData=Newtonsoft.Json.Linq.JObject.FromObject(dataTask);
@@ -56,12 +55,12 @@ public class LLMinterface : MonoBehaviour
     }
     //need api
     public void evaluateSystemAnswer(string answer){//interaction user - system
-        StartCoroutine(GetData("http://localhost:8000/",true));
+        StartCoroutine(GetData("http://localhost:8000/willing",true));
 
     }
     //need api
     public void PrepareResponseToUser(string lastUserResponse){
-        StartCoroutine(GetData("http://localhost:9000/respond?",false));
+        StartCoroutine(GetData("http://localhost:8000/respond?",false));
     }
     IEnumerator GetData(string url, bool systemic)
     {
@@ -79,9 +78,9 @@ public class LLMinterface : MonoBehaviour
 
                 ResponseReady?.Invoke(www.downloadHandler.text);
             }
-            Debug.Log(www.downloadHandler.text); // Or retrieve results as binary
+            Debug.Log(www.downloadHandler.text); 
             
-            //launch event and attach text from api
+            
         }
     }
 }
@@ -111,7 +110,7 @@ public class Semantic
 
 public class Timing
 {
-    public float s_before_action { get; set; }
+    public float s_before_action { get; set; }//how, the user is never really static with the kinect, would need a complex way to check it
     public float s_duration { get; set; }
     public float s_before_action_target { get; set; }
     public float s_duration_per_unit_target { get; set; }

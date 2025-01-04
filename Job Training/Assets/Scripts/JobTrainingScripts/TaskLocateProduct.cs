@@ -51,7 +51,7 @@ class FirstDialog:InteractionState{
         //JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question="FirstDialogInput";
          
     }
-    public void handleTTS(int secondsNeeded){
+    public void handleTTS(float secondsNeeded){
         //set waiting time before change state TODO
         JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded,new AwaitUserInput());
     }
@@ -69,14 +69,29 @@ class AwaitUserInput : InteractionState
     {
         JobTrainingManager.instance.RemoveSTThandler(HandleUserSpoke);
     }
-
+    private Movement actionForFeedBack;
+    private DateTime startMovement;
     public override void Setup()
     {
         Debug.Log("Setting up AwaitUserInputState");
+        actionForFeedBack=new();
+        startMovement=DateTime.Now;
         JobTrainingManager.instance.ToggleSpeakerButton(true);
         JobTrainingManager.instance.GetUserDialog(HandleUserSpoke);
+        JobTrainingManager.instance.SubscribeToAreaTrigger("locateTask",HandleUserInTarget);
     }
+    public void HandleUserInTarget(Vector2 userPosition, Vector2 targetPosition, DateTime arrival){
+        actionForFeedBack.positioning.user_pos.x=userPosition.x;
+        actionForFeedBack.positioning.user_pos.y=userPosition.y;
 
+        actionForFeedBack.positioning.target_pos.x=targetPosition.x;
+        actionForFeedBack.positioning.target_pos.y=targetPosition.y;
+        
+        actionForFeedBack.timing.s_before_action=0;
+        actionForFeedBack.timing.s_duration=arrival.Subtract(startMovement).Seconds;
+
+
+    }
     private void HandleUserMoved(Movement userMovement)
     {
         JobTrainingManager.instance.getCurrentTasksFeedbackData().movement=userMovement;
@@ -147,7 +162,7 @@ class PositiveTurnout : InteractionState
         JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question="FirstDialogInput";
         
     }
-    public void handleTTS(int secondsNeeded){
+    public void handleTTS(float secondsNeeded){
         //set waiting time before change state
         JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded, new FeedbackState());
     }
@@ -169,7 +184,7 @@ class NegativeTurnout : InteractionState
         JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question="FirstDialogInput";
         
     }
-    public void handleTTS(int secondsNeeded){
+    public void handleTTS(float secondsNeeded){
         //set waiting time before change state
         JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded, new AwaitUserInput());
     }
@@ -186,7 +201,7 @@ class FeedbackState : InteractionState
         JobTrainingManager.instance.RemoveTTShandler(handleTTS);
     }
 
-    public void handleTTS(int secondsNeeded){
+    public void handleTTS(float secondsNeeded){
         JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded, null);
     }
 }
