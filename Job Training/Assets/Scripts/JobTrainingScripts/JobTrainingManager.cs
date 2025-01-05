@@ -57,22 +57,16 @@ public class JobTrainingManager:MonoBehaviour{
         }
         ren.material=backG;
     }
-
-    public void ToggleSpeakerButton(bool show){
-        SpeakerButton.SetActive(show);
-
-    }
     void ShowMicrophoneFeedback(){
-        ToggleSpeakerButton(true);
+        SpeakerButton.GetComponent<Renderer>().enabled=true;
     }   
 
     void HideMicrophoneFeedback(){
-        ToggleSpeakerButton(false);
+        SpeakerButton.GetComponent<Renderer>().enabled=false;
     }
-
     public void PlaySound(){
         if(RoomSpeakers != null){
-            RoomSpeakers.Play();
+            RoomSpeakers.PlayOneShot((AudioClip)Resources.Load("supermarket-17823"));;
         }
     }
 
@@ -102,6 +96,7 @@ public class JobTrainingManager:MonoBehaviour{
 //-------TextToSpeech calls 
     public void PlayDialog(string textToTTS, OnTTSPlaying handler){
         TTS.TTsPlaying+=handler;
+        Debug.Log("playing voice "+textToTTS);
         TTS.PlayAudio(textToTTS);
     }
     public void RemoveTTShandler(OnTTSPlaying handler){
@@ -111,6 +106,7 @@ public class JobTrainingManager:MonoBehaviour{
 
 //-------SpeachToText calls
     public void GetUserDialog(OnSTTReady handler){
+        Debug.Log("getting text from user voice");
         speechTT.RequestComplete+=handler;
         ShowMicrophoneFeedback();
         speechTT.StartTTSListening();
@@ -123,6 +119,7 @@ public class JobTrainingManager:MonoBehaviour{
 //-------LLM calls
     public void GetEvaluation(DataForEvaluation dataForEvaluation,  OnEvaluationReady handler)
     {
+        Debug.Log("getting evaluation");
         LLM.EvaluationComplete+=handler;
         LLM.evaluateDialog(dataForEvaluation);
     }  
@@ -134,6 +131,8 @@ public class JobTrainingManager:MonoBehaviour{
         return TaskManager.CurrentTask.dataForEvaluation;
     }
     public void GenerateLLMCustomerResponse(string transcript, OnLLMresponseToUserReady handler){
+                Debug.Log("generating response");
+
         LLM.ResponseReady+=handler;
         LLM.PrepareResponseToUser(transcript);
     }

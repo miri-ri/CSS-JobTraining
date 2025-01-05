@@ -29,10 +29,10 @@ public class STTInterface : MonoBehaviour
         else
         {
             //Debug.Log(www.downloadHandler.text); 
-            if(www.downloadHandler.text=="Finished"){
                 ListeningComplete.Invoke();
+                Debug.Log("stopped listening to user, retrieving transcript");
                 GetUserDialog();
-            }
+            
             
         
         }
@@ -45,7 +45,7 @@ public class STTInterface : MonoBehaviour
         { Debug.LogError(www.error); }
         else
         {
-            //Debug.Log(www.downloadHandler.text); 
+            Debug.Log(www.downloadHandler.text); 
             
             RequestComplete?.Invoke(JsonConvert.DeserializeObject<Speech>( www.downloadHandler.text));
         

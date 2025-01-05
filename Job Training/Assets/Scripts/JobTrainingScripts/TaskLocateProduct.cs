@@ -76,9 +76,8 @@ class AwaitUserInput : InteractionState
         Debug.Log("Setting up AwaitUserInputState");
         actionForFeedBack=new();
         startMovement=DateTime.Now;
-        JobTrainingManager.instance.ToggleSpeakerButton(true);
         JobTrainingManager.instance.GetUserDialog(HandleUserSpoke);
-        JobTrainingManager.instance.SubscribeToAreaTrigger("locateTask",HandleUserInTarget);
+        //JobTrainingManager.instance.SubscribeToAreaTrigger("locateTask",HandleUserInTarget);
     }
     public void HandleUserInTarget(Vector2 userPosition, Vector2 targetPosition, DateTime arrival){
         actionForFeedBack.positioning.user_pos.x=userPosition.x;
@@ -97,16 +96,19 @@ class AwaitUserInput : InteractionState
         JobTrainingManager.instance.getCurrentTasksFeedbackData().movement=userMovement;
     }
 
-    private void HandleUserSpoke(Speech spokenResponse){//if domenico can output an object from the tts of the same type as those needed by LLM it would make this simpler -> TODO
-        //evaluation data
+    public void HandleUserSpoke(Speech spokenResponse){
         
         Debug.Log("Trying to add response");
-        var task1 = PerformEvaluation(spokenResponse);
+        //var task1 = PerformEvaluation(spokenResponse);
+        JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().addResponse(spokenResponse.semantic.reply, true);
         
+        Debug.Log("Response added");
         Debug.Log("Getting Feedback Data");
-        var task2 = PerformLoggingAsync(spokenResponse);
-
-        System.Threading.Tasks.Task.WaitAll(task1, task2);
+        //var task2 = PerformLoggingAsync(spokenResponse);
+        JobTrainingManager.instance.getCurrentTasksFeedbackData().speech=spokenResponse ;
+        
+        Debug.Log("Feedback Data set");
+       // System.Threading.Tasks.Task.WaitAll(task1, task2);
         
         bool IsResponsePositive = true; // todo: proper adaptation
 
@@ -117,30 +119,7 @@ class AwaitUserInput : InteractionState
         } else {
             JobTrainingManager.instance.GetTaskManager().CurrentTask.GetInteractionMachine().ChangeState(new NegativeTurnout());
         }
-
     }
-
-    private static async System.Threading.Tasks.Task PerformEvaluation(Speech spokenResponse)
-    {
-        await System.Threading.Tasks.Task.Run(()=>
-        {
-        JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().addResponse(spokenResponse.semantic.reply, true);
-        
-        Debug.Log("Response added");
-        });
-
-    }
-
-    private static async System.Threading.Tasks.Task PerformLoggingAsync(Speech spokenResponse)
-    {
-        await System.Threading.Tasks.Task.Run(()=>
-        {
-        JobTrainingManager.instance.getCurrentTasksFeedbackData().speech=spokenResponse ;
-        
-        Debug.Log("Feedback Data set");
-        });
-
-    }  
 }
 
 
@@ -154,6 +133,7 @@ class PositiveTurnout : InteractionState
 
     public override void Setup()
     {
+        Debug.Log("generated response");
         JobTrainingManager.instance.GenerateLLMCustomerResponse("last transcript",PLayGeneratedResponse);
     }
     public void PLayGeneratedResponse(string reply){
