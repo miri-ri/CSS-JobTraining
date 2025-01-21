@@ -4,27 +4,27 @@ using System.Collections;
 using UnityEngine;
 
 public abstract class Task{
-    public string Description;//no need to have this here, better to have a enum
     public static InteractionMachine interactionMachine;
     public DataForEvaluation dataForEvaluation;
 
     protected void CompleteTask()
     {
+        Debug.Log($"Task completed.");
         JobTrainingManager.instance.GetTaskManager()?.TriggerTaskCompleted();
     }
 
     public abstract void TaskSetup();
+
     public abstract void Feedback();
 
     public static void SetInteractionMachine(InteractionMachine InteractionMachine){
         interactionMachine = InteractionMachine;
-        return;
     }
     public InteractionMachine GetInteractionMachine(){
         return interactionMachine;
     }
 
-}
+}   
 public enum TaskList{
     LocateProduct=1
 

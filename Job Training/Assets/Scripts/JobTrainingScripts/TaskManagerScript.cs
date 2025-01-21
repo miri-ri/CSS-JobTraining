@@ -10,11 +10,20 @@ public class TaskManagerScript : MonoBehaviour
     public event Action onTaskCompleted; // Todo: Implement
     //reference to objects in gameScene
 
-    public void StartTask(Task chosen){
+    public void StartTask(TaskList chosen){
         if(CurrentTask!=null){
             throw new Exception("Another task is already running!");
         }
-        CurrentTask=chosen;
+
+        Debug.Log($"Starting Task: {chosen}");
+
+        switch (chosen){
+            case TaskList.LocateProduct:
+                CurrentTask = new TaskLocateProduct();
+                break;
+            default:
+                throw new Exception("Unknown task type!");
+        }
         CurrentTask.dataForEvaluation=new();
         CurrentTask.TaskSetup();
         
@@ -25,8 +34,8 @@ public class TaskManagerScript : MonoBehaviour
         switch (requested)
         {
             case  TaskList.LocateProduct:
-                return "in this task you will be asked to locate a specific product"; 
-            default: return "";
+                return "In this Task you will be asked to locate a specific product."; 
+            default: return "Unknown Task";
         }
     }
 
@@ -34,38 +43,22 @@ public class TaskManagerScript : MonoBehaviour
 
     public void TriggerTaskCompleted()
     {
+        Debug.Log("Task completed!");
         CurrentTask=null;
         onTaskCompleted?.Invoke();
     } 
-    void handleTTS(int sec){
 
-    }
     public void ChangeStateOnTimer(float sec, InteractionState next){
         
         Debug.Log($"Waiting {sec} seconds before going to {next}");
         StartCoroutine(CompleteStateAfterWait(sec,next));
     }
-    IEnumerator CompleteStateAfterWait(float sec, InteractionState next){
+
+    private IEnumerator CompleteStateAfterWait(float sec, InteractionState next){
         yield return new WaitForSeconds(sec);
         Task.interactionMachine.ChangeState(next);
     }
     
     
-}
-
-public class UserInput{
-    public static event Action<string> OnUserSpoke;
-    public static event Action<Vector3> OnUserMoved; // Movement action probably has more input
-
-    public static void HandleSpeechInput(string spokenText)
-    {
-        OnUserSpoke?.Invoke(spokenText);
-    }
-
-    public static void HandleMovementInput(Vector3 newPosition)
-    {
-        OnUserMoved?.Invoke(newPosition);
-    }
-
 }
 

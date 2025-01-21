@@ -19,7 +19,7 @@ public class ActivityManager:MonoBehaviour{
         JobTrainingManager.instance.PerformanceLog = new("testUser");
         stateMachine = new ActivityStateMachine();
         stateMachine.SetState(new ExplanationOfActivity());
-        JobTrainingManager.instance.ToggleSpeakerButton(false);
+        //JobTrainingManager.instance.ToggleSpeakerButton(false); TODO: doesnt work right now
     }
 
     //this class uses a state machine for the entire activity, and loads tasks
@@ -143,7 +143,7 @@ class TaskState : ActivityState
         Debug.Log("Tast state started");
         
         JobTrainingManager.instance.PerformanceLog.TasksData.Add(taskPerformanceData);
-        taskManager.StartTask(new TaskLocateProduct()); // Todo: add task choice input here
+        taskManager.StartTask(TaskList.LocateProduct); // Todo: add task choice input here
         taskManager.onTaskCompleted += CompleteTask; // onTaskCompleted only triggered when no problem appeared
     }
 

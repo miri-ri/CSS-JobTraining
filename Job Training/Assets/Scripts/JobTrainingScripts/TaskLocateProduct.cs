@@ -31,10 +31,9 @@ public class TaskLocateProduct : Task
 
     public override void TaskSetup() // maybe making introduction a proper state for consistency
     {//add tts use
-        JobTrainingManager.instance.WriteOnUi("In this task, you will have to show the product to the customer."); // maybe replace with Task Description later
+        JobTrainingManager.instance.GetTaskManager().TaskDescription(TaskList.LocateProduct);
         JobTrainingManager.instance.ChangeFrontWallBackground("PlaceholderMarket");
 
-        
         SetInteractionMachine(new InteractionMachine());
         GetInteractionMachine().ChangeState(new FirstDialog());
     }
