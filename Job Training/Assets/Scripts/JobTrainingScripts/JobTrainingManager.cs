@@ -17,7 +17,7 @@ public class JobTrainingManager:MonoBehaviour{
     void Awake(){
         instance=this;
         TriggerableAreas=new();
-        FeedbackUIRef.HideFeedbackUI(); 
+        FeedbackUIRef.ToggleHide(); 
 
         speechTT=gameObject.AddComponent<STTInterface>();
         LLM=gameObject.AddComponent<LLMinterface>();
@@ -36,12 +36,14 @@ public class JobTrainingManager:MonoBehaviour{
     public ActivityManager GetActivityManager(){
         return ActivityManager;
     }
+    public Vector2 getUserPos(){
+        return new(UserPosition.position.x, UserPosition.position.z);
+    }
 
 
     [SerializeField] Transform UserPosition;
     [SerializeField] Transform ClientPosition;
     [SerializeField] GameObject FrontWall,Floor;
-    //[SerializeField] AudioSource RoomSpeaker;
     [SerializeField] TextCloud TextCloudUI;
     [SerializeField] FeedbackUI FeedbackUIRef;
     [SerializeField] AudioSource RoomSpeakers;
@@ -58,11 +60,11 @@ public class JobTrainingManager:MonoBehaviour{
         ren.material=backG;
     }
     void ShowMicrophoneFeedback(){
-        SpeakerButton.GetComponent<Renderer>().enabled=true;
+        SpeakerButton.GetComponent<CanvasGroup>().alpha=1;
     }   
 
     void HideMicrophoneFeedback(){
-        SpeakerButton.GetComponent<Renderer>().enabled=false;
+        SpeakerButton.GetComponent<CanvasGroup>().alpha=0;
     }
     public void PlaySound(){
         if(RoomSpeakers != null){
@@ -73,11 +75,10 @@ public class JobTrainingManager:MonoBehaviour{
     public void WriteOnUi(string text){
         TextCloudUI.WriteText(text);
     }
-    public TextCloud GetTextCloudUi(){
-        return TextCloudUI;
-    }
-    public FeedbackUI GetFeedbackUI(){
-        return FeedbackUIRef;
+    public void ShowFeedbackMessages(string feedbackMessage){//todo graphical display for multple points
+        FeedbackUIRef.ToggleHide();
+        FeedbackUIRef.setFeedback(feedbackMessage);
+
     }
     public void SubscribeToAreaTrigger(string areaName, OnUserEnteredArea handler){
         foreach (var item in TriggerableAreas){

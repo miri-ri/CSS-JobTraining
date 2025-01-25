@@ -58,11 +58,7 @@ public class DemoTestApi :MonoBehaviour{
 
 
     public void handleLLMEvaluate(EvaluationResponse response){
-        Debug.Log(" SCORE -  "+response.total);
-        foreach (var item in response.evaluations)
-        {
-            Debug.Log(item);
-        }
+       
         
     }
 

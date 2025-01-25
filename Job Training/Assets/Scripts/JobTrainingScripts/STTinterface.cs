@@ -30,6 +30,7 @@ public class STTInterface : MonoBehaviour
         {
             //Debug.Log(www.downloadHandler.text); 
                 ListeningComplete.Invoke();
+                //the ouput is realtime on my (nicola) computer, not sure on the actual machine
                 Debug.Log("stopped listening to user, retrieving transcript");
                 GetUserDialog();
             

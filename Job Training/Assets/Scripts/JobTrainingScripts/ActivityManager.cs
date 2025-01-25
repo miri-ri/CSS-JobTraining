@@ -19,7 +19,6 @@ public class ActivityManager:MonoBehaviour{
         JobTrainingManager.instance.PerformanceLog = new("testUser");
         stateMachine = new ActivityStateMachine();
         stateMachine.SetState(new ExplanationOfActivity());
-        //JobTrainingManager.instance.ToggleSpeakerButton(false); TODO: doesnt work right now
     }
 
     //this class uses a state machine for the entire activity, and loads tasks

@@ -23,6 +23,7 @@ public class PerformanceLog{
     public TaskData getCurrentTaskData(){
         return TasksData[^1];
     }
+    
     private void LogData(){
         StreamWriter writer= new StreamWriter("Assets/Resources/logData_"+UserIdentifier+".txt",true);
         string log = "Log: User - " + UserIdentifier + "\nStart - " + ActivityStart + " \n End - " + ActivityEnd + "\nDuration - " + ActivityStart.Subtract( ActivityEnd).TotalMinutes;
@@ -55,12 +56,28 @@ public class TaskData{//to be created in Activity manager on new task
     public DateTime taskStart, taskEnd;
 
     public void setFeedback(EvaluationResponse eval){
-        score= (int)eval.total;
+        score= (int)eval.Total;
         feedbackMessage="";
-        foreach (string item in eval.evaluations)
-        {
-            feedbackMessage+=item+"\n";
-        }
+        TaskDebugLog("feedback\n");
+        //feedbackMessage=Pono(eval.Evaluations);
+       
+       
+        TaskDebugLog(feedbackMessage);
+        
+    }
+    /*private string Pono(Evaluations ev){
+        string tt="";
+        tt+="SpeechSemantic -> "+ev.SpeechSemantic.Description+" score"+ev.SpeechSemantic.Score+"\n";
+        tt+="SpeechTimingBefore -> "+ev.SpeechTimingBefore.Description+" score"+ev.SpeechTimingBefore.Score+"\n";
+        tt+="MovementTimingBefore -> "+ev.MovementTimingBefore.Description+" score"+ev.MovementTimingBefore.Score+"\n";
+        tt+="MovementSpeed -> "+ev.MovementSpeed.Description+" score"+ev.MovementSpeed.Score+"\n";
+        tt+="MovementPositioning -> "+ev.MovementPositioning.Description+" score"+ev.MovementPositioning.Score+"\n";
+        return tt;
+    }*/
+    private void TaskDebugLog(string txt){
+        StreamWriter writer= new StreamWriter("Assets/Resources/logData_debugTask.txt",true);
+        writer.Write(txt+"\n");
+        writer.Close();
     }
 
     public TaskData(string taskName){ 
@@ -74,11 +91,18 @@ public class TaskData{//to be created in Activity manager on new task
         taskEnd=DateTime.Now;
     }
     public void addResponse(string text, bool isUser){
-        if(isUser) dialogTranscript.Add("user -> "+text);
-        else dialogTranscript.Add("customer -> "+text);
+        if(isUser){
+            dialogTranscript.Add("user -> "+text);
+            TaskDebugLog(DateTime.Now+"-- user -> "+text);
+        }
+        else {
+            dialogTranscript.Add("customer -> "+text);
+            TaskDebugLog(DateTime.Now+"-- customer -> "+text);
+        }
     }
     public void addConversationError(string errorMessage){
         dialogTranscript.Add("ERROR -> "+ errorMessage);
+        TaskDebugLog(DateTime.Now+"-- ERROR -> "+ errorMessage);
     }
 
 

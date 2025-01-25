@@ -34,17 +34,17 @@ async def evaluate_role( role: CommonTypes.Role, behavior: CommonTypes.Behavior)
     evaluations:dict[str, CommonTypes.Evaluation] = {}
 
     if(role is CommonTypes.Role.assistant):
-        evaluations["speech.semantic"] = llme.LlmEvaluator.assistant(LLM, behavior.speech.semantic)
+        evaluations[1] = llme.LlmEvaluator.assistant(LLM, behavior.speech.semantic)
 
-        evaluations["speech.timing_before"] = te.TimingBeforeEvaluator.evaluate_before(behavior.speech.timing)
+        evaluations[2] = te.TimingBeforeEvaluator.evaluate_before(behavior.speech.timing)
 
-        evaluations["speech.speed"] = te.SpeechTimingEvaluator.evaluate(behavior.speech)
+        evaluations[3] = te.SpeechTimingEvaluator.evaluate(behavior.speech)
 
-        evaluations["movement.timing_before"] = te.TimingBeforeEvaluator.evaluate_before(behavior.movement.timing)
+        evaluations[4] = te.TimingBeforeEvaluator.evaluate_before(behavior.movement.timing)
 
-        evaluations["movement.speed"] = te.MovementTimingEvaluator.evaluate(behavior.movement)
+        evaluations[5] = te.MovementTimingEvaluator.evaluate(behavior.movement)
 
-        evaluations["movement.positioning"] = pe.PositioningEvaluator.evaluate(behavior.movement.positioning)
+        evaluations[6] = pe.PositioningEvaluator.evaluate(behavior.movement.positioning)
     
     scoresum = 0
     for case in evaluations:

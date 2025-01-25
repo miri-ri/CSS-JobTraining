@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -13,20 +14,6 @@ public class TaskLocateProduct : Task
     
     public override void Feedback()
     {
-        //send data logged during states, or only user responses to feedback api
-        JobTrainingManager.instance.GetEvaluation(JobTrainingManager.instance.getCurrentTasksFeedbackData(),ShowFeedback);
-        
-        
-    }
-    void ShowFeedback(EvaluationResponse eval){
-
-        JobTrainingManager.instance.WriteOnUi(eval.evaluations[0]);//todo  ->show all info and send to TTS and graphic of evaluation screen
-
-        JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().setFeedback(eval);//logs feedback
-        JobTrainingManager.instance.RemoveEvaluationHandler(ShowFeedback);
-
-        CompleteTask();
-        
     }
 
     public override void TaskSetup() // maybe making introduction a proper state for consistency
@@ -47,7 +34,8 @@ class FirstDialog:InteractionState{
     {
         JobTrainingManager.instance.PlayDialog("Ciao! Can you show me the tomatoes?",handleTTS);
         JobTrainingManager.instance.WriteOnUi("Ciao! Can you show me the tomatoes?"); // for dynamic first dialogue input from LLM API
-        //JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question="FirstDialogInput";
+        JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question="FirstDialogInput";
+        JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().addResponse("FirstDialogInput", false);
          
     }
     public void handleTTS(float secondsNeeded){
@@ -70,45 +58,73 @@ class AwaitUserInput : InteractionState
     }
     private Movement actionForFeedBack;
     private DateTime startMovement;
+    private bool movementFinished,SpeechFinished;
+
+    private  delegate void onTimeout();
+    private event onTimeout TimesUp;
     public override void Setup()
     {
         Debug.Log("Setting up AwaitUserInputState");
         actionForFeedBack=new();
         startMovement=DateTime.Now;
         JobTrainingManager.instance.GetUserDialog(HandleUserSpoke);
-        //JobTrainingManager.instance.SubscribeToAreaTrigger("locateTask",HandleUserInTarget);
-    }
-    public void HandleUserInTarget(Vector2 userPosition, Vector2 targetPosition, DateTime arrival){
-        actionForFeedBack.positioning.user_pos.x=userPosition.x;
-        actionForFeedBack.positioning.user_pos.y=userPosition.y;
+        JobTrainingManager.instance.SubscribeToAreaTrigger("locateTask",HandleUserInTarget);
+        actionForFeedBack.positioning.start_pos=new(JobTrainingManager.instance.getUserPos());
+        movementFinished=true;//this should be false. true to bypass waiting WARNING
+        SpeechFinished=false;
 
-        actionForFeedBack.positioning.target_pos.x=targetPosition.x;
-        actionForFeedBack.positioning.target_pos.y=targetPosition.y;
+        TimesUp+=HandleTimeOut;
+        //todo needs a timer for a maximun duration -> calls TimesUp
+    }
+    public void HandleUserInTarget(Vector2 userPosition, Vector2 targetPosition, DateTime arrival){//todo fix up start pos and area
+        actionForFeedBack.positioning.user_pos=new(userPosition);
+
+        actionForFeedBack.positioning.target_pos=new(targetPosition);
         
-        actionForFeedBack.timing.s_before_action=0;
+        actionForFeedBack.timing.s_before_action=0;//unclear
         actionForFeedBack.timing.s_duration=arrival.Subtract(startMovement).Seconds;
+        JobTrainingManager.instance.getCurrentTasksFeedbackData().movement=actionForFeedBack;
+
+        movementFinished=true;
 
 
+        if(SpeechFinished) ToNextState();
     }
-    private void HandleUserMoved(Movement userMovement)
-    {
-        JobTrainingManager.instance.getCurrentTasksFeedbackData().movement=userMovement;
+
+    public void HandleTimeOut(){
+        if(!movementFinished){
+
+        }
+        if(!SpeechFinished){
+
+        }
+
+        ToNextState();
+
     }
 
     public void HandleUserSpoke(Speech spokenResponse){
         
-        Debug.Log("Trying to add response");
-        //var task1 = PerformEvaluation(spokenResponse);
         JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().addResponse(spokenResponse.semantic.reply, true);
         
-        Debug.Log("Response added");
-        Debug.Log("Getting Feedback Data");
-        //var task2 = PerformLoggingAsync(spokenResponse);
+        string question=JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question;
         JobTrainingManager.instance.getCurrentTasksFeedbackData().speech=spokenResponse ;
+        JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question=question ;
         
-        Debug.Log("Feedback Data set");
-       // System.Threading.Tasks.Task.WaitAll(task1, task2);
         
+
+        {//for debug w/ no kinect
+            HandleUserInTarget(new(0,0), new(0,0), DateTime.Now);
+        }
+        SpeechFinished=true;
+        if(movementFinished) 
+            ToNextState();        
+    }
+
+    void ToNextState(){
+
+        TimesUp-=HandleTimeOut;
+
         bool IsResponsePositive = true; // todo: proper adaptation
 
         if(IsResponsePositive) {
@@ -118,6 +134,8 @@ class AwaitUserInput : InteractionState
         } else {
             JobTrainingManager.instance.GetTaskManager().CurrentTask.GetInteractionMachine().ChangeState(new NegativeTurnout());
         }
+
+
     }
 }
 
@@ -133,12 +151,13 @@ class PositiveTurnout : InteractionState
     public override void Setup()
     {
         Debug.Log("generated response");
-        JobTrainingManager.instance.GenerateLLMCustomerResponse("last transcript",PLayGeneratedResponse);
+        PLayGeneratedResponse("Risposta positiva");
+        //JobTrainingManager.instance.GenerateLLMCustomerResponse("last transcript",PLayGeneratedResponse);
     }
     public void PLayGeneratedResponse(string reply){
         JobTrainingManager.instance.PlayDialog("Thanks for your help!",handleTTS);
         JobTrainingManager.instance.WriteOnUi("Thanks for your help!"); // for dynamic first dialogue input from LLM API
-        JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question="FirstDialogInput";
+        
         
     }
     public void handleTTS(float secondsNeeded){
@@ -151,7 +170,7 @@ class PositiveTurnout : InteractionState
 class NegativeTurnout : InteractionState
 {
     public override void Setup(){
-        JobTrainingManager.instance.GenerateLLMCustomerResponse("last transcript",PlayGeneratedResponse);
+       // JobTrainingManager.instance.GenerateLLMCustomerResponse("last transcript",PlayGeneratedResponse);
     }
 
     public override void Dismantle(){
@@ -172,8 +191,19 @@ class NegativeTurnout : InteractionState
 class FeedbackState : InteractionState
 {
     public override void Setup(){
-        JobTrainingManager.instance.WriteOnUi("Well done! Task completed.");
-        JobTrainingManager.instance.PlayDialog("WellDone", handleTTS);
+        JobTrainingManager.instance.GetEvaluation(JobTrainingManager.instance.getCurrentTasksFeedbackData(),ShowFeedback);
+        JobTrainingManager.instance.PlayDialog("Well done, now wait a few seconds for your evaluation",handleTTS);
+    }
+    void ShowFeedback(EvaluationResponse eval){
+        JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().setFeedback(eval);//logs feedback
+        Debug.Log("Feedback coming(?)");
+        JobTrainingManager.instance.ShowFeedbackMessages(eval.Evaluations[0].Description);
+
+        
+        JobTrainingManager.instance.RemoveEvaluationHandler(ShowFeedback);
+
+        //CompleteTask();
+        //todo on user input or after timer complete task
     }
 
     public override void Dismantle(){

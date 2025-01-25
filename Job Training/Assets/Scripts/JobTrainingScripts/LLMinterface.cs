@@ -53,7 +53,7 @@ public class LLMinterface : MonoBehaviour
 
                 
     }
-    //need api
+    
     public void evaluateSystemAnswer(string answer){//interaction user - system
         StartCoroutine(GetData("http://localhost:8000/willing",true));
 
@@ -72,7 +72,7 @@ public class LLMinterface : MonoBehaviour
         { // Show results as text 
 
             if(systemic){
-                SystemResponseInterpreted?.Invoke(www.downloadHandler.text=="accept");
+                SystemResponseInterpreted?.Invoke(JsonConvert.DeserializeObject<UserWillingness>(www.downloadHandler.text).value);
 
             }else{
 
@@ -84,22 +84,47 @@ public class LLMinterface : MonoBehaviour
         }
     }
 }
-public class EvaluationResponse{
-    public List<string> evaluations;
-    public float total;
+
+public class UserWillingness{
+    public bool value;
+    public float score;
+    public string description;
+
 }
 
-//to json
-public class DataForEvaluation
+
+public class Evaluation
 {
+    public double Score { get; set; }
+    public string Description { get; set; }
+}
+
+
+public class EvaluationResponse
+{
+    public double Total { get; set; }
+    public Evaluation[] Evaluations { get; set; }}
+
+
+//to json
+public class DataForEvaluation{
     public Speech speech { get; set; }
     public Movement movement { get; set; }
+    public DataForEvaluation(){
+        speech=new();
+        movement=new();
+    }
+
 }
 
 public class Speech
 {
     public Semantic semantic { get; set; }
     public Timing timing { get; set; }
+    public Speech(){
+        semantic=new();
+        timing=new();
+    }
 }
 
 public class Semantic
@@ -120,6 +145,10 @@ public class Movement
 {
     public Positioning positioning;
     public Timing timing;
+    public Movement(){
+        positioning=new();
+        timing=new();
+    }
 }
 public class Positioning
 {
@@ -128,18 +157,35 @@ public class Positioning
     public Position target_pos { get; set; }
     public float ok_radius { get; set; }
     public Area area { get; set; }
+
+    public Positioning(){
+        area=new();
+        ok_radius=1;
+    }
 }
 
 public class Position
 {
     public float x { get; set; }
     public float y { get; set; }
+    public Position(Vector2 coord){
+        x=coord.x;
+        y=coord.y;
+    }
+    public Position(){
+        x=0;
+        y=0;
+    }
 }
 
 public class Area
 {
     public float w { get; set; }
     public float h { get; set; }
+    public Area(){
+        w=1;
+        h=1;
+    }
 }
 
 
