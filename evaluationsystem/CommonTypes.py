@@ -64,5 +64,5 @@ class Truth(BaseModel):
 
 class ComplexEvaluation(BaseModel):
     total: float
-    evaluations: dict[str, Evaluation] = {}
+    evaluations: list[Evaluation] = []
  

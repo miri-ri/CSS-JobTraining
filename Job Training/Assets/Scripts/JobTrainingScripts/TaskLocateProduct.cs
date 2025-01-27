@@ -32,9 +32,10 @@ class FirstDialog:InteractionState{
     //play audio from virtual client
     public override void Setup()
     {
-        JobTrainingManager.instance.PlayDialog("Ciao! Can you show me the tomatoes?",handleTTS);
-        JobTrainingManager.instance.WriteOnUi("Ciao! Can you show me the tomatoes?"); // for dynamic first dialogue input from LLM API
-        JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question="FirstDialogInput";
+        string question = "Ciao! Can you show me the tomatoes?";
+        JobTrainingManager.instance.PlayDialog(question,handleTTS);
+        JobTrainingManager.instance.WriteOnUi(question); // for dynamic first dialogue input from LLM API
+        JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question=question;
         JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().addResponse("FirstDialogInput", false);
          
     }

@@ -9,7 +9,7 @@ class PositioningEvaluator:
         )
         
         distance_from_ok = meters - behavior.ok_radius if meters - behavior.ok_radius > 0 else 0
-        relative_to = max(behavior.area.w, behavior.area.h)
+        relative_to = max(behavior.area.w, behavior.area.h, 1) #minimo un metro di area
 
         
         print(meters, distance_from_ok, relative_to)

@@ -9,12 +9,16 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, BackgroundTasks
 
 
-from speechToText import stt, willing
 
-
-app_stt = stt.Stt()
+EFFICIENT_MODE = True
  
-LLM =  Llama(verbose=False, model_path="model.gguf", chat_format="chatml") 
+if not EFFICIENT_MODE: 
+    from speechToText import stt, willing
+    app_stt = stt.Stt()
+    LLM =  Llama(verbose=False, model_path="model.gguf", chat_format="chatml") 
+else: 
+    app_stt = None
+    LLM = None
 
  
 
@@ -23,6 +27,9 @@ app = FastAPI()
 @app.get("/willing")
 async def willing_response() -> CommonTypes.Truth:
     global LLM, app_stt
+    
+    if EFFICIENT_MODE: 
+        return
     willChecker = willing.Willing(LLM, app_stt)
     return willChecker.evaluate()
 
@@ -31,24 +38,26 @@ async def willing_response() -> CommonTypes.Truth:
 async def evaluate_role( role: CommonTypes.Role, behavior: CommonTypes.Behavior) -> CommonTypes.ComplexEvaluation:
     global LLM
 
-    evaluations:dict[str, CommonTypes.Evaluation] = {}
+    evaluations = []
 
     if(role is CommonTypes.Role.assistant):
-        evaluations[1] = llme.LlmEvaluator.assistant(LLM, behavior.speech.semantic)
+        
+        if not EFFICIENT_MODE: 
+            evaluations.append(llme.LlmEvaluator.assistant(LLM, behavior.speech.semantic))
 
-        evaluations[2] = te.TimingBeforeEvaluator.evaluate_before(behavior.speech.timing)
+        evaluations.append(te.TimingBeforeEvaluator.evaluate_before(behavior.speech.timing))
 
-        evaluations[3] = te.SpeechTimingEvaluator.evaluate(behavior.speech)
+        evaluations.append(te.SpeechTimingEvaluator.evaluate(behavior.speech))
 
-        evaluations[4] = te.TimingBeforeEvaluator.evaluate_before(behavior.movement.timing)
+        evaluations.append(te.TimingBeforeEvaluator.evaluate_before(behavior.movement.timing))
 
-        evaluations[5] = te.MovementTimingEvaluator.evaluate(behavior.movement)
+        evaluations.append(te.MovementTimingEvaluator.evaluate(behavior.movement))
 
-        evaluations[6] = pe.PositioningEvaluator.evaluate(behavior.movement.positioning)
+        evaluations.append(pe.PositioningEvaluator.evaluate(behavior.movement.positioning))
     
     scoresum = 0
     for case in evaluations:
-        scoresum += evaluations[case].score
+        scoresum += case.score
     
     return CommonTypes.ComplexEvaluation(total = scoresum / len(evaluations), evaluations = evaluations)
 
@@ -63,6 +72,9 @@ async def evaluate_role( role: CommonTypes.Role, behavior: CommonTypes.Behavior)
 @app.get("/start-stt")
 async def startStt(background_tasks: BackgroundTasks) -> str:
     global app_stt
+    
+    if EFFICIENT_MODE: 
+        return
 
     app_stt.start()
 
@@ -73,6 +85,10 @@ async def startStt(background_tasks: BackgroundTasks) -> str:
 @app.get("/get-stt")
 async def getStt() ->  CommonTypes.SpeechBehavior:
     global app_stt 
+
+    
+    if EFFICIENT_MODE: 
+        return
 
     app_stt.analyze()
  
