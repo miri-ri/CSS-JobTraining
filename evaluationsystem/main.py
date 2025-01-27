@@ -10,7 +10,7 @@ from fastapi import FastAPI, BackgroundTasks
 
 
 
-EFFICIENT_MODE = True
+EFFICIENT_MODE = False
  
 if not EFFICIENT_MODE: 
     from speechToText import stt, willing
@@ -26,7 +26,7 @@ app = FastAPI()
 
 @app.get("/willing")
 async def willing_response() -> CommonTypes.Truth:
-    global LLM, app_stt
+    global LLM, app_stt, EFFICIENT_MODE
     
     if EFFICIENT_MODE: 
         return
@@ -36,7 +36,7 @@ async def willing_response() -> CommonTypes.Truth:
 #NOTA IMP: forse con async il sistema rimane in grado di rispondere AD ATLTRE COSE! PER VEDERE STATO DEL DISCORSO!
 @app.post("/evaluate/{role}")
 async def evaluate_role( role: CommonTypes.Role, behavior: CommonTypes.Behavior) -> CommonTypes.ComplexEvaluation:
-    global LLM
+    global LLM, EFFICIENT_MODE
 
     evaluations = []
 
@@ -71,7 +71,7 @@ async def evaluate_role( role: CommonTypes.Role, behavior: CommonTypes.Behavior)
 
 @app.get("/start-stt")
 async def startStt(background_tasks: BackgroundTasks) -> str:
-    global app_stt
+    global app_stt, EFFICIENT_MODE
     
     if EFFICIENT_MODE: 
         return
