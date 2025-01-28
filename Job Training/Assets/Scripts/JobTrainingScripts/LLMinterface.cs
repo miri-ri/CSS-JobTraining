@@ -45,7 +45,6 @@ public class LLMinterface : MonoBehaviour
         }
     }
 
-    //!!!!!works with stub!!! however adapt and check with the correct api
     public void evaluateDialog(DataForEvaluation dataTask){//give transcript of conversation
       
         var jsonData=Newtonsoft.Json.Linq.JObject.FromObject(dataTask);
@@ -54,14 +53,14 @@ public class LLMinterface : MonoBehaviour
 
                 
     }
-    //need api
+    
     public void evaluateSystemAnswer(string answer){//interaction user - system
-        StartCoroutine(GetData("http://localhost:8000/",true));
+        StartCoroutine(GetData("http://localhost:8000/willing",true));
 
     }
     //need api
     public void PrepareResponseToUser(string lastUserResponse){
-        StartCoroutine(GetData("http://localhost:9000/respond?",false));
+        StartCoroutine(GetData("http://localhost:8000/respond?",false));
     }
     IEnumerator GetData(string url, bool systemic)
     {
@@ -73,34 +72,59 @@ public class LLMinterface : MonoBehaviour
         { // Show results as text 
 
             if(systemic){
-                SystemResponseInterpreted?.Invoke(www.downloadHandler.text=="accept");
+                SystemResponseInterpreted?.Invoke(JsonConvert.DeserializeObject<UserWillingness>(www.downloadHandler.text).value);
 
             }else{
 
                 ResponseReady?.Invoke(www.downloadHandler.text);
             }
-            Debug.Log(www.downloadHandler.text); // Or retrieve results as binary
+            Debug.Log(www.downloadHandler.text); 
             
-            //launch event and attach text from api
+            
         }
     }
 }
-public class EvaluationResponse{
-    public List<string> evaluations;
-    public float total;
+
+public class UserWillingness{
+    public bool value;
+    public float score;
+    public string description;
+
 }
 
-//to json
-public class DataForEvaluation
+
+public class Evaluation
 {
+    public double Score { get; set; }
+    public string Description { get; set; }//add a descriptor for the type of eval- (speech duration, speed etccc)
+}
+
+
+public class EvaluationResponse
+{
+    public double Total { get; set; }
+    public Evaluation[] Evaluations { get; set; }}
+
+
+//to json
+public class DataForEvaluation{
     public Speech speech { get; set; }
     public Movement movement { get; set; }
+    public DataForEvaluation(){
+        speech=new();
+        movement=new();
+    }
+
 }
 
 public class Speech
 {
     public Semantic semantic { get; set; }
     public Timing timing { get; set; }
+    public Speech(){
+        semantic=new();
+        timing=new();
+    }
 }
 
 public class Semantic
@@ -111,7 +135,7 @@ public class Semantic
 
 public class Timing
 {
-    public float s_before_action { get; set; }
+    public float s_before_action { get; set; }//how, the user is never really static with the kinect, would need a complex way to check it
     public float s_duration { get; set; }
     public float s_before_action_target { get; set; }
     public float s_duration_per_unit_target { get; set; }
@@ -121,6 +145,10 @@ public class Movement
 {
     public Positioning positioning;
     public Timing timing;
+    public Movement(){
+        positioning=new();
+        timing=new();
+    }
 }
 public class Positioning
 {
@@ -129,18 +157,35 @@ public class Positioning
     public Position target_pos { get; set; }
     public float ok_radius { get; set; }
     public Area area { get; set; }
+
+    public Positioning(){
+        area=new();
+        ok_radius=1;
+    }
 }
 
 public class Position
 {
     public float x { get; set; }
     public float y { get; set; }
+    public Position(Vector2 coord){
+        x=coord.x;
+        y=coord.y;
+    }
+    public Position(){
+        x=0;
+        y=0;
+    }
 }
 
 public class Area
 {
     public float w { get; set; }
     public float h { get; set; }
+    public Area(){
+        w=1;
+        h=1;
+    }
 }
 
 

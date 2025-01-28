@@ -1,72 +1,108 @@
 import CommonTypes
-# import Evaluators.LlmEvaluator as llme
+import Evaluators.LlmEvaluator as llme
 import Evaluators.TimingEvaluator as te
 import Evaluators.PositioningEvaluator as pe
+
+from llama_cpp import Llama
+
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, BackgroundTasks
 
-from speechToText import stt
 
-app = FastAPI()
 
+EFFICIENT_MODE = False
+ 
+if not EFFICIENT_MODE: 
+    from speechToText import stt, willing
+    app_stt = stt.Stt()
+    LLM =  Llama(verbose=False, model_path="model.gguf", chat_format="chatml") 
+else: 
+    app_stt = None
+    LLM = None
 
  
 
+app = FastAPI()
+
+@app.get("/willing")
+async def willing_response() -> CommonTypes.Truth:
+    global LLM, app_stt, EFFICIENT_MODE
+    
+    if EFFICIENT_MODE: 
+        return
+    willChecker = willing.Willing(LLM, app_stt)
+    return willChecker.evaluate()
+
+#NOTA IMP: forse con async il sistema rimane in grado di rispondere AD ATLTRE COSE! PER VEDERE STATO DEL DISCORSO!
 @app.post("/evaluate/{role}")
 async def evaluate_role( role: CommonTypes.Role, behavior: CommonTypes.Behavior) -> CommonTypes.ComplexEvaluation:
+    global LLM, EFFICIENT_MODE
 
-
-    evaluations:dict[str, CommonTypes.Evaluation] = {}
+    evaluations = []
 
     if(role is CommonTypes.Role.assistant):
-        # evaluations["speech.semantic"] = llme.LlmEvaluator.assistant(behavior.speech.semantic)
+        
+        if not EFFICIENT_MODE: 
+            evaluations.append(llme.LlmEvaluator.assistant(LLM, behavior.speech.semantic))
 
-        evaluations["speech.timing_before"] = te.TimingBeforeEvaluator.evaluate_before(behavior.speech.timing)
+        evaluations.append(te.TimingBeforeEvaluator.evaluate_before(behavior.speech.timing))
 
-        evaluations["speech.speed"] = te.SpeechTimingEvaluator.evaluate(behavior.speech)
+        evaluations.append(te.SpeechTimingEvaluator.evaluate(behavior.speech))
 
-        evaluations["movement.timing_before"] = te.TimingBeforeEvaluator.evaluate_before(behavior.movement.timing)
+        evaluations.append(te.TimingBeforeEvaluator.evaluate_before(behavior.movement.timing))
 
-        evaluations["movement.speed"] = te.MovementTimingEvaluator.evaluate(behavior.movement)
+        evaluations.append(te.MovementTimingEvaluator.evaluate(behavior.movement))
 
-        evaluations["movement.positioning"] = pe.PositioningEvaluator.evaluate(behavior.movement.positioning)
+        evaluations.append(pe.PositioningEvaluator.evaluate(behavior.movement.positioning))
     
     scoresum = 0
     for case in evaluations:
-        scoresum += evaluations[case].score
+        scoresum += case.score
     
     return CommonTypes.ComplexEvaluation(total = scoresum / len(evaluations), evaluations = evaluations)
 
 
-generated_text: CommonTypes.GeneratedText = CommonTypes.GeneratedText(s_before_action = -1, s_duration = -1, text="")
-
-def generateText() -> None:
-    global generated_text
-    stt_data = stt.stt()
-
-
-    generated_text =  CommonTypes.GeneratedText(
-        s_before_action= stt_data["s_before"],
-        s_duration= stt_data["s_duration"],
-        text=stt_data["text"]
-    )
- 
+##THIS function does not work. It should return a the status of stt, but the stt is still blocking.
+#That's better because we avoid conflicts, but it can be improved for giving the user more feedback
+# @app.get("/get-stt-status")
+# async def sttStatus() -> str:
+#     global app_stt
+#     return app_stt.status
 
 @app.get("/start-stt")
 async def startStt(background_tasks: BackgroundTasks) -> str:
-    global generated_text
+    global app_stt, EFFICIENT_MODE
+    
+    if EFFICIENT_MODE: 
+        return
 
-    generated_text = CommonTypes.GeneratedText(s_before_action = -1, s_duration = -1, text="")
+    app_stt.start()
 
-    background_tasks.add_task(generateText)
-
-    return "Ok"
+    return "Finished"
 
 
 
 @app.get("/get-stt")
-async def getStt() ->  CommonTypes.GeneratedText:
-    global generated_text
-    return generated_text
+async def getStt() ->  CommonTypes.SpeechBehavior:
+    global app_stt 
+
+    
+    if EFFICIENT_MODE: 
+        return
+
+    app_stt.analyze()
+ 
+
+    return CommonTypes.SpeechBehavior(
+        semantic= CommonTypes.SemanticBehavior(
+            question="", 
+            reply=app_stt.text
+        ),
+        timing= CommonTypes.SpeechTimingBehavior(
+            s_before_action = app_stt.s_before_start,
+            s_duration = app_stt.s_duration
+        )
+    ) 
 
 
     

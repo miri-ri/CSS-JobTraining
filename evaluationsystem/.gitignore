@@ -170,3 +170,6 @@ Job Training/ProjectSettings/ProjectVersion.txt
 Job Training/UpgradeLog.htm
 .gguf
 .vsconfig
+
+vosk-model-it-0.22/
+vosk-model-small-it-0.22/

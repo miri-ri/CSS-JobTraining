@@ -142,7 +142,7 @@ class TaskState : ActivityState
         Debug.Log("Tast state started");
         
         JobTrainingManager.instance.PerformanceLog.TasksData.Add(taskPerformanceData);
-        taskManager.StartTask(new TaskLocateProduct()); // Todo: add task choice input here
+        taskManager.StartTask(TaskList.LocateProduct); // Todo: add task choice input here
         taskManager.onTaskCompleted += CompleteTask; // onTaskCompleted only triggered when no problem appeared
     }
 
@@ -169,7 +169,7 @@ class TaskCompleteState : ActivityState
     {
         JobTrainingManager.instance.PerformanceLog.TasksData[^1].EndTask();
         JobTrainingManager.instance.WriteOnUi("Do you want to proceed to the next task, take a break or stop the activity?");
-        string userInput = "";// user selection input
+        string userInput = "next";// user selection input
         if(userInput=="next"){
             stateMachine.CompleteState(new TaskState());
         } else if (userInput == "wait"){
