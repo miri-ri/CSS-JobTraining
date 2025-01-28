@@ -17,7 +17,7 @@ public class TaskLocateProduct : Task
     }
 
     public override void TaskSetup() // maybe making introduction a proper state for consistency
-    {//add tts use
+    {
         JobTrainingManager.instance.GetTaskManager().TaskDescription(TaskList.LocateProduct);
         JobTrainingManager.instance.ChangeFrontWallBackground("PlaceholderMarket");
 
@@ -32,10 +32,11 @@ class FirstDialog:InteractionState{
     //play audio from virtual client
     public override void Setup()
     {
-        JobTrainingManager.instance.PlayDialog("Ciao! Can you show me the tomatoes?",handleTTS);
-        JobTrainingManager.instance.WriteOnUi("Ciao! Can you show me the tomatoes?"); // for dynamic first dialogue input from LLM API
-        JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question="FirstDialogInput";// here we have to insert the question not FirstDialogInput
-        JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().addResponse("FirstDialogInput", false);
+        string txtForTTS="Ciao! Can you show me the tomatoes?";
+        JobTrainingManager.instance.PlayDialog(txtForTTS,handleTTS);
+        //JobTrainingManager.instance.WriteOnUi("Ciao! Can you show me the tomatoes?"); // for dynamic first dialogue input from LLM API
+        JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question=txtForTTS;// here we have to insert the question not FirstDialogInput
+        JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().addResponse(txtForTTS, false);
          
     }
     public void handleTTS(float secondsNeeded){
@@ -55,6 +56,7 @@ class AwaitUserInput : InteractionState
     public override void Dismantle()
     {
         JobTrainingManager.instance.RemoveSTThandler(HandleUserSpoke);
+        JobTrainingManager.instance.UnsubscribeToAreaTrigger("locateTask",HandleUserInTarget);
     }
     private Movement actionForFeedBack;
     private DateTime startMovement;
@@ -70,7 +72,8 @@ class AwaitUserInput : InteractionState
         JobTrainingManager.instance.GetUserDialog(HandleUserSpoke);
         JobTrainingManager.instance.SubscribeToAreaTrigger("locateTask",HandleUserInTarget);
         actionForFeedBack.positioning.start_pos=new(JobTrainingManager.instance.getUserPos());
-        movementFinished=true;//this should be false. true to bypass waiting WARNING
+        if(JobTrainingManager.noKinectDebug)
+            movementFinished=true;//this should be false. true to bypass waiting WARNING
         SpeechFinished=false;
 
         TimesUp+=HandleTimeOut;
@@ -84,14 +87,14 @@ class AwaitUserInput : InteractionState
         actionForFeedBack.timing.s_before_action=0;//unclear
         actionForFeedBack.timing.s_duration=arrival.Subtract(startMovement).Seconds;
         JobTrainingManager.instance.getCurrentTasksFeedbackData().movement=actionForFeedBack;
-
+        JobTrainingManager.instance.PerformanceLog.MovementDataLogger(JobTrainingManager.instance.getCurrentTasksFeedbackData().movement);
         movementFinished=true;
 
 
         if(SpeechFinished) ToNextState();
     }
 
-    public void HandleTimeOut(){
+    public void HandleTimeOut(){//todo lab decide timer
         if(!movementFinished){
 
         }
@@ -113,7 +116,7 @@ class AwaitUserInput : InteractionState
         
         
 
-        {//for debug w/ no kinect
+        if(JobTrainingManager.noKinectDebug){//for debug w/ no kinect
             HandleUserInTarget(new(0,0), new(0,0), DateTime.Now);
         }
         SpeechFinished=true;
@@ -134,8 +137,6 @@ class AwaitUserInput : InteractionState
         } else {
             JobTrainingManager.instance.GetTaskManager().CurrentTask.GetInteractionMachine().ChangeState(new NegativeTurnout());
         }
-
-
     }
 }
 
@@ -146,6 +147,7 @@ class PositiveTurnout : InteractionState
     public override void Dismantle()
     {
         JobTrainingManager.instance.RemoveLLMCustomerResponse(PLayGeneratedResponse);
+        JobTrainingManager.instance.RemoveTTShandler(handleTTS);
     }
 
     public override void Setup()
@@ -156,7 +158,6 @@ class PositiveTurnout : InteractionState
     }
     public void PLayGeneratedResponse(string reply){
         JobTrainingManager.instance.PlayDialog("Thanks for your help!",handleTTS);
-        JobTrainingManager.instance.WriteOnUi("Thanks for your help!"); // for dynamic first dialogue input from LLM API
         
         
     }
@@ -174,12 +175,12 @@ class NegativeTurnout : InteractionState
     }
 
     public override void Dismantle(){
+        JobTrainingManager.instance.RemoveTTShandler(handleTTS);
         JobTrainingManager.instance.RemoveLLMCustomerResponse(PlayGeneratedResponse);
     }
     public void PlayGeneratedResponse(string reply){
         JobTrainingManager.instance.PlayDialog("I didn't quite understand, can you try again?",handleTTS);
-        JobTrainingManager.instance.WriteOnUi("I didn't quite understand, can you try again?"); 
-        JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question="FirstDialogInput";
+        JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question="I didn't quite understand, can you try again?";
         
     }
     public void handleTTS(float secondsNeeded){
@@ -196,22 +197,22 @@ class FeedbackState : InteractionState
     }
     void ShowFeedback(EvaluationResponse eval){
         JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().setFeedback(eval);//logs feedback
-        Debug.Log("Feedback coming(?)");
         JobTrainingManager.instance.ShowFeedbackMessages(eval.Evaluations[0].Description);
 
         
-        JobTrainingManager.instance.RemoveEvaluationHandler(ShowFeedback);
-
+        
         //CompleteTask();
         //todo on user input or after timer complete task
+        
     }
 
     public override void Dismantle(){
+        JobTrainingManager.instance.RemoveEvaluationHandler(ShowFeedback);
         JobTrainingManager.instance.RemoveTTShandler(handleTTS);
     }
 
     public void handleTTS(float secondsNeeded){
-        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded, null);
+        //JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded+10, null);//todo , i believe this breakes the machine 
     }
 }
 

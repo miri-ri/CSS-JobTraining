@@ -23,7 +23,35 @@ public class PerformanceLog{
     public TaskData getCurrentTaskData(){
         return TasksData[^1];
     }
+    public void MovementDataLogger(Movement movement){//for development data
+        string positionData="Position Data : \n", timingData="Timing Data : \n";
+        Positioning pos=movement.positioning;
+        Timing tt=movement.timing;
+        
+        positionData+="starting position -> "+PositionToCoordinate(pos.start_pos)+"\n";
+        positionData+="user final position -> "+PositionToCoordinate(pos.user_pos)+"\n";
+        positionData+="target position -> "+PositionToCoordinate(pos.target_pos)+"\n";
+        positionData+="acceptability radius -> "+pos.ok_radius+"\n";
+        positionData+="area(?) -> ("+pos.area.w+","+pos.area.h+")\n";
+
+        
+        timingData+="time before action -> "+tt.s_before_action+"\n";
+        timingData+="duration -> "+tt.s_duration+"\n";
+        timingData+="T-before target -> "+tt.s_before_action_target+"\n";
+        timingData+="duration target -> "+tt.s_duration_per_unit_target+"\n";
+        StreamWriter writer= new StreamWriter("Assets/Resources/logData_Movement"+UserIdentifier+".txt",true);
+
+        string wr="";
+        if(JobTrainingManager.noKinectDebug)
+            wr+="DATA FROM HARDCODED DEBUG -- ";
+        wr+="Logged data of activity -> "+DateTime.Now+" \n\n"+ positionData+"______\n"+ timingData+"______\n";
+        writer.Write(wr);
+        writer.Close();
+    }
     
+    private string PositionToCoordinate(Position pp){
+        return "("+pp.x+","+pp.y+")";
+    }
     private void LogData(){
         StreamWriter writer= new StreamWriter("Assets/Resources/logData_"+UserIdentifier+".txt",true);
         string log = "Log: User - " + UserIdentifier + "\nStart - " + ActivityStart + " \n End - " + ActivityEnd + "\nDuration - " + ActivityStart.Subtract( ActivityEnd).TotalMinutes;
@@ -57,23 +85,22 @@ public class TaskData{//to be created in Activity manager on new task
 
     public void setFeedback(EvaluationResponse eval){
         score= (int)eval.Total;
-        feedbackMessage="";
-        TaskDebugLog("feedback\n");
+        feedbackMessage="feedback\n";
         //feedbackMessage=Pono(eval.Evaluations);
-       
-       
+        feedbackMessage+="Final Score -> "+eval.Total+"\n";
+        feedbackMessage+="____ evaluations ____ \n";
+        foreach (var item in eval.Evaluations)
+        {
+            feedbackMessage+="partial score -> "+item.Score+"\n";
+            feedbackMessage+="feedback -> "+item.Description+"\n";
+            feedbackMessage+="___\n";
+        }
+
+
         TaskDebugLog(feedbackMessage);
         
     }
-    /*private string Pono(Evaluations ev){
-        string tt="";
-        tt+="SpeechSemantic -> "+ev.SpeechSemantic.Description+" score"+ev.SpeechSemantic.Score+"\n";
-        tt+="SpeechTimingBefore -> "+ev.SpeechTimingBefore.Description+" score"+ev.SpeechTimingBefore.Score+"\n";
-        tt+="MovementTimingBefore -> "+ev.MovementTimingBefore.Description+" score"+ev.MovementTimingBefore.Score+"\n";
-        tt+="MovementSpeed -> "+ev.MovementSpeed.Description+" score"+ev.MovementSpeed.Score+"\n";
-        tt+="MovementPositioning -> "+ev.MovementPositioning.Description+" score"+ev.MovementPositioning.Score+"\n";
-        return tt;
-    }*/
+
     private void TaskDebugLog(string txt){
         StreamWriter writer= new StreamWriter("Assets/Resources/logData_debugTask.txt",true);
         writer.Write(txt+"\n");

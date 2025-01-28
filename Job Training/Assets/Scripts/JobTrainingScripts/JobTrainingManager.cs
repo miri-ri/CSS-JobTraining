@@ -1,12 +1,27 @@
 using System.Collections.Generic;
 using UnityEngine;
+//todo fix audio playing wrong sometimes + display all necessary feedback
+public class Targets{//make it task dependent
+    public float speechDuration;
+    public float speechBeforeStart;
+    public Position MovementTarget;
+    public float MovementOkRadius;
 
-
+    public Targets(float sD, float sB, Vector2 mT, float kR)
+    {
+        speechDuration=sD;
+        speechBeforeStart=sB;
+        MovementTarget=new(mT);
+        MovementOkRadius=kR;
+    }
+}
 
 public class JobTrainingManager:MonoBehaviour{
 
     public static JobTrainingManager instance;
-    public static Vector3 roomCenter=new (0,7,412);
+    public static bool noKinectDebug=true;
+    public static Targets EvaluationTargets=new(5,2,new(1,1), 1);//for only locate task todo
+    public static Vector3 roomCenter=new (0,7,412);//todo lab, centrare in origine e basta
     [SerializeField] ActivityManager ActivityManager;
     [SerializeField] TaskManagerScript TaskManager;
     public LLMinterface LLM{get;private set;}
@@ -42,13 +57,14 @@ public class JobTrainingManager:MonoBehaviour{
 
 
     [SerializeField] Transform UserPosition;
-    [SerializeField] Transform ClientPosition;
+    //[SerializeField] Transform ClientPosition;
     [SerializeField] GameObject FrontWall,Floor;
     [SerializeField] TextCloud TextCloudUI;
     [SerializeField] FeedbackUI FeedbackUIRef;
     [SerializeField] AudioSource RoomSpeakers;
     [SerializeField] GameObject SpeakerButton;
     public PerformanceLog PerformanceLog;
+
 
     //here go all the functions that act on the scene, change background, change audio, etch
     public void ChangeFrontWallBackground(string bkgName){
@@ -89,6 +105,14 @@ public class JobTrainingManager:MonoBehaviour{
         }
         Debug.LogError("no area called '"+areaName+"' found");
     }
+    public void UnsubscribeToAreaTrigger(string areaName,OnUserEnteredArea handler){
+        foreach (var item in TriggerableAreas){
+            if(item.AreaName==areaName){
+                item.UserIn-=handler;
+                return;
+            }
+        }
+    }
     public void StopJobTraining(){
         // stop audio
     }
@@ -98,6 +122,7 @@ public class JobTrainingManager:MonoBehaviour{
     public void PlayDialog(string textToTTS, OnTTSPlaying handler){
         TTS.TTsPlaying+=handler;
         Debug.Log("playing voice "+textToTTS);
+        WriteOnUi(textToTTS);
         TTS.PlayAudio(textToTTS);
     }
     public void RemoveTTShandler(OnTTSPlaying handler){

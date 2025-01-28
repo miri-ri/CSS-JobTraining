@@ -96,7 +96,7 @@ public class UserWillingness{
 public class Evaluation
 {
     public double Score { get; set; }
-    public string Description { get; set; }
+    public string Description { get; set; }//add a descriptor for the type of eval- (speech duration, speed etccc)
 }
 
 

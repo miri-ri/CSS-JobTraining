@@ -1,2 +1,48 @@
-1/25/2025 12:57:02 AM-- customer -> FirstDialogInput
-1/25/2025 12:57:10 AM-- user ->  se 
+1/28/2025 1:43:21 AM-- customer -> Ciao! Can you show me the tomatoes?
+1/28/2025 1:43:32 AM-- user ->  la born cammina con me daniel buren cammina con me
+feedback
+Final Score -> 6.18313492063492
+____ evaluations ____ 
+partial score -> 1
+feedback -> 1 (pessima)
+___
+partial score -> 8.45
+feedback -> Ottimo tempismo!
+___
+partial score -> 7.64880952380952
+feedback -> La velocità nel parlare può essere migliore! (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 0
+feedback -> Devi migliorare di molto la tua velocità di movimento (Serve diminuire)
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+
+1/28/2025 1:44:55 AM-- customer -> Ciao! Can you show me the tomatoes?
+1/28/2025 1:45:14 AM-- user ->  movimento punk nella foresta gli alberi giuridica apprende sempre verdi sulla testa 
+feedback
+Final Score -> 4.95632911392405
+____ evaluations ____ 
+partial score -> 1
+feedback -> 1 (pessima)
+___
+partial score -> 7.575
+feedback -> Il tempismo può essere migliore! (Serve aumentare)
+___
+partial score -> 1.1629746835443
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 0
+feedback -> Devi migliorare di molto la tua velocità di movimento (Serve diminuire)
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+
