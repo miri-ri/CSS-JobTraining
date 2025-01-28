@@ -184,3 +184,171 @@ partial score -> 1.79067076109984
 feedback -> Devi migliorare di molto la tua posizione (Serve diminuire)
 ___
 
+28/01/2025 14:37:42-- customer -> Ciao! Can you show me the tomatoes?
+28/01/2025 14:37:58-- user ->  no non avrai mai pomodori muori 
+feedback
+Final Score -> 5.20383458149974
+____ evaluations ____ 
+partial score -> 1
+feedback -> 1 (pessima)
+___
+partial score -> 8.825
+feedback -> Ottimo tempismo!
+___
+partial score -> 2.56944444444444
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 7.53630366134735
+feedback -> La velocità di movimento può essere migliore! (Serve diminuire)
+___
+partial score -> 1.29225938320663
+feedback -> Devi migliorare di molto la tua posizione (Serve diminuire)
+___
+
+28/01/2025 14:43:09-- customer -> Ciao! Can you show me the tomatoes?
+28/01/2025 14:43:27-- user ->  presto veloce rende modo i corvi corvi pomodori 
+feedback
+Final Score -> 3.45394984969764
+____ evaluations ____ 
+partial score -> 1
+feedback -> 1 (pessima)
+___
+partial score -> 7.45
+feedback -> Il tempismo può essere migliore! (Serve aumentare)
+___
+partial score -> 3.64224137931034
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 6.11203059451703
+feedback -> La velocità di movimento può essere migliore! (Serve diminuire)
+___
+partial score -> -7.48057287564151
+feedback -> Devi migliorare di molto la tua posizione (Serve aumentare)
+___
+
+28/01/2025 14:47:48-- customer -> Ciao!Puoi mostrarmi dove sono i pomodori?
+28/01/2025 14:48:03-- user ->  i motori festival di jazz dance floor 
+feedback
+Final Score -> 3.51103126808564
+____ evaluations ____ 
+partial score -> 1
+feedback -> 1 (pessima)
+___
+partial score -> 8.825
+feedback -> Ottimo tempismo!
+___
+partial score -> 4.21195652173913
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 3.29967243266284
+feedback -> Devi migliorare di molto la tua velocità di movimento (Serve diminuire)
+___
+partial score -> -6.2704413458881
+feedback -> Devi migliorare di molto la tua posizione (Serve aumentare)
+___
+
+28/01/2025 14:50:14-- customer -> Ciao!Puoi mostrarmi dove sono i pomodori?
+28/01/2025 14:50:28-- user ->  sì pomodori ma c'è l'alcool watch 
+feedback
+Final Score -> 5.54689165909569
+____ evaluations ____ 
+partial score -> 1
+feedback -> 1 (pessima)
+___
+partial score -> 8.2
+feedback -> Ottimo tempismo!
+___
+partial score -> 3.83928571428571
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 6.97092870104691
+feedback -> La velocità di movimento può essere migliore! (Serve diminuire)
+___
+partial score -> 3.27113553924149
+feedback -> Posizionamento può essere migliore! (Serve diminuire)
+___
+
+28/01/2025 14:51:24-- customer -> Ciao!Puoi mostrarmi dove sono i pomodori?
+28/01/2025 14:51:59-- user ->  in questo caso di un sacco di cose che non c'entra niente con l'argomento e stupore la promessa di tempo così vediamo quanto ci mette trazione e quando si incazza rivoluzione siciliana oh 
+feedback
+Final Score -> 3.18391285229208
+____ evaluations ____ 
+partial score -> 1
+feedback -> 1 (pessima)
+___
+partial score -> 8.95
+feedback -> Ottimo tempismo!
+___
+partial score -> 4.18004587155963
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 8.70696983807815
+feedback -> Ottima velocità di movimento!
+___
+partial score -> -13.7335385958853
+feedback -> Devi migliorare di molto la tua posizione (Serve aumentare)
+___
+
+28/01/2025 14:52:58-- customer -> Ciao!Puoi mostrarmi dove sono i pomodori?
+28/01/2025 14:53:10-- user ->  nell'ultimo test pomodori venga hodor hodor 
+feedback
+Final Score -> 1.02155654047934
+____ evaluations ____ 
+partial score -> 1
+feedback -> 1 (pessima)
+___
+partial score -> 8.7
+feedback -> Ottimo tempismo!
+___
+partial score -> 2.56944444444444
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 3.30681670441172
+feedback -> Devi migliorare di molto la tua velocità di movimento (Serve diminuire)
+___
+partial score -> -19.4469219059802
+feedback -> Devi migliorare di molto la tua posizione (Serve aumentare)
+___
+
+28/01/2025 14:53:57-- customer -> Ciao!Puoi mostrarmi dove sono i pomodori?
+28/01/2025 14:54:10-- user ->  ultimo test condotti dalla magic room adesso cowboy 
+feedback
+Final Score -> 2.88936612868819
+____ evaluations ____ 
+partial score -> 1
+feedback -> 1 (pessima)
+___
+partial score -> 8.95
+feedback -> Ottimo tempismo!
+___
+partial score -> 3.64224137931034
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 5.85765498038785
+feedback -> La velocità di movimento può essere migliore! (Serve diminuire)
+___
+partial score -> -12.113699587569
+feedback -> Devi migliorare di molto la tua posizione (Serve aumentare)
+___
+
