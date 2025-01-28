@@ -44,3 +44,63 @@ duration -> 17
 T-before target -> 0
 duration target -> 0
 ______
+DATA FROM HARDCODED DEBUG -- Logged data of activity -> 28/01/2025 12:42:41 
+
+Position Data : 
+starting position -> (-2,410)
+user final position -> (0,0)
+target position -> (0,0)
+acceptability radius -> 1
+area(?) -> (1,1)
+______
+Timing Data : 
+time before action -> 0
+duration -> 12
+T-before target -> 0
+duration target -> 0
+______
+Logged data of activity -> 28/01/2025 13:40:49 
+
+Position Data : 
+starting position -> (3.885453,410.7855)
+user final position -> (-3.708388,407.1273)
+target position -> (-5.09,409.29)
+acceptability radius -> 1
+area(?) -> (1,1)
+______
+Timing Data : 
+time before action -> 0
+duration -> 37
+T-before target -> 0
+duration target -> 0
+______
+Logged data of activity -> 28/01/2025 13:45:24 
+
+Position Data : 
+starting position -> (6.450685,411.0591)
+user final position -> (-2.350068,410.2601)
+target position -> (-5.09,409.33)
+acceptability radius -> 1
+area(?) -> (1,1)
+______
+Timing Data : 
+time before action -> 0
+duration -> 4
+T-before target -> 0
+duration target -> 0
+______
+Logged data of activity -> 28/01/2025 14:02:48 
+
+Position Data : 
+starting position -> (5.096946,407.9781)
+user final position -> (-2.080143,410.3003)
+target position -> (-5.09,409.33)
+acceptability radius -> 1
+area(?) -> (1,1)
+______
+Timing Data : 
+time before action -> 0
+duration -> 12
+T-before target -> 0
+duration target -> 0
+______

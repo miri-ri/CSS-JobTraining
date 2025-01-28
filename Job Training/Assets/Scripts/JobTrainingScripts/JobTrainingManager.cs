@@ -19,7 +19,7 @@ public class Targets{//make it task dependent
 public class JobTrainingManager:MonoBehaviour{
 
     public static JobTrainingManager instance;
-    public static bool noKinectDebug=true;
+    public static bool noKinectDebug=false;
     public static Targets EvaluationTargets=new(5,2,new(1,1), 1);//for only locate task todo
     public static Vector3 roomCenter=new (0,7,412);//todo lab, centrare in origine e basta
     [SerializeField] ActivityManager ActivityManager;
@@ -28,12 +28,17 @@ public class JobTrainingManager:MonoBehaviour{
     public STTInterface speechTT{get;private set;}
     public TTSInterface TTS{get; private set;}
     public List<AreaTriggerScript> TriggerableAreas;
+    public AreaTriggerScript Triggerable;
+
 
     void Awake(){
         instance=this;
         TriggerableAreas=new();
-        FeedbackUIRef.ToggleHide(); 
-
+        FeedbackUIRef.ToggleHide();
+        TriggerableAreas.Add(Triggerable);
+        Debug.Log("esiste??? " + Triggerable.AreaName);
+        foreach(var it in TriggerableAreas)
+         Debug.Log("areassssssss>>>" + it.AreaName);
         speechTT=gameObject.AddComponent<STTInterface>();
         LLM=gameObject.AddComponent<LLMinterface>();
         TTS=gameObject.AddComponent<TTSInterface>();
@@ -123,7 +128,7 @@ public class JobTrainingManager:MonoBehaviour{
         TTS.TTsPlaying+=handler;
         Debug.Log("playing voice "+textToTTS);
         WriteOnUi(textToTTS);
-        TTS.PlayAudio(textToTTS);
+        TTS.PlayAudio(textToTTS);//warning tts non instaziato
     }
     public void RemoveTTShandler(OnTTSPlaying handler){
         TTS.TTsPlaying-=handler;

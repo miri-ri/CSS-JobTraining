@@ -14,7 +14,7 @@ public class AreaTriggerScript : MonoBehaviour
         Debug.Log("exited area "+AreaName);
     }
     void Start(){
-        JobTrainingManager.instance.TriggerableAreas.Add(this);
+        //JobTrainingManager.instance.TriggerableAreas.Add(this);
     }
 
 }

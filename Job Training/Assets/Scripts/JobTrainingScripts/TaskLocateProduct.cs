@@ -72,8 +72,9 @@ class AwaitUserInput : InteractionState
         JobTrainingManager.instance.GetUserDialog(HandleUserSpoke);
         JobTrainingManager.instance.SubscribeToAreaTrigger("locateTask",HandleUserInTarget);
         actionForFeedBack.positioning.start_pos=new(JobTrainingManager.instance.getUserPos());
-        if(JobTrainingManager.noKinectDebug)
-            movementFinished=true;//this should be false. true to bypass waiting WARNING
+        if (JobTrainingManager.noKinectDebug)
+            movementFinished = true;//this should be false. true to bypass waiting WARNING
+        else movementFinished = false;
         SpeechFinished=false;
 
         TimesUp+=HandleTimeOut;
@@ -90,7 +91,7 @@ class AwaitUserInput : InteractionState
         JobTrainingManager.instance.PerformanceLog.MovementDataLogger(JobTrainingManager.instance.getCurrentTasksFeedbackData().movement);
         movementFinished=true;
 
-
+        Debug.Log("AAAAAAAAAAAAAAAAAAAKKKKKKKKKKKKKK UTENTE ENTRATO JISASDJIADUIFEWIBFWOEBYF");
         if(SpeechFinished) ToNextState();
     }
 

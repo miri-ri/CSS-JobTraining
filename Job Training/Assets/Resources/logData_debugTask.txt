@@ -46,3 +46,117 @@ partial score -> 10
 feedback -> Ottimo posizonamento!
 ___
 
+28/01/2025 12:42:27-- customer -> Ciao! Can you show me the tomatoes?
+28/01/2025 12:42:41-- user ->   a 
+feedback
+Final Score -> 3.83333333333333
+____ evaluations ____ 
+partial score -> 3
+feedback -> 3 (media) 
+La risposta del commesso è breve, ma non è immediatamente comprensibile per il cliente (il commesso non dice "si" o "no, I'll show you" ma solo " a ").
+___
+partial score -> 0
+feedback -> Devi migliorare molto il tuo tempismo! (Serve diminuire)
+___
+partial score -> 0
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve diminuire la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 0
+feedback -> Devi migliorare di molto la tua velocità di movimento (Serve diminuire)
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+
+28/01/2025 12:45:57-- customer -> Ciao! Can you show me the tomatoes?
+28/01/2025 12:46:39-- user ->  sovraccarichi non mi sembra cambi domus castello 
+28/01/2025 12:50:40-- customer -> Ciao! Can you show me the tomatoes?
+28/01/2025 12:50:59-- user ->  sangue a vista istanbul non penso proprio 
+28/01/2025 12:54:08-- customer -> Ciao! Can you show me the tomatoes?
+28/01/2025 12:54:22-- user ->  sì i pomodori modo i pomodori pomodori 
+28/01/2025 12:57:27-- customer -> Ciao! Can you show me the tomatoes?
+28/01/2025 12:57:44-- user ->  se pomodori ma certo corrente l'ennesimo grave 
+28/01/2025 13:04:32-- customer -> Ciao! Can you show me the tomatoes?
+28/01/2025 13:04:48-- user ->  sì odori forti odori odori 
+28/01/2025 13:27:46-- customer -> Ciao! Can you show me the tomatoes?
+28/01/2025 13:28:05-- user ->  ho scritto è tratta di sesso 
+28/01/2025 13:28:55-- customer -> Ciao! Can you show me the tomatoes?
+28/01/2025 13:31:51-- customer -> Ciao! Can you show me the tomatoes?
+28/01/2025 13:32:09-- user ->  per fitzgerald pomodori storia di quei pomodori 
+28/01/2025 13:34:38-- customer -> Ciao! Can you show me the tomatoes?
+28/01/2025 13:34:55-- user ->  chiuso mi tormento ma pazzesco ma certo che cosa suo antico nemico bill gates 
+28/01/2025 13:38:10-- customer -> Ciao! Can you show me the tomatoes?
+28/01/2025 13:38:26-- user ->  si riposo e authority 
+feedback
+Final Score -> 4.21293471416502
+____ evaluations ____ 
+partial score -> 1
+feedback -> 1 (pessima)
+___
+partial score -> 8.575
+feedback -> Ottimo tempismo!
+___
+partial score -> 2.125
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 9.24062981606509
+feedback -> Ottima velocità di movimento!
+___
+partial score -> -5.66302153107499
+feedback -> Devi migliorare di molto la tua posizione (Serve aumentare)
+___
+
+28/01/2025 13:45:18-- customer -> Ciao! Can you show me the tomatoes?
+28/01/2025 13:45:30-- user ->  pomodori a sfondare
+feedback
+Final Score -> 3.15013818784632
+____ evaluations ____ 
+partial score -> 1
+feedback -> 1 (pessima) - la risposta non è comprensibile per un turista o per qualcuno che non parla l'italiano. La risposta dovrebbe essere "certain section of the produce, right here" o "we have them over there" e non un'espressione colloquiale italiana.
+___
+partial score -> 8.575
+feedback -> Ottimo tempismo!
+___
+partial score -> 5.625
+feedback -> La velocità nel parlare può essere migliore! (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 2.63587896925553
+feedback -> Devi migliorare di molto la tua velocità di movimento (Serve diminuire)
+___
+partial score -> -8.93504984217759
+feedback -> Devi migliorare di molto la tua posizione (Serve aumentare)
+___
+
+28/01/2025 14:02:35-- customer -> Ciao! Can you show me the tomatoes?
+28/01/2025 14:03:10-- user ->  sfondare e rainbow is missing of water i vicoli sterrati ikea idee del sudan hodor hodor hodor hodor 
+feedback
+Final Score -> 3.1176019596718
+____ evaluations ____ 
+partial score -> 1
+feedback -> 1 (pessima)
+___
+partial score -> 9.7
+feedback -> Ottimo tempismo!
+___
+partial score -> 1.725
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 7.90459930669078
+feedback -> La velocità di movimento può essere migliore! (Serve diminuire)
+___
+partial score -> -11.62398754866
+feedback -> Devi migliorare di molto la tua posizione (Serve aumentare)
+___
+
