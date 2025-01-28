@@ -21,7 +21,7 @@ public class JobTrainingManager:MonoBehaviour{
     public static JobTrainingManager instance;
     public static bool noKinectDebug=false;
     public static Targets EvaluationTargets=new(5,2,new(1,1), 1);//for only locate task todo
-    public static Vector3 roomCenter=new (0,7,412);//todo lab, centrare in origine e basta
+    public static Vector3 roomCenter=new (0,7,0);//todo lab, centrare in origine e basta
     [SerializeField] ActivityManager ActivityManager;
     [SerializeField] TaskManagerScript TaskManager;
     public LLMinterface LLM{get;private set;}

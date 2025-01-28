@@ -160,3 +160,27 @@ partial score -> -11.62398754866
 feedback -> Devi migliorare di molto la tua posizione (Serve aumentare)
 ___
 
+28/01/2025 14:25:49-- customer -> Ciao! Can you show me the tomatoes?
+28/01/2025 14:26:17-- user ->  tableau super nintendo world non ha un ruolo in pomodori 
+feedback
+Final Score -> 5.56656950483815
+____ evaluations ____ 
+partial score -> 1
+feedback -> 1 (pessima)
+___
+partial score -> 3.95
+feedback -> Devi migliorare molto il tuo tempismo! (Serve aumentare)
+___
+partial score -> 8.92857142857143
+feedback -> Ottima velocità nel parlare! 
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 7.73017483935766
+feedback -> La velocità di movimento può essere migliore! (Serve diminuire)
+___
+partial score -> 1.79067076109984
+feedback -> Devi migliorare di molto la tua posizione (Serve diminuire)
+___
+

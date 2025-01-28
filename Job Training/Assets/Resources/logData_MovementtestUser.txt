@@ -104,3 +104,48 @@ duration -> 12
 T-before target -> 0
 duration target -> 0
 ______
+Logged data of activity -> 28/01/2025 14:25:54 
+
+Position Data : 
+starting position -> (4.032655,-3.116753)
+user final position -> (-1.569894,-0.7083483)
+target position -> (-5.09,0.88)
+acceptability radius -> 1
+area(?) -> (1,1)
+______
+Timing Data : 
+time before action -> 0
+duration -> 4
+T-before target -> 0
+duration target -> 0
+______
+Logged data of activity -> 28/01/2025 14:26:05 
+
+Position Data : 
+starting position -> (4.032655,-3.116753)
+user final position -> (-6.510176,-0.4154987)
+target position -> (-5.09,0.88)
+acceptability radius -> 1
+area(?) -> (1,1)
+______
+Timing Data : 
+time before action -> 0
+duration -> 15
+T-before target -> 0
+duration target -> 0
+______
+Logged data of activity -> 28/01/2025 14:26:07 
+
+Position Data : 
+starting position -> (4.032655,-3.116753)
+user final position -> (-5.180669,2.698674)
+target position -> (-5.09,0.88)
+acceptability radius -> 1
+area(?) -> (1,1)
+______
+Timing Data : 
+time before action -> 0
+duration -> 16
+T-before target -> 0
+duration target -> 0
+______
