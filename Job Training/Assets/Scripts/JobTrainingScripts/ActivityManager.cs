@@ -143,7 +143,19 @@ class TaskState : ActivityState
         Debug.Log("Tast state started");
         
         JobTrainingManager.instance.PerformanceLog.TasksData.Add(taskPerformanceData);
-        TaskList selectedTask = (TaskList)UnityEngine.Random.Range(1, Enum.GetValues(typeof(TaskList)).Length + 1);
+
+        TaskList selectedTask; 
+        if (JobTrainingManager.instance.GetActivityManager().demoTaskRoutine == 0){
+            selectedTask = TaskList.LocateProduct;
+            JobTrainingManager.instance.GetActivityManager().demoTaskRoutine = 1;
+        } else if (JobTrainingManager.instance.GetActivityManager().demoTaskRoutine == 1){
+            selectedTask = TaskList.ShowInfopoint;
+            JobTrainingManager.instance.GetActivityManager().demoTaskRoutine = 2;
+        } else {
+            stateMachine.CompleteState(new StopActivity());
+            return;
+        }
+        
         taskManager.StartTask(selectedTask);
         taskManager.onTaskCompleted += CompleteTask; // onTaskCompleted only triggered when no problem appeared
     }

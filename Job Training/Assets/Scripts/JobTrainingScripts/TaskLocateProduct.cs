@@ -6,7 +6,7 @@ using UnityEngine;
 public class TaskLocateProduct : Task
 {
     protected override TaskList GetTaskType() => TaskList.LocateProduct;
-    protected override string GetInitialDialog() => "Ciao! Can you show me the tomatoes?";
+    protected override string GetInitialDialog() => "Ciao!Puoi mostrarmi dove sono i pomodori?";
     public override string GetAreaTrigger() => "locateTask";
 
     public TaskLocateProduct(){
