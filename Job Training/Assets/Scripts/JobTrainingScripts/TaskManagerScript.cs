@@ -17,26 +17,28 @@ public class TaskManagerScript : MonoBehaviour
 
         Debug.Log($"Starting Task: {chosen}");
 
-        switch (chosen){
-            case TaskList.LocateProduct:
-                CurrentTask = new TaskLocateProduct();
-                break;
-            default:
-                throw new Exception("Unknown task type!");
-        }
+        CurrentTask = CreateTask(chosen);
         CurrentTask.dataForEvaluation=new();
         CurrentTask.TaskSetup();
-        
-
     }
 
     public string TaskDescription(TaskList requested){
         switch (requested)
         {
             case  TaskList.LocateProduct:
-                return "In this Task you will be asked to locate a specific product."; 
+                return "In this task you will be asked to locate a specific product."; 
+            case TaskList.ShowInfopoint:
+                return "In this task, a customer approaches you and wants to report an expired product. You will have to guide them to the infopoint.";
             default: return "Unknown Task";
         }
+    }
+
+    private Task CreateTask(TaskList taskType){
+        return taskType switch {
+            TaskList.LocateProduct => new TaskLocateProduct(),
+            TaskList.ShowInfopoint => new TaskShowInfopoint(),
+            _ => throw new Exception("Unknown task type!")
+        };
     }
 
     //onEventUserAcceptsToStartAfterIntroduction(){ CurrentTask.Interaction}
@@ -58,7 +60,6 @@ public class TaskManagerScript : MonoBehaviour
         yield return new WaitForSeconds(sec);
         Task.interactionMachine.ChangeState(next);
     }
-    
     
 }
 

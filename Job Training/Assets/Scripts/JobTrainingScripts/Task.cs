@@ -13,7 +13,22 @@ public abstract class Task{
         JobTrainingManager.instance.GetTaskManager()?.TriggerTaskCompleted();
     }
 
-    public abstract void TaskSetup();
+    public void TaskSetup(){
+        JobTrainingManager.instance.GetTaskManager().TaskDescription(GetTaskType());
+        JobTrainingManager.instance.ChangeFrontWallBackground(GetBackgroundImage());
+
+        SetInteractionMachine(new InteractionMachine());
+        GetInteractionMachine().ChangeState(new FirstDialog(GetInitialDialog()));
+    }
+
+    protected abstract TaskList GetTaskType();
+    protected abstract string GetInitialDialog();
+
+    public abstract string GetAreaTrigger();
+
+    public virtual string GetBackgroundImage(){
+        return "PlaceholderMarket"; //Standard Background, selection can be expanded
+    }
 
     public abstract void Feedback();
 
@@ -25,9 +40,10 @@ public abstract class Task{
     }
 
 }   
-public enum TaskList{
-    LocateProduct=1
 
+public enum TaskList{
+    LocateProduct=1,
+    ShowInfopoint=2
 }
 
 public class InteractionMachine {

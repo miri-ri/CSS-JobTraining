@@ -2,6 +2,8 @@ using System;
 using TMPro;
 using UnityEngine;
 
+//Todo: Can be deleted
+
 // prototype of task 1: Locate product
 // advance by enabling use of syestem's TTS for audio, STT for dialog and kinect capture for movement;
 // then advance to using a fully working parametrized manager, with feedback (scoring) system;

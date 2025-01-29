@@ -9,6 +9,7 @@ public class ActivityManager:MonoBehaviour{
 
     private ActivityStateMachine stateMachine;
     private TaskManagerScript TaskManager;
+    public int demoTaskRoutine;
     
 
     public void Start(){
@@ -16,6 +17,7 @@ public class ActivityManager:MonoBehaviour{
         if(TaskManager == null){
             throw new ArgumentNullException(nameof(TaskManager), "TaskManager not asigned!");
         }
+        demoTaskRoutine = 0;
         JobTrainingManager.instance.PerformanceLog = new("testUser");
         stateMachine = new ActivityStateMachine();
         stateMachine.SetState(new ExplanationOfActivity());
@@ -122,7 +124,6 @@ class ExplanationOfActivity : ActivityState
 
         // Start background audio
         JobTrainingManager.instance.PlaySound();
-        // await trainer task selection
         
         stateMachine.CompleteState(null, 7);
     }
@@ -142,7 +143,8 @@ class TaskState : ActivityState
         Debug.Log("Tast state started");
         
         JobTrainingManager.instance.PerformanceLog.TasksData.Add(taskPerformanceData);
-        taskManager.StartTask(TaskList.LocateProduct); // Todo: add task choice input here
+        TaskList selectedTask = (TaskList)UnityEngine.Random.Range(1, Enum.GetValues(typeof(TaskList)).Length + 1);
+        taskManager.StartTask(selectedTask);
         taskManager.onTaskCompleted += CompleteTask; // onTaskCompleted only triggered when no problem appeared
     }
 

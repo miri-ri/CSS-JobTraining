@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class TaskLocateProduct : Task
 {
+    protected override TaskList GetTaskType() => TaskList.LocateProduct;
+    protected override string GetInitialDialog() => "Ciao! Can you show me the tomatoes?";
+    public override string GetAreaTrigger() => "locateTask";
 
     public TaskLocateProduct(){
         if(JobTrainingManager.instance==null){
@@ -15,32 +18,25 @@ public class TaskLocateProduct : Task
     public override void Feedback()
     {
     }
-
-    public override void TaskSetup() // maybe making introduction a proper state for consistency
-    {
-        JobTrainingManager.instance.GetTaskManager().TaskDescription(TaskList.LocateProduct);
-        JobTrainingManager.instance.ChangeFrontWallBackground("PlaceholderMarket");
-
-        SetInteractionMachine(new InteractionMachine());
-        GetInteractionMachine().ChangeState(new FirstDialog());
-    }
-
     
 }
 
 class FirstDialog:InteractionState{
     //play audio from virtual client
+
+    private string dialogText;
+
+    public FirstDialog(string dialogText){
+        this.dialogText = dialogText;
+    }
     public override void Setup()
     {
-        string txtForTTS="Ciao! Can you show me the tomatoes?";
-        JobTrainingManager.instance.PlayDialog(txtForTTS,handleTTS);
-        //JobTrainingManager.instance.WriteOnUi("Ciao! Can you show me the tomatoes?"); // for dynamic first dialogue input from LLM API
-        JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question=txtForTTS;// here we have to insert the question not FirstDialogInput
-        JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().addResponse(txtForTTS, false);
+        JobTrainingManager.instance.PlayDialog(dialogText,handleTTS);// for dynamic first dialogue input from LLM API
+        JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question=dialogText;// here we have to insert the question not FirstDialogInput
+        JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().addResponse(dialogText, false);
          
     }
     public void handleTTS(float secondsNeeded){
-        //set waiting time before change state TODO
         JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded,new AwaitUserInput());
     }
     public override void Dismantle()
@@ -56,21 +52,26 @@ class AwaitUserInput : InteractionState
     public override void Dismantle()
     {
         JobTrainingManager.instance.RemoveSTThandler(HandleUserSpoke);
-        JobTrainingManager.instance.UnsubscribeToAreaTrigger("locateTask",HandleUserInTarget);
+        JobTrainingManager.instance.UnsubscribeToAreaTrigger(areaTrigger,HandleUserInTarget);
     }
+    private string areaTrigger;
     private Movement actionForFeedBack;
     private DateTime startMovement;
     private bool movementFinished,SpeechFinished;
 
     private  delegate void onTimeout();
     private event onTimeout TimesUp;
+
+    public AwaitUserInput(){
+        areaTrigger = JobTrainingManager.instance.GetTaskManager().CurrentTask.GetAreaTrigger();
+    }
     public override void Setup()
     {
         Debug.Log("Setting up AwaitUserInputState");
         actionForFeedBack=new();
         startMovement=DateTime.Now;
         JobTrainingManager.instance.GetUserDialog(HandleUserSpoke);
-        JobTrainingManager.instance.SubscribeToAreaTrigger("locateTask",HandleUserInTarget);
+        JobTrainingManager.instance.SubscribeToAreaTrigger(areaTrigger,HandleUserInTarget);
         actionForFeedBack.positioning.start_pos=new(JobTrainingManager.instance.getUserPos());
         if(JobTrainingManager.noKinectDebug)
             movementFinished=true;//this should be false. true to bypass waiting WARNING
