@@ -73,8 +73,9 @@ class AwaitUserInput : InteractionState
         JobTrainingManager.instance.GetUserDialog(HandleUserSpoke);
         JobTrainingManager.instance.SubscribeToAreaTrigger(areaTrigger,HandleUserInTarget);
         actionForFeedBack.positioning.start_pos=new(JobTrainingManager.instance.getUserPos());
-        if(JobTrainingManager.noKinectDebug)
-            movementFinished=true;//this should be false. true to bypass waiting WARNING
+        if (JobTrainingManager.noKinectDebug)
+            movementFinished = true;//this should be false. true to bypass waiting WARNING
+        else movementFinished = false;
         SpeechFinished=false;
 
         TimesUp+=HandleTimeOut;
@@ -91,7 +92,7 @@ class AwaitUserInput : InteractionState
         JobTrainingManager.instance.PerformanceLog.MovementDataLogger(JobTrainingManager.instance.getCurrentTasksFeedbackData().movement);
         movementFinished=true;
 
-
+        Debug.Log("AAAAAAAAAAAAAAAAAAAKKKKKKKKKKKKKK UTENTE ENTRATO JISASDJIADUIFEWIBFWOEBYF");
         if(SpeechFinished) ToNextState();
     }
 
@@ -158,7 +159,7 @@ class PositiveTurnout : InteractionState
         //JobTrainingManager.instance.GenerateLLMCustomerResponse("last transcript",PLayGeneratedResponse);
     }
     public void PLayGeneratedResponse(string reply){
-        JobTrainingManager.instance.PlayDialog("Thanks for your help!",handleTTS);
+        JobTrainingManager.instance.PlayDialog("Grazie mille!",handleTTS);
         
         
     }
@@ -180,8 +181,8 @@ class NegativeTurnout : InteractionState
         JobTrainingManager.instance.RemoveLLMCustomerResponse(PlayGeneratedResponse);
     }
     public void PlayGeneratedResponse(string reply){
-        JobTrainingManager.instance.PlayDialog("I didn't quite understand, can you try again?",handleTTS);
-        JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question="I didn't quite understand, can you try again?";
+        JobTrainingManager.instance.PlayDialog("Non ho capito, puoi ripeter?",handleTTS);
+        JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question= "Non ho capito, puoi ripeter?";
         
     }
     public void handleTTS(float secondsNeeded){
@@ -194,7 +195,7 @@ class FeedbackState : InteractionState
 {
     public override void Setup(){
         JobTrainingManager.instance.GetEvaluation(JobTrainingManager.instance.getCurrentTasksFeedbackData(),ShowFeedback);
-        JobTrainingManager.instance.PlayDialog("Well done, now wait a few seconds for your evaluation",handleTTS);
+        JobTrainingManager.instance.PlayDialog("Ben fatto, ora attendi qualche secondo per la valutazione ",handleTTS);
     }
     void ShowFeedback(EvaluationResponse eval){
         JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().setFeedback(eval);//logs feedback

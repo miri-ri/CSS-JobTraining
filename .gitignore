@@ -74,3 +74,4 @@ crashlytics-build.properties
 .DS_Store
 evaluationsystem/model.gguf
 Job Training/ProjectSettings/ProjectVersion.txt
+evaluationsystem/.venv39/
