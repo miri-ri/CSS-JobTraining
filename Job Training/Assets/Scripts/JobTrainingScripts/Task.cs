@@ -27,7 +27,7 @@ public abstract class Task{
     public abstract string GetAreaTrigger();
 
     public virtual string GetBackgroundImage(){
-        return "PlaceholderMarket"; //Standard Background, selection can be expanded
+        return "PlaceholderSuper"; //Standard Background, selection can be expanded
     }
 
     public abstract void Feedback();

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 //todo fix audio playing wrong sometimes + display all necessary feedback
 public class Targets{//make it task dependent
     public float speechDuration;
@@ -62,23 +63,20 @@ public class JobTrainingManager:MonoBehaviour{
 
 
     [SerializeField] Transform UserPosition;
-    //[SerializeField] Transform ClientPosition;
-    [SerializeField] GameObject FrontWall,Floor;
     [SerializeField] TextCloud TextCloudUI;
     [SerializeField] FeedbackUI FeedbackUIRef;
     [SerializeField] AudioSource RoomSpeakers;
     [SerializeField] GameObject SpeakerButton;
+    [SerializeField] Image wall;
     public PerformanceLog PerformanceLog;
 
 
     //here go all the functions that act on the scene, change background, change audio, etch
+    
     public void ChangeFrontWallBackground(string bkgName){
-        Renderer ren= FrontWall.GetComponent<Renderer>();
-        Material backG=Resources.Load<Material>("Backgrounds/"+bkgName);
-        if(backG==null){
-            throw new System.Exception("backg: "+bkgName+" not found");
-        }
-        ren.material=backG;
+        Sprite bkg= Resources.Load <Sprite>("Backgrounds/sp/"+bkgName);
+        if(bkg==null) Debug.LogError("missing backgeound for -> "+bkgName);
+        wall.sprite=bkg;
     }
     void ShowMicrophoneFeedback(){
         SpeakerButton.GetComponent<CanvasGroup>().alpha=1;
@@ -87,9 +85,11 @@ public class JobTrainingManager:MonoBehaviour{
     void HideMicrophoneFeedback(){
         SpeakerButton.GetComponent<CanvasGroup>().alpha=0;
     }
-    public void PlaySound(){
+    public void PlaySound(string soundName){
         if(RoomSpeakers != null){
-            RoomSpeakers.PlayOneShot((AudioClip)Resources.Load("supermarket-17823"));;
+            AudioClip cl=Resources.Load<AudioClip>("roomBKGNoise/"+soundName);
+            if(cl==null)Debug.LogError("no clip audio -> "+soundName);
+            RoomSpeakers.PlayOneShot(cl);
         }
     }
 

@@ -31,6 +31,7 @@ class FirstDialog:InteractionState{
     }
     public override void Setup()
     {
+        JobTrainingManager.instance.PlaySound("supermarket-17823");
         JobTrainingManager.instance.PlayDialog(dialogText,handleTTS);// for dynamic first dialogue input from LLM API
         JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question=dialogText;// here we have to insert the question not FirstDialogInput
         JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().addResponse(dialogText, false);

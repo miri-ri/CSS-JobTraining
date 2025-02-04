@@ -123,7 +123,7 @@ class ExplanationOfActivity : ActivityState
         JobTrainingManager.instance.WriteOnUi("Welcome to the Job Training! In this activity you will be practice different tasks that will help you learn to work in a supermarket.");
 
         // Start background audio
-        JobTrainingManager.instance.PlaySound();
+        //JobTrainingManager.instance.PlaySound("startSound");
         
         stateMachine.CompleteState(null, 7);
     }
