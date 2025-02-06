@@ -188,6 +188,14 @@ public class JobTrainingManager:MonoBehaviour{
     public void RemoveLLMCustomerResponse(OnLLMresponseToUserReady handler){
         LLM.ResponseReady-=handler;
     }
+    public void getUserWillingess(OnSystemInteractionReady handler){
+        LLM.SystemResponseInterpreted+=handler;
+        LLM.evaluateSystemAnswer();
+    }
+    public void RemoveUserWillingessHandler(OnSystemInteractionReady handler){
+        LLM.SystemResponseInterpreted-=handler;
+
+    }
     
     
 }
