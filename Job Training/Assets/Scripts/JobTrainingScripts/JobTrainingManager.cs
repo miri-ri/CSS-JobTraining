@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +17,7 @@ public class Targets{//make it task dependent
         MovementOkRadius=kR;
     }
 }
+public delegate void generalTimer();
 
 public class JobTrainingManager:MonoBehaviour{
 
@@ -121,6 +123,22 @@ public class JobTrainingManager:MonoBehaviour{
     public void StopJobTraining(){
         // stop audio
     }
+
+    public generalTimer timer;
+
+    public void SetTimer(int sec, generalTimer handler){
+        timer+=handler;
+        StartCoroutine(Timer(sec));
+    }
+    public void DismantleTimer(generalTimer handler){
+        timer-=handler;
+    }
+    IEnumerator Timer(int sec){
+        yield return new WaitForSeconds(sec);
+        timer.Invoke();
+    }
+    
+    
     
   
 //-------TextToSpeech calls 

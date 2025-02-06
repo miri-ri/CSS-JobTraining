@@ -53,15 +53,13 @@ class AwaitUserInput : InteractionState
     public override void Dismantle()
     {
         JobTrainingManager.instance.RemoveSTThandler(HandleUserSpoke);
+        JobTrainingManager.instance.DismantleTimer(HandleTimeOut);
         JobTrainingManager.instance.UnsubscribeToAreaTrigger(areaTrigger,HandleUserInTarget);
     }
     private string areaTrigger;
     private Movement actionForFeedBack;
     private DateTime startMovement;
     private bool movementFinished,SpeechFinished;
-
-    private  delegate void onTimeout();
-    private event onTimeout TimesUp;
 
     public AwaitUserInput(){
         areaTrigger = JobTrainingManager.instance.GetTaskManager().CurrentTask.GetAreaTrigger();
@@ -78,8 +76,8 @@ class AwaitUserInput : InteractionState
             movementFinished = true;//this should be false. true to bypass waiting WARNING
         else movementFinished = false;
         SpeechFinished=false;
-
-        TimesUp+=HandleTimeOut;
+        JobTrainingManager.instance.SetTimer(20,HandleTimeOut);
+        
         //todo needs a timer for a maximun duration -> calls TimesUp
     }
     public void HandleUserInTarget(Vector2 userPosition, Vector2 targetPosition, DateTime arrival){//todo fix up start pos and area
@@ -91,20 +89,23 @@ class AwaitUserInput : InteractionState
         actionForFeedBack.timing.s_duration=arrival.Subtract(startMovement).Seconds;
         JobTrainingManager.instance.getCurrentTasksFeedbackData().movement=actionForFeedBack;
         JobTrainingManager.instance.PerformanceLog.MovementDataLogger(JobTrainingManager.instance.getCurrentTasksFeedbackData().movement);
-        movementFinished=true;
 
-        Debug.Log("AAAAAAAAAAAAAAAAAAAKKKKKKKKKKKKKK UTENTE ENTRATO JISASDJIADUIFEWIBFWOEBYF");
-        if(SpeechFinished) ToNextState();
+
+
+        movementFinished=true;
+        if(SpeechFinished) 
+            ToNextState();
     }
 
-    public void HandleTimeOut(){//todo lab decide timer
+    public void HandleTimeOut(){
+        
         if(!movementFinished){
 
         }
         if(!SpeechFinished){
 
         }
-
+        JobTrainingManager.instance.PlaySound("timeoutSound");//todo add sound
         ToNextState();
 
     }
@@ -129,7 +130,7 @@ class AwaitUserInput : InteractionState
 
     void ToNextState(){
 
-        TimesUp-=HandleTimeOut;
+        
 
         bool IsResponsePositive = true; // todo: proper adaptation
 
@@ -204,7 +205,7 @@ class FeedbackState : InteractionState
 
         
         
-        //CompleteTask();
+        //
         //todo on user input or after timer complete task
         
     }
