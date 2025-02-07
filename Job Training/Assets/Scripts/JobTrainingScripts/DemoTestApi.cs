@@ -62,13 +62,7 @@ public class DemoTestApi :MonoBehaviour{
         
     }
 
-    void InterpreteSystemInteraction(string userRes){
-        LLMinterface LLM=gameObject.AddComponent<LLMinterface>();
-        //=new();
-        LLM.SystemResponseInterpreted+=handleInterpretation;
-        LLM.evaluateSystemAnswer(userRes);
-    
-    }
+
 
 
 

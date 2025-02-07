@@ -54,7 +54,7 @@ public class LLMinterface : MonoBehaviour
                 
     }
     
-    public void evaluateSystemAnswer(string answer){//interaction user - system
+    public void evaluateSystemAnswer(){//interaction user - system
         StartCoroutine(GetData("http://localhost:8000/willing",true));
 
     }
