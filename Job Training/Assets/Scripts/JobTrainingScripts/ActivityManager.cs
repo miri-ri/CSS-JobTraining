@@ -119,7 +119,7 @@ class ExplanationOfActivity : ActivityState
     {
         // Show intro UI
         JobTrainingManager.instance.WriteOnUi("Welcome to the Job Training! In this activity you will be practice different tasks that will help you learn to work in a supermarket.");
-
+        JobTrainingManager.instance.ChangeFrontWallBackground("activity_intr");
         // Start background audio
         //JobTrainingManager.instance.PlaySound("startSound");
         
@@ -181,6 +181,7 @@ class TaskCompleteState : ActivityState
     {
         JobTrainingManager.instance.PerformanceLog.TasksData[^1].EndTask();
         JobTrainingManager.instance.WriteOnUi("Do you want to proceed to the next task, take a break or stop the activity?");
+        JobTrainingManager.instance.ChangeFrontWallBackground("again");
         string userInput = "next";// user selection input
         if(userInput=="next"){
             stateMachine.CompleteState(new TaskState());

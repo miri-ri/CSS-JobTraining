@@ -21,6 +21,7 @@ public class TaskManagerScript : MonoBehaviour
         CurrentTask.dataForEvaluation=new();
         CurrentTask.TaskSetup();
     }
+    
 
     public string TaskDescription(TaskList requested){
         switch (requested)

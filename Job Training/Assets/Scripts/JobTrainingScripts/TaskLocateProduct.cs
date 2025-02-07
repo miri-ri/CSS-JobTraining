@@ -197,19 +197,20 @@ class FeedbackState : InteractionState
 {
     public override void Setup(){
         JobTrainingManager.instance.GetEvaluation(JobTrainingManager.instance.getCurrentTasksFeedbackData(),ShowFeedback);
+        JobTrainingManager.instance.ChangeFrontWallBackground("waiting_eval");
         JobTrainingManager.instance.PlayDialog("Ben fatto, ora attendi qualche secondo per la valutazione ",handleTTS);
     }
     void ShowFeedback(EvaluationResponse eval){
         JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().setFeedback(eval);//logs feedback
-        JobTrainingManager.instance.ShowFeedbackMessages(eval.Evaluations[0].Description);
-
+        //JobTrainingManager.instance.ShowFeedbackMessages(eval.Evaluations[0].Description);
+        JobTrainingManager.instance.ChangeFrontWallBackground("evaluation");
         
-        
+        JobTrainingManager.instance.showEvaluation(eval);
         //
         //todo on user input or after timer complete task
         
     }
-
+    
     public override void Dismantle(){
         JobTrainingManager.instance.RemoveEvaluationHandler(ShowFeedback);
         JobTrainingManager.instance.RemoveTTShandler(handleTTS);

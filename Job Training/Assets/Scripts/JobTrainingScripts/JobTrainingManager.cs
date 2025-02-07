@@ -39,16 +39,16 @@ public class JobTrainingManager:MonoBehaviour{
         TriggerableAreas=new();
         FeedbackUIRef.ToggleHide();
         TriggerableAreas.Add(Triggerable);
-        Debug.Log("esiste??? " + Triggerable.AreaName);
+        /*Debug.Log("esiste??? " + Triggerable.AreaName);
         foreach(var it in TriggerableAreas)
-         Debug.Log("areassssssss>>>" + it.AreaName);
+         Debug.Log("areassssssss>>>" + it.AreaName);*/
         speechTT=gameObject.AddComponent<STTInterface>();
         LLM=gameObject.AddComponent<LLMinterface>();
         TTS=gameObject.AddComponent<TTSInterface>();
 
         HideMicrophoneFeedback();
         speechTT.ListeningComplete+=HideMicrophoneFeedback;
-
+        ChangeFrontWallBackground("start");
     }
     
     //used to show on the wall that the system is actively listening to the user speech
@@ -70,6 +70,7 @@ public class JobTrainingManager:MonoBehaviour{
     [SerializeField] AudioSource RoomSpeakers;
     [SerializeField] GameObject SpeakerButton;
     [SerializeField] Image wall;
+    [SerializeField] EvalScript FeedbackPanel;
     public PerformanceLog PerformanceLog;
 
 
@@ -94,7 +95,14 @@ public class JobTrainingManager:MonoBehaviour{
             RoomSpeakers.PlayOneShot(cl);
         }
     }
-
+    public void showEvaluation(EvaluationResponse eval){
+        FeedbackPanel.FlushPanel();
+        ChangeFrontWallBackground("evaluation");
+        FeedbackPanel.AddFeedbackIcons(eval);
+    }
+    public void hideEvaluation(){
+        FeedbackPanel.FlushPanel();
+    }
     public void WriteOnUi(string text){
         TextCloudUI.WriteText(text);
     }
