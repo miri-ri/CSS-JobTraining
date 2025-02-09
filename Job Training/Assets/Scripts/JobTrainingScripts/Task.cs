@@ -7,7 +7,7 @@ public abstract class Task{
     public static InteractionMachine interactionMachine;
     public DataForEvaluation dataForEvaluation;
 
-    protected void CompleteTask()
+    public void CompleteTask()
     {
         Debug.Log($"Task completed.");
         JobTrainingManager.instance.GetTaskManager()?.TriggerTaskCompleted();

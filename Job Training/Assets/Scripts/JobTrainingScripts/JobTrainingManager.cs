@@ -22,7 +22,7 @@ public delegate void generalTimer();
 public class JobTrainingManager:MonoBehaviour{
 
     public static JobTrainingManager instance;
-    public static bool noKinectDebug=false;
+    public static bool noKinectDebug=true;
     public static Targets EvaluationTargets=new(5,2,new(1,1), 1);//for only locate task todo
     public static Vector3 roomCenter=new (0,7,0);
     [SerializeField] ActivityManager ActivityManager;
@@ -37,7 +37,7 @@ public class JobTrainingManager:MonoBehaviour{
     void Awake(){
         instance=this;
         TriggerableAreas=new();
-        FeedbackUIRef.ToggleHide();
+        //FeedbackUIRef.ToggleHide();
         TriggerableAreas.Add(Triggerable);
         /*Debug.Log("esiste??? " + Triggerable.AreaName);
         foreach(var it in TriggerableAreas)
@@ -45,10 +45,11 @@ public class JobTrainingManager:MonoBehaviour{
         speechTT=gameObject.AddComponent<STTInterface>();
         LLM=gameObject.AddComponent<LLMinterface>();
         TTS=gameObject.AddComponent<TTSInterface>();
-
+        
         HideMicrophoneFeedback();
         speechTT.ListeningComplete+=HideMicrophoneFeedback;
         ChangeFrontWallBackground("start");
+        ToggleTextUi(false);
     }
     
     //used to show on the wall that the system is actively listening to the user speech
@@ -66,7 +67,6 @@ public class JobTrainingManager:MonoBehaviour{
 
     [SerializeField] Transform UserPosition;
     [SerializeField] TextCloud TextCloudUI;
-    [SerializeField] FeedbackUI FeedbackUIRef;
     [SerializeField] AudioSource RoomSpeakers;
     [SerializeField] GameObject SpeakerButton;
     [SerializeField] Image wall;
@@ -95,6 +95,9 @@ public class JobTrainingManager:MonoBehaviour{
             RoomSpeakers.PlayOneShot(cl);
         }
     }
+    public void StopAudioCurrentClip(){
+        RoomSpeakers.Stop();
+    }
     public void showEvaluation(EvaluationResponse eval){
         FeedbackPanel.FlushPanel();
         ChangeFrontWallBackground("evaluation");
@@ -106,11 +109,16 @@ public class JobTrainingManager:MonoBehaviour{
     public void WriteOnUi(string text){
         TextCloudUI.WriteText(text);
     }
-    public void ShowFeedbackMessages(string feedbackMessage){//todo graphical display for multple points
+    public void ToggleTextUi(bool visible){
+        if(visible)
+            TextCloudUI.ShowTextUI();
+        else TextCloudUI.HideTextUI();
+    }
+    /*public void ShowFeedbackMessages(string feedbackMessage){//todo graphical display for multple points
         FeedbackUIRef.ToggleHide();
         FeedbackUIRef.setFeedback(feedbackMessage);
 
-    }
+    }*/
     public void SubscribeToAreaTrigger(string areaName, OnUserEnteredArea handler){
         foreach (var item in TriggerableAreas){
             if(item.AreaName==areaName){
@@ -132,7 +140,7 @@ public class JobTrainingManager:MonoBehaviour{
         // stop audio
     }
 
-    public generalTimer timer;
+    public event generalTimer timer;
 
     public void SetTimer(int sec, generalTimer handler){
         timer+=handler;
@@ -143,7 +151,7 @@ public class JobTrainingManager:MonoBehaviour{
     }
     IEnumerator Timer(int sec){
         yield return new WaitForSeconds(sec);
-        timer.Invoke();
+        timer?.Invoke();
     }
     
     

@@ -119,9 +119,10 @@ class ExplanationOfActivity : ActivityState
     {
         // Show intro UI
         JobTrainingManager.instance.WriteOnUi("Welcome to the Job Training! In this activity you will be practice different tasks that will help you learn to work in a supermarket.");
-        JobTrainingManager.instance.ChangeFrontWallBackground("activity_intr");
+        JobTrainingManager.instance.ChangeFrontWallBackground("instructions");
         // Start background audio
         //JobTrainingManager.instance.PlaySound("startSound");
+        JobTrainingManager.instance.ToggleTextUi(true);
         
         stateMachine.CompleteState(null, 7);
     }
@@ -129,6 +130,7 @@ class ExplanationOfActivity : ActivityState
 
     public override void Dismantle()
     {
+        //JobTrainingManager.instance.ToggleTextUi(false);
         //throw new System.NotImplementedException();
     }
 }

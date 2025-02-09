@@ -35,7 +35,7 @@ class FirstDialog:InteractionState{
         JobTrainingManager.instance.PlayDialog(dialogText,handleTTS);// for dynamic first dialogue input from LLM API
         JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question=dialogText;// here we have to insert the question not FirstDialogInput
         JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().addResponse(dialogText, false);
-         
+        Debug.LogError("sdadasd "+JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question);
     }
     public void handleTTS(float secondsNeeded){
         JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded,new AwaitUserInput());
@@ -78,7 +78,7 @@ class AwaitUserInput : InteractionState
         SpeechFinished=false;
         JobTrainingManager.instance.SetTimer(20,HandleTimeOut);
         
-        //todo needs a timer for a maximun duration -> calls TimesUp
+       
     }
     public void HandleUserInTarget(Vector2 userPosition, Vector2 targetPosition, DateTime arrival){//todo fix up start pos and area
         actionForFeedBack.positioning.user_pos=new(userPosition);
@@ -98,14 +98,15 @@ class AwaitUserInput : InteractionState
     }
 
     public void HandleTimeOut(){
-        
+        Debug.Log("TIMEOUT");
         if(!movementFinished){
 
         }
         if(!SpeechFinished){
-
+            //todo graphics, may add a different animation to the microphone if timeout;
+            //warning with no words server crashes
         }
-        JobTrainingManager.instance.PlaySound("timeoutSound");//todo add sound
+       // JobTrainingManager.instance.PlaySound("timeoutSound");//todo add sound
         ToNextState();
 
     }
@@ -117,7 +118,7 @@ class AwaitUserInput : InteractionState
         string question=JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question;
         JobTrainingManager.instance.getCurrentTasksFeedbackData().speech=spokenResponse ;
         JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question=question ;
-        
+        Debug.LogError("sdadasd "+JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question);
         
 
         if(JobTrainingManager.noKinectDebug){//for debug w/ no kinect
@@ -130,7 +131,7 @@ class AwaitUserInput : InteractionState
 
     void ToNextState(){
 
-        
+        JobTrainingManager.instance.DismantleTimer(HandleTimeOut);
 
         bool IsResponsePositive = true; // todo: proper adaptation
 
@@ -198,14 +199,18 @@ class FeedbackState : InteractionState
     public override void Setup(){
         JobTrainingManager.instance.GetEvaluation(JobTrainingManager.instance.getCurrentTasksFeedbackData(),ShowFeedback);
         JobTrainingManager.instance.ChangeFrontWallBackground("waiting_eval");
+        JobTrainingManager.instance.PlaySound("waiting-music");
+        JobTrainingManager.instance.ToggleTextUi(false);
         JobTrainingManager.instance.PlayDialog("Ben fatto, ora attendi qualche secondo per la valutazione ",handleTTS);
     }
     void ShowFeedback(EvaluationResponse eval){
+        
         JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().setFeedback(eval);//logs feedback
         //JobTrainingManager.instance.ShowFeedbackMessages(eval.Evaluations[0].Description);
         JobTrainingManager.instance.ChangeFrontWallBackground("evaluation");
         
         JobTrainingManager.instance.showEvaluation(eval);
+        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(20, null);
         //
         //todo on user input or after timer complete task
         
@@ -217,7 +222,20 @@ class FeedbackState : InteractionState
     }
 
     public void handleTTS(float secondsNeeded){
-        //JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded+10, null);//todo , i believe this breakes the machine 
+        //JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded+10, null);
+    }
+}
+class EndingState : InteractionState
+{
+    public override void Dismantle()
+    {
+        
+    }
+
+    public override void Setup()
+    {
+        Debug.Log("end of task LOCATE");
+        JobTrainingManager.instance.GetTaskManager().CurrentTask.CompleteTask();
     }
 }
 

@@ -17,10 +17,10 @@ public class TextCloud : MonoBehaviour
   
     }
     public void ShowTextUI(){
-        this.enabled=true;
+        gameObject.GetComponent<CanvasGroup>().alpha=1;
     }
     public void HideTextUI(){
-        this.enabled=false;
+        gameObject.GetComponent<CanvasGroup>().alpha=0;
     }
     public void WriteText(string txt){
         text.text=txt;
