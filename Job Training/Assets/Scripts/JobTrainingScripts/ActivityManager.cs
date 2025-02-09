@@ -181,19 +181,25 @@ class TaskCompleteState : ActivityState
 
     public override void Setup()
     {
+        string dialog = "Do you want to proceed to the next task?";
         JobTrainingManager.instance.PerformanceLog.TasksData[^1].EndTask();
-        JobTrainingManager.instance.WriteOnUi("Do you want to proceed to the next task, take a break or stop the activity?");
+        JobTrainingManager.instance.WriteOnUi(dialog);
+        // todo JobTrainingManager.instance.PlayDialog(dialog,handleTTS);
         JobTrainingManager.instance.ChangeFrontWallBackground("again");
-        string userInput = "next";// user selection input
-        if(userInput=="next"){
-            stateMachine.CompleteState(new TaskState());
-        } else if (userInput == "wait"){
-            stateMachine.CompleteState(new WaitingState());
-        } else if (userInput == "stop"){
-            stateMachine.CompleteState(new StopActivity());
+        bool userInput = true;// user selection input
+        if(userInput){
+            dialog = "Alright, proceeding...";
+            JobTrainingManager.instance.WriteOnUi(dialog);
+        // todo JobTrainingManager.instance.PlayDialog(dialog,handleTTS);
+            stateMachine.CompleteState(new TaskState(), 3);
         } else {
-            throw new ArgumentException("TaskCompleteState: invalid user selection");
+            dialog = "Alright, stopping the activity!";
+            JobTrainingManager.instance.WriteOnUi(dialog);
+        // todo JobTrainingManager.instance.PlayDialog(dialog,handleTTS);
+            stateMachine.CompleteState(new StopActivity(), 3);
         }
+
+
     }
 }
 
@@ -208,8 +214,6 @@ class WaitingState : ActivityState
     public override void Setup()
     {
         JobTrainingManager.instance.WriteOnUi("Alright, let's take a short break of 3 minutes!");
-        // continue instead of timer
-        //Thread.Sleep(3*1000); // maybe async needed?
         stateMachine.CompleteState(null, 3*60);
     }
 }
@@ -226,7 +230,7 @@ class StopActivity : ActivityState
     {
         JobTrainingManager.instance.PerformanceLog.EndLog();
         JobTrainingManager.instance.WriteOnUi("Goodbye!");
-        // final logging (wait till finished)
+        // todo final logging (wait till finished)
         JobTrainingManager.instance.StopJobTraining();
 
     }

@@ -137,6 +137,7 @@ public class JobTrainingManager:MonoBehaviour{
         }
     }
     public void StopJobTraining(){
+        // todo
         // stop audio
     }
 
