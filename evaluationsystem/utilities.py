@@ -17,9 +17,13 @@ def difference(actual:float, target:float, deltaInf, deltaSup, exp:float = 1):
         return 10
     
     if actual > target:
+        if(deltaSup == 0): 
+            return 0
         return (1 - (actual - target)**exp / deltaSup) * 10
     
     if actual < target:
+        if(deltaInf == 0): 
+            return 0
         return (1 - (target - actual)**exp / deltaInf) * 10
     
 

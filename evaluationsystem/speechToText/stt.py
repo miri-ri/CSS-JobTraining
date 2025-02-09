@@ -130,7 +130,8 @@ class Stt:
                 partial_result = self.fast_recognizer.PartialResult()
                 value = json.loads(partial_result)["partial"]
                 if( (self.s / self.s_RECOGNITION_FRAME_DURATION)%1 == 0 ):
-                    print(round( (time.time()-start_time)*1000 )/1000, "s passed - analizing ",self.s, "sec", end="\r")
+                    pass
+                    # print(round( (time.time()-start_time)*1000 )/1000, "s passed - analizing ",self.s, "sec", end="\r")
 
             if len(value) > 0:
                 self.s_last_non_empty = self.s
@@ -207,13 +208,13 @@ class Stt:
                 text_sure += " "+value
 
             else:
-                print("      > ", round((time.time()-start_time)*1000 )/1000, "s passed - analizing ",(i/self.RECOGNITION_FRAME)*self.s_RECOGNITION_FRAME_DURATION, "sec")
+                # print("      > ", round((time.time()-start_time)*1000 )/1000, "s passed - analizing ",(i/self.RECOGNITION_FRAME)*self.s_RECOGNITION_FRAME_DURATION, "sec")
                 
                 partial_result = self.slow_recognizer.PartialResult()
                 value = json.loads(partial_result)["partial"] 
                 unsure = value
 
-            print(text_sure+" "+unsure)
+            # print(text_sure+" "+unsure)
         
         self.text = text_sure+" "+unsure
         
