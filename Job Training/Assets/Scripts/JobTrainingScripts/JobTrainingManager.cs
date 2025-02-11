@@ -170,7 +170,7 @@ public class JobTrainingManager:MonoBehaviour{
     }
   
 
-//-------SpeachToText calls
+//-------SpeechToText calls
     public void GetUserDialog(OnSTTReady handler){
         Debug.Log("getting text from user voice");
         speechTT.RequestComplete+=handler;

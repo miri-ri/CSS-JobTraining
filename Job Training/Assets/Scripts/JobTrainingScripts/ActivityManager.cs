@@ -37,7 +37,7 @@ public class ActivityManager:MonoBehaviour{
     public ActivityStateMachine GetActivityStateMachine(){
         return stateMachine;
     }
-    
+    // todo: all states need proper sound playing
 }
 
 //the states in this SA handle the interaction during the activity 
@@ -181,25 +181,23 @@ class TaskCompleteState : ActivityState
 
     public override void Setup()
     {
-        string dialog = "Do you want to proceed to the next task?";
         JobTrainingManager.instance.PerformanceLog.TasksData[^1].EndTask();
-        JobTrainingManager.instance.WriteOnUi(dialog);
+        JobTrainingManager.instance.WriteOnUi("Do you want to proceed to the next task?");
+        JobTrainingManager.instance.getUserWillingess(ProceedAfterTask);
         // todo JobTrainingManager.instance.PlayDialog(dialog,handleTTS);
         JobTrainingManager.instance.ChangeFrontWallBackground("again");
-        bool userInput = true;// user selection input
+
+    }
+    void ProceedAfterTask(bool userInput){
         if(userInput){
-            dialog = "Alright, proceeding...";
-            JobTrainingManager.instance.WriteOnUi(dialog);
+            JobTrainingManager.instance.WriteOnUi("Alright, proceeding...");
         // todo JobTrainingManager.instance.PlayDialog(dialog,handleTTS);
             stateMachine.CompleteState(new TaskState(), 3);
         } else {
-            dialog = "Alright, stopping the activity!";
-            JobTrainingManager.instance.WriteOnUi(dialog);
+            JobTrainingManager.instance.WriteOnUi("Alright, stopping the activity!");
         // todo JobTrainingManager.instance.PlayDialog(dialog,handleTTS);
             stateMachine.CompleteState(new StopActivity(), 3);
         }
-
-
     }
 }
 
