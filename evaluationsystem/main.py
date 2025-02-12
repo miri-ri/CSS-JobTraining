@@ -15,7 +15,7 @@ EFFICIENT_MODE = False
 if not EFFICIENT_MODE: 
     from speechToText import stt, willing
     app_stt = stt.Stt()
-    LLM =  Llama(verbose=False, model_path="model.gguf", chat_format="chatml") 
+    LLM =  Llama(verbose=False, model_path="model.gguf", chat_format="chatml", n_gpu_layers=-1) #try to use as much gpu as possible n_gpu_layers=-1
 else: 
     app_stt = None
     LLM = None
