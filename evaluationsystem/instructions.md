@@ -24,12 +24,37 @@ vosk-model-it-0.22
 Put it inside projectroot/evaluationsystem/ (here)
 
 
-install python packages for python 3.12.4 (llamacpppython needs sdk and c++ tools for the os):
-llama-cpp-python
-fastapi[standard]
-pyaudio
-noisereducer
-vosk
+USE PYTHON 3.12
+
+create a python virtual environment
+python -m venv .venv
+
+open virtual environment
+WINDOWS: .\.venv\Scripts\activate
+
+install llama cpp FOR GPU
+install cuda 
+we used cuda 12.3
+https://developer.nvidia.com/cuda-12-3-0-download-archive?target_os=Windows&target_arch=x86_64&target_version=Server2019&target_type=exe_local
+
+download a wheel from the official repository
+https://github.com/abetlen/llama-cpp-python
+in particular you can dowload the wheel for cuda 12.3 from
+https://abetlen.github.io/llama-cpp-python/whl/cu123/llama-cpp-python/
+download the file corresponding to last version, your processor and python 3.12
+we downloaded
+https://github.com/abetlen/llama-cpp-python/releases/download/v0.3.4-cu123/llama_cpp_python-0.3.4-cp312-cp312-win_amd64.whl
+move the whl file into the current working directory and install from it python llama cpp
+python -m pip install .\llama_cpp_python-0.3.4-cp312-cp312-win_amd64.whl
+
+install llama cpp FOR CPU (llamacpppython needs sdk and c++ tools for the os).
+python -m pip install llama-cpp-python
+
+install python packages for python 3.12.4 
+python -m pip install fastapi[standard]
+python -m pip install pyaudio
+python -m pip install noisereducer
+python -m pip install vosk
 
 start with
  python -m fastapi dev main.py
