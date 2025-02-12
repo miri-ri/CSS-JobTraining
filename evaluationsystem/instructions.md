@@ -24,7 +24,13 @@ vosk-model-it-0.22
 Put it inside projectroot/evaluationsystem/ (here)
 
 
-install everything
+install python packages for python 3.12.4 (llamacpppython needs sdk and c++ tools for the os):
+llama-cpp-python
+fastapi[standard]
+pyaudio
+noisereducer
+vosk
+
 start with
  python -m fastapi dev main.py
 
