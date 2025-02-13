@@ -1,0 +1,279 @@
+Log: User - testUser
+Start - 2/13/2025 1:19:20 PM 
+ End - 2/13/2025 1:21:15 PM
+Duration - -1.905872328333331:  Task taskName
+   Score - 5
+   Transcript :
+customer -> Ciao!Puoi mostrarmi dove sono i pomodori?
+user ->   pomodori 
+
+Feedback - feedback
+Final Score -> 5.87446307046481
+____ evaluations ____ 
+partial score -> 1
+feedback -> 1 (pessima) - la risposta non è comprensibile per la mancanza di contesto e di parole complete. 
+___
+partial score -> 3.7
+feedback -> Devi migliorare molto il tuo tempismo! (Serve aumentare)
+___
+partial score -> 0.625
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 9.92177842278883
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+1:  Task taskName
+   Score - 7
+   Transcript :
+customer -> Hello! Can you show me the Info Box?
+user ->  certo adesso vi porto a vedere lightbox 
+
+Feedback - feedback
+Final Score -> 7.99557490744774
+____ evaluations ____ 
+partial score -> 6
+feedback -> Valutazione: 6 (la risposta non è esatta, il cliente chiedeva "Info Box" e il commesso ha detto "lightbox", ma il commesso ha capito il senso della domanda e si è mosso per aiutare il cliente) 
+
+___
+partial score -> 7.575
+feedback -> Il tempismo può essere migliore! (Serve aumentare)
+___
+partial score -> 4.48863636363636
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 9.90981308105009
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+Log: User - testUser
+Start - 2/13/2025 4:42:34 PM 
+ End - 2/13/2025 4:43:56 PM
+Duration - -1.354979141:  Task taskName
+   Score - 8
+   Transcript :
+customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+user ->  abete certo i colori sonori il tuo culo 
+
+Feedback - feedback
+Final Score -> 8.0289536238219
+____ evaluations ____ 
+partial score -> 1
+feedback -> 1 (pessima)
+___
+partial score -> 8.45
+feedback -> Ottimo tempismo!
+___
+partial score -> 8.79166666666667
+feedback -> Ottima velocità nel parlare! 
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 9.93205507626475
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+1:  Task taskName
+   Score - 0
+   Transcript :
+customer -> Scusa, sto cercando un punto informazioni, puoi aiutarmi?
+
+Feedback - 1:  Task taskName
+   Score - 0
+   Transcript :
+
+Feedback - 1:  Task taskName
+   Score - 0
+   Transcript :
+
+Feedback - Log: User - testUser
+Start - 2/13/2025 4:51:30 PM 
+ End - 2/13/2025 4:53:06 PM
+Duration - -1.607887683333331:  Task taskName
+   Score - 8
+   Transcript :
+customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+user ->  prima venga qui certo 
+
+Feedback - feedback
+Final Score -> 8.63919290588206
+____ evaluations ____ 
+partial score -> 7
+feedback -> 7 (buona) 
+La risposta del commerto non è esattamente una frase che indica la posizione, ma indica che il commesso è pronto a aiutare il cliente. Il cliente deve ancora chiedere dove sono i pomodori.
+___
+partial score -> 9.575
+feedback -> Ottimo tempismo!
+___
+partial score -> 5.39772727272727
+feedback -> La velocità nel parlare può essere migliore! (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 9.86243016256506
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+1:  Task taskName
+   Score - 0
+   Transcript :
+customer -> Scusa, sto cercando un punto informazioni, puoi aiutarmi?
+
+Feedback - 1:  Task taskName
+   Score - 0
+   Transcript :
+
+Feedback - 1:  Task taskName
+   Score - 0
+   Transcript :
+
+Feedback - 1:  Task taskName
+   Score - 0
+   Transcript :
+
+Feedback - 1:  Task taskName
+   Score - 0
+   Transcript :
+
+Feedback - 1:  Task taskName
+   Score - 0
+   Transcript :
+
+Feedback - Log: User - testUser
+Start - 2/13/2025 5:02:15 PM 
+ End - 2/13/2025 5:04:58 PM
+Duration - -2.712755583333331:  Task taskName
+   Score - 8
+   Transcript :
+customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+user ->  allora i pomodori stanno da questa parte 
+
+Feedback - feedback
+Final Score -> 8.04394474109307
+____ evaluations ____ 
+partial score -> 5
+feedback -> 5 (buona) 
+La risposta non è esattamente precisa, ma il commesso ha cercato di aiutare il cliente e ha indicato la direzione. Se avesse detto "i pomodori sono là in quel lato del negozio" sarebbe stato ancora meglio. 
+___
+partial score -> 8.575
+feedback -> Ottimo tempismo!
+___
+partial score -> 4.79166666666667
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 9.89700177989176
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+1:  Task taskName
+   Score - 8
+   Transcript :
+customer -> Scusa, sto cercando un punto informazioni, puoi aiutarmi?
+user ->  sì va bene d'aiuto 
+
+Feedback - feedback
+Final Score -> 8.14034971316206
+____ evaluations ____ 
+partial score -> 6
+feedback -> Valutazione: 6 (buona, ma potrebbe essere più esplicita)
+___
+partial score -> 8.7
+feedback -> Ottimo tempismo!
+___
+partial score -> 4.27884615384615
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 9.86325212512622
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+1:  Task taskName
+   Score - 0
+   Transcript :
+
+Feedback - Log: User - testUser
+Start - 2/13/2025 5:53:32 PM 
+ End - 2/13/2025 5:55:44 PM
+Duration - -2.203387661:  Task taskName
+   Score - 8
+   Transcript :
+customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+user ->  certo i pomodori stanno da questa parte 
+
+Feedback - feedback
+Final Score -> 8.681379089593
+____ evaluations ____ 
+partial score -> 8
+feedback -> 8 (buona) 
+La risposta è breve e diretta, il commesso indica la posizione dove si trovano i pomodori. 
+___
+partial score -> 8.7
+feedback -> Ottimo tempismo!
+___
+partial score -> 5.49342105263158
+feedback -> La velocità nel parlare può essere migliore! (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 9.89485348492643
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+1:  Task taskName
+   Score - 8
+   Transcript :
+customer -> Scusa, sto cercando un punto informazioni, puoi aiutarmi?
+user ->  ma certo mi segua da questa parte 
+
+Feedback - feedback
+Final Score -> 8.14345277651395
+____ evaluations ____ 
+partial score -> 5
+feedback -> 5 (buona) 
+La risposta del commerto è breve e indica la direzione, ma non fornisce una spiegazione chiara del percorso da seguire. 
+La valutazione potrebbe essere diversa se il cliente ha esperienze precedenti in quel supermercato e sa dove si trova il punto informazioni.
+___
+partial score -> 9.2
+feedback -> Ottimo tempismo!
+___
+partial score -> 4.79166666666667
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 9.86904999241701
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___

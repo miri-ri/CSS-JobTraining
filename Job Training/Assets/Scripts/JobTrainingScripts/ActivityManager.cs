@@ -53,7 +53,7 @@ public class ActivityStateMachine {
         currentState?.Setup();
     }
 
-    public void CompleteState(ActivityState nextState = null, int delaySeconds = 0)
+    public void CompleteState(ActivityState nextState = null, float delaySeconds = 0)
     {
         if (delaySeconds > 0)
         {
@@ -85,11 +85,11 @@ public class ActivityStateMachine {
             SetState(new TaskCompleteState());
             break;
         default:
-            throw new System.NotImplementedException();
+            throw new Exception("Change state: NO CORRESPONDING STATE");
         }
     }
 
-    IEnumerator CompleteStateAfterWait(int waitingSeconds, ActivityState nextState = null){
+    IEnumerator CompleteStateAfterWait(float waitingSeconds, ActivityState nextState = null){
         Debug.Log($"Waiting for {waitingSeconds} seconds before changing state.");
         yield return new WaitForSeconds(waitingSeconds);
         if(nextState==null){SetNextState();} else {SetNextState(nextState);}
@@ -118,11 +118,11 @@ class ExplanationOfActivity : ActivityState
     public override void Setup()
     {
         // Show intro UI
-        JobTrainingManager.instance.WriteOnUi("Welcome to the Job Training! In this activity you will be practice different tasks that will help you learn to work in a supermarket.");
-        JobTrainingManager.instance.ChangeFrontWallBackground("instructions");
+        //JobTrainingManager.instance.WriteOnUi("Welcome to the Job Training! In this activity you will be practice different tasks that will help you learn to work in a supermarket.");
+        JobTrainingManager.instance.ChangeFrontWallBackground("activity_intr");
         // Start background audio
         //JobTrainingManager.instance.PlaySound("startSound");
-        JobTrainingManager.instance.ToggleTextUi(true);
+        //JobTrainingManager.instance.ToggleTextUi(true);
         
         stateMachine.CompleteState(null, 7);
     }
@@ -176,7 +176,9 @@ class TaskCompleteState : ActivityState
 
     public override void Dismantle()
     {
-        throw new NotImplementedException();
+        JobTrainingManager.instance.RemoveUserWillingessHandler(ProceedAfterTask);
+        JobTrainingManager.instance.RemoveTTShandler(handleAfterRestart);
+        JobTrainingManager.instance.RemoveTTShandler(handleAfterExit);
     }
 
     public override void Setup()
@@ -190,14 +192,25 @@ class TaskCompleteState : ActivityState
     }
     void ProceedAfterTask(bool userInput){
         if(userInput){
-            JobTrainingManager.instance.WriteOnUi("Alright, proceeding...");
-        // todo JobTrainingManager.instance.PlayDialog(dialog,handleTTS);
-            stateMachine.CompleteState(new TaskState(), 3);
+            JobTrainingManager.instance.PlayDialog("Alright, proceeding...",handleAfterRestart);
+            JobTrainingManager.instance.ChangeFrontWallBackground("new_start");
+        
+            
         } else {
-            JobTrainingManager.instance.WriteOnUi("Alright, stopping the activity!");
-        // todo JobTrainingManager.instance.PlayDialog(dialog,handleTTS);
-            stateMachine.CompleteState(new StopActivity(), 3);
+            JobTrainingManager.instance.PlayDialog("Alright, stopping the activity!",handleAfterExit);
+            JobTrainingManager.instance.ChangeFrontWallBackground("bye_bye");
+        
+            
         }
+    }
+
+  
+
+    void handleAfterRestart(float sec){
+        stateMachine.CompleteState(new TaskState(), 5);
+    }
+    void handleAfterExit(float sec){
+        stateMachine.CompleteState(new StopActivity(), 5);
     }
 }
 
@@ -206,7 +219,7 @@ class WaitingState : ActivityState
 
     public override void Dismantle()
     {
-        throw new NotImplementedException();
+       // throw new NotImplementedException();
     }
 
     public override void Setup()
@@ -221,7 +234,7 @@ class StopActivity : ActivityState
 
     public override void Dismantle()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     public override void Setup()

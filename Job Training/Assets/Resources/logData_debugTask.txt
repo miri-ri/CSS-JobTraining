@@ -947,3 +947,333 @@ partial score -> 10
 feedback -> Ottimo posizonamento!
 ___
 
+2/13/2025 11:19:25 AM-- customer -> Ciao!Puoi mostrarmi dove sono i pomodori?
+2/13/2025 11:19:37 AM-- user ->   
+feedback
+Final Score -> 6.1522406263171
+____ evaluations ____ 
+partial score -> 7
+feedback -> 7 (buona) 
+Il commesso ha risposto immediatamente e ha indicato la posizione dei pomodori. La risposta non è stata troppo verbosa, il che è utile per persone con difficoltà a seguire conversazioni lunghe. 
+___
+partial score -> 0
+feedback -> Devi migliorare molto il tuo tempismo! (Serve diminuire)
+___
+partial score -> 0
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve diminuire la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 9.91344375790262
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+
+2/13/2025 11:23:29 AM-- customer -> Ciao!Puoi mostrarmi dove sono i pomodori?
+2/13/2025 11:23:40 AM-- user ->    
+feedback
+Final Score -> 6.15231338797567
+____ evaluations ____ 
+partial score -> 7
+feedback -> 7 (buona) - il commesso indica dove sono i pomodori, anche se non con molte parole. 
+___
+partial score -> 0
+feedback -> Devi migliorare molto il tuo tempismo! (Serve diminuire)
+___
+partial score -> 0
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve diminuire la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 9.913880327854
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+
+2/13/2025 11:32:16 AM-- customer -> Ciao!Puoi mostrarmi dove sono i pomodori?
+2/13/2025 11:52:49 AM-- customer -> Ciao!Puoi mostrarmi dove sono i pomodori?
+2/13/2025 12:57:13 PM-- customer -> Ciao!Puoi mostrarmi dove sono i pomodori?
+2/13/2025 12:57:21 PM-- user ->  certo pomodori 
+feedback
+Final Score -> 6.96421965642928
+____ evaluations ____ 
+partial score -> 2
+feedback -> 2 (poco utile) 
+La risposta del commerto è molto breve e non fornisce informazioni precise sulla posizione dei pomodori. 
+___
+partial score -> 8.45
+feedback -> Ottimo tempismo!
+___
+partial score -> 1.45833333333333
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 9.87698460524233
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+
+2/13/2025 1:05:55 PM-- customer -> Ciao!Puoi mostrarmi dove sono i pomodori?
+2/13/2025 1:06:08 PM-- user ->  i pomodori arrivano 
+feedback
+Final Score -> 6.52028542816819
+____ evaluations ____ 
+partial score -> 1
+feedback -> 1 (pessima)
+___
+partial score -> 6.075
+feedback -> Il tempismo può essere migliore! (Serve aumentare)
+___
+partial score -> 2.125
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 9.92171256900917
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+
+2/13/2025 1:06:40 PM-- customer -> Hello! Can you show me the Info Box?
+2/13/2025 1:19:28 PM-- customer -> Ciao!Puoi mostrarmi dove sono i pomodori?
+2/13/2025 1:19:41 PM-- user ->   pomodori 
+feedback
+Final Score -> 5.87446307046481
+____ evaluations ____ 
+partial score -> 1
+feedback -> 1 (pessima) - la risposta non è comprensibile per la mancanza di contesto e di parole complete. 
+___
+partial score -> 3.7
+feedback -> Devi migliorare molto il tuo tempismo! (Serve aumentare)
+___
+partial score -> 0.625
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 9.92177842278883
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+
+2/13/2025 1:20:18 PM-- customer -> Hello! Can you show me the Info Box?
+2/13/2025 1:20:30 PM-- user ->  certo adesso vi porto a vedere lightbox 
+feedback
+Final Score -> 7.99557490744774
+____ evaluations ____ 
+partial score -> 6
+feedback -> Valutazione: 6 (la risposta non è esatta, il cliente chiedeva "Info Box" e il commesso ha detto "lightbox", ma il commesso ha capito il senso della domanda e si è mosso per aiutare il cliente) 
+
+___
+partial score -> 7.575
+feedback -> Il tempismo può essere migliore! (Serve aumentare)
+___
+partial score -> 4.48863636363636
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 9.90981308105009
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+
+2/13/2025 2:16:35 PM-- customer -> Ciao!Puoi mostrarmi dove sono i pomodori?
+2/13/2025 2:16:45 PM-- user ->  oh pomodori pomodori pomodori pomodori 
+feedback
+Final Score -> 7.06102268195816
+____ evaluations ____ 
+partial score -> 1
+feedback -> 1 (pessima)
+___
+partial score -> 8.575
+feedback -> Ottimo tempismo!
+___
+partial score -> 2.88690476190476
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 9.90423132984419
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+
+2/13/2025 2:17:17 PM-- customer -> Hello! Can you show me the Info Box?
+2/13/2025 4:28:42 PM-- customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+2/13/2025 4:30:12 PM-- customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+2/13/2025 4:42:46 PM-- customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+2/13/2025 4:43:01 PM-- user ->  abete certo i colori sonori il tuo culo 
+feedback
+Final Score -> 8.0289536238219
+____ evaluations ____ 
+partial score -> 1
+feedback -> 1 (pessima)
+___
+partial score -> 8.45
+feedback -> Ottimo tempismo!
+___
+partial score -> 8.79166666666667
+feedback -> Ottima velocità nel parlare! 
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 9.93205507626475
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+
+2/13/2025 4:43:44 PM-- customer -> Scusa, sto cercando un punto informazioni, puoi aiutarmi?
+2/13/2025 4:51:45 PM-- customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+2/13/2025 4:51:54 PM-- user ->  prima venga qui certo 
+feedback
+Final Score -> 8.63919290588206
+____ evaluations ____ 
+partial score -> 7
+feedback -> 7 (buona) 
+La risposta del commerto non è esattamente una frase che indica la posizione, ma indica che il commesso è pronto a aiutare il cliente. Il cliente deve ancora chiedere dove sono i pomodori.
+___
+partial score -> 9.575
+feedback -> Ottimo tempismo!
+___
+partial score -> 5.39772727272727
+feedback -> La velocità nel parlare può essere migliore! (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 9.86243016256506
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+
+2/13/2025 4:52:46 PM-- customer -> Scusa, sto cercando un punto informazioni, puoi aiutarmi?
+2/13/2025 4:59:19 PM-- customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+2/13/2025 5:01:09 PM-- customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+2/13/2025 5:02:31 PM-- customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+2/13/2025 5:02:42 PM-- user ->  allora i pomodori stanno da questa parte 
+feedback
+Final Score -> 8.04394474109307
+____ evaluations ____ 
+partial score -> 5
+feedback -> 5 (buona) 
+La risposta non è esattamente precisa, ma il commesso ha cercato di aiutare il cliente e ha indicato la direzione. Se avesse detto "i pomodori sono là in quel lato del negozio" sarebbe stato ancora meglio. 
+___
+partial score -> 8.575
+feedback -> Ottimo tempismo!
+___
+partial score -> 4.79166666666667
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 9.89700177989176
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+
+2/13/2025 5:03:37 PM-- customer -> Scusa, sto cercando un punto informazioni, puoi aiutarmi?
+2/13/2025 5:03:47 PM-- user ->  sì va bene d'aiuto 
+feedback
+Final Score -> 8.14034971316206
+____ evaluations ____ 
+partial score -> 6
+feedback -> Valutazione: 6 (buona, ma potrebbe essere più esplicita)
+___
+partial score -> 8.7
+feedback -> Ottimo tempismo!
+___
+partial score -> 4.27884615384615
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 9.86325212512622
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+
+2/13/2025 5:53:52 PM-- customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+2/13/2025 5:54:04 PM-- user ->  certo i pomodori stanno da questa parte 
+feedback
+Final Score -> 8.681379089593
+____ evaluations ____ 
+partial score -> 8
+feedback -> 8 (buona) 
+La risposta è breve e diretta, il commesso indica la posizione dove si trovano i pomodori. 
+___
+partial score -> 8.7
+feedback -> Ottimo tempismo!
+___
+partial score -> 5.49342105263158
+feedback -> La velocità nel parlare può essere migliore! (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 9.89485348492643
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+
+2/13/2025 5:54:46 PM-- customer -> Scusa, sto cercando un punto informazioni, puoi aiutarmi?
+2/13/2025 5:54:58 PM-- user ->  ma certo mi segua da questa parte 
+feedback
+Final Score -> 8.14345277651395
+____ evaluations ____ 
+partial score -> 5
+feedback -> 5 (buona) 
+La risposta del commerto è breve e indica la direzione, ma non fornisce una spiegazione chiara del percorso da seguire. 
+La valutazione potrebbe essere diversa se il cliente ha esperienze precedenti in quel supermercato e sa dove si trova il punto informazioni.
+___
+partial score -> 9.2
+feedback -> Ottimo tempismo!
+___
+partial score -> 4.79166666666667
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 9.86904999241701
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+

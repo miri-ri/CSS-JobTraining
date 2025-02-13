@@ -15,20 +15,19 @@ public abstract class Task{
 
     public void TaskSetup(){
         JobTrainingManager.instance.GetTaskManager().TaskDescription(GetTaskType());
-        JobTrainingManager.instance.ChangeFrontWallBackground(GetBackgroundImage());
+        //JobTrainingManager.instance.ChangeFrontWallBackground(GetBackgroundImage());
 
         SetInteractionMachine(new InteractionMachine());
-        GetInteractionMachine().ChangeState(new FirstDialog(GetInitialDialog()));
+        GetInteractionMachine().ChangeState(new TaskDescription(GetIntroduction(),GetInitialDialog()));
     }
 
     protected abstract TaskList GetTaskType();
     protected abstract string GetInitialDialog();
+    protected abstract string GetIntroduction();
 
     public abstract string GetAreaTrigger();
 
-    public virtual string GetBackgroundImage(){
-        return "PlaceholderSuper"; //Standard Background, selection can be expanded
-    }
+    public abstract string GetBackgroundImage();
 
     public abstract void Feedback();
 

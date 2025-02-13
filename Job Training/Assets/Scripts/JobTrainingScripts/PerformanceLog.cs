@@ -68,8 +68,8 @@ public class PerformanceLog{
         }
         writer.Write(log);
         writer.Close();
-        TextAsset logFile= (TextAsset)Resources.Load("LogData");
-        Debug.Log(logFile.text);
+       // TextAsset logFile= (TextAsset)Resources.Load("LogData");
+       // Debug.Log(logFile.text);
 
     }
 

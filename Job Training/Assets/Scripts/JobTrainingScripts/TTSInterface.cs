@@ -14,7 +14,7 @@ public class TTSInterface : MonoBehaviour
     }
     public float ApproximateTimeToSpeach(string text){
         int words=text.Split().Length;
-        float secondsPerWord=0.2f;
+        float secondsPerWord=0.6f;
         return words*secondsPerWord;
     }
 }

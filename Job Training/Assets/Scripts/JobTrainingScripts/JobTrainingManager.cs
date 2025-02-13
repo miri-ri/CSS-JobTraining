@@ -47,6 +47,7 @@ public class JobTrainingManager:MonoBehaviour{
         TTS=gameObject.AddComponent<TTSInterface>();
         
         HideMicrophoneFeedback();
+        LLM.SystemResponseInterpreted+=HideMicrophoneFeedback;
         speechTT.ListeningComplete+=HideMicrophoneFeedback;
         ChangeFrontWallBackground("start");
         ToggleTextUi(false);
@@ -88,6 +89,10 @@ public class JobTrainingManager:MonoBehaviour{
     void HideMicrophoneFeedback(){
         SpeakerButton.GetComponent<CanvasGroup>().alpha=0;
     }
+    void HideMicrophoneFeedback(bool n){
+        HideMicrophoneFeedback();
+    }
+
     public void PlaySound(string soundName){
         if(RoomSpeakers != null){
             AudioClip cl=Resources.Load<AudioClip>("roomBKGNoise/"+soundName);
@@ -161,9 +166,9 @@ public class JobTrainingManager:MonoBehaviour{
 //-------TextToSpeech calls 
     public void PlayDialog(string textToTTS, OnTTSPlaying handler){
         TTS.TTsPlaying+=handler;
-        Debug.Log("playing voice "+textToTTS);
+        Debug.Log("playing voice -> "+textToTTS);
         WriteOnUi(textToTTS);
-        TTS.PlayAudio(textToTTS);//warning tts non instaziato
+        TTS.PlayAudio(textToTTS);
     }
     public void RemoveTTShandler(OnTTSPlaying handler){
         TTS.TTsPlaying-=handler;
@@ -207,6 +212,8 @@ public class JobTrainingManager:MonoBehaviour{
     }
     public void getUserWillingess(OnSystemInteractionReady handler){
         LLM.SystemResponseInterpreted+=handler;
+        Debug.Log("analyzing user willingness");
+        ShowMicrophoneFeedback();
         LLM.evaluateSystemAnswer();
     }
     public void RemoveUserWillingessHandler(OnSystemInteractionReady handler){

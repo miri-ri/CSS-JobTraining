@@ -20,7 +20,13 @@ public class EvalScript : MonoBehaviour
     }
     public void FlushPanel(){
         //todo, destroy objs, or set alpha=0
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+      
     }
+    List<GameObject> scoreList ;
     public void AddFeedbackIcons(EvaluationResponse eval){
         List<Sprite> iconType, iconVal;
         Sprite star=Resources.Load<Sprite>("icons/star");
@@ -29,7 +35,7 @@ public class EvalScript : MonoBehaviour
 
         iconVal=new();
         iconType=new();
-        List<GameObject> scoreList ;
+        
         scoreList=new();
 
         for (int i = 0; i < 3; i++)
@@ -67,6 +73,7 @@ public class EvalScript : MonoBehaviour
             j++;
         }
 
+        
 
         int[] starPosX={-130,-65,0,65,130};
         Debug.Log(eval.Total);

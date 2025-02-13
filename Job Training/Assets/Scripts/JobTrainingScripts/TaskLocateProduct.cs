@@ -6,7 +6,8 @@ using UnityEngine;
 public class TaskLocateProduct : Task
 {
     protected override TaskList GetTaskType() => TaskList.LocateProduct;
-    protected override string GetInitialDialog() => "Ciao!Puoi mostrarmi dove sono i pomodori?";
+    protected override string GetInitialDialog() => "Ciao! Puoi mostrarmi dove sono i pomodori?";
+    protected override string GetIntroduction() => "In questo task dovrai aiutare un cliente rispondendo alla sua richiesta e mostrandogli dove si trovano i pomodori in vendita";
     public override string GetAreaTrigger() => "locateTask";
 
     public TaskLocateProduct(){
@@ -18,9 +19,32 @@ public class TaskLocateProduct : Task
     public override void Feedback()
     {
     }
-    
-}
 
+    public override string GetBackgroundImage()=>"market_produce";
+}
+class TaskDescription : InteractionState
+{
+    string FirstDialog, instructions;
+    public override void Dismantle()
+    {
+               JobTrainingManager.instance.RemoveTTShandler(handleTTS);
+
+    }
+
+    public override void Setup()
+    {
+        JobTrainingManager.instance.ToggleTextUi(true);
+        JobTrainingManager.instance.ChangeFrontWallBackground("instructions");
+        JobTrainingManager.instance.PlayDialog(instructions,handleTTS);
+    }
+    public TaskDescription(string introduction, string FirstDialog){
+        instructions=introduction;
+        this.FirstDialog=FirstDialog;
+    }
+    public void handleTTS(float secondsNeeded){
+        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded,new FirstDialog(FirstDialog));
+    }
+}
 class FirstDialog:InteractionState{
     //play audio from virtual client
 
@@ -31,11 +55,11 @@ class FirstDialog:InteractionState{
     }
     public override void Setup()
     {
+        JobTrainingManager.instance.ChangeFrontWallBackground(JobTrainingManager.instance.GetTaskManager().CurrentTask.GetBackgroundImage());
         JobTrainingManager.instance.PlaySound("supermarket-17823");
         JobTrainingManager.instance.PlayDialog(dialogText,handleTTS);// for dynamic first dialogue input from LLM API
         JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question=dialogText;// here we have to insert the question not FirstDialogInput
         JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().addResponse(dialogText, false);
-        Debug.LogError("sdadasd "+JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question);
     }
     public void handleTTS(float secondsNeeded){
         JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded,new AwaitUserInput());
@@ -66,7 +90,6 @@ class AwaitUserInput : InteractionState
     }
     public override void Setup()
     {
-        Debug.Log("Setting up AwaitUserInputState");
         actionForFeedBack=new();
         startMovement=DateTime.Now;
         JobTrainingManager.instance.GetUserDialog(HandleUserSpoke);
@@ -118,7 +141,6 @@ class AwaitUserInput : InteractionState
         string question=JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question;
         JobTrainingManager.instance.getCurrentTasksFeedbackData().speech=spokenResponse ;
         JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question=question ;
-        Debug.LogError("sdadasd "+JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question);
         
 
         if(JobTrainingManager.noKinectDebug){//for debug w/ no kinect
@@ -157,7 +179,6 @@ class PositiveTurnout : InteractionState
 
     public override void Setup()
     {
-        Debug.Log("generated response");
         PLayGeneratedResponse("Risposta positiva");
         //JobTrainingManager.instance.GenerateLLMCustomerResponse("last transcript",PLayGeneratedResponse);
     }
@@ -210,7 +231,7 @@ class FeedbackState : InteractionState
         JobTrainingManager.instance.ChangeFrontWallBackground("evaluation");
         
         JobTrainingManager.instance.showEvaluation(eval);
-        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(20, null);
+        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(10, new EndingState());
         //
         //todo on user input or after timer complete task
         
@@ -219,6 +240,8 @@ class FeedbackState : InteractionState
     public override void Dismantle(){
         JobTrainingManager.instance.RemoveEvaluationHandler(ShowFeedback);
         JobTrainingManager.instance.RemoveTTShandler(handleTTS);
+        JobTrainingManager.instance.hideEvaluation();
+        JobTrainingManager.instance.StopAudioCurrentClip();
     }
 
     public void handleTTS(float secondsNeeded){
