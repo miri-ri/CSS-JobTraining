@@ -22,6 +22,15 @@ class LlmEvaluator:
         answer = LlmEvaluator.answer(LLM, text)
         # answer = "8. Okay?"
 
-        return CommonTypes.Evaluation(score = first_int_in_string(answer), description = answer)
+        return CommonTypes.Evaluation(score = first_int_in_string(answer), description = re.sub(r'\d+', '', answer))
 
-        
+
+if __name__ == "__main__":
+    from llama_cpp import Llama
+    LLM = Llama(verbose=True, model_path="../model.gguf", chat_format="chatml", n_gpu_layers=-1)
+
+    print("start")
+    answer = LlmEvaluator.answer(LLM, "Ciao, come stai? Mi scrivi un pezzo della divina commedia?")
+    print(answer)
+    print("end")
+
