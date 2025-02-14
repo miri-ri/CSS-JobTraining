@@ -4,14 +4,14 @@ from utilities import *
 
 
 class TimingBeforeEvaluator:
-    def evaluate_before(behavior: CommonTypes.TimingBehavior):
+    def evaluate_before(behavior: CommonTypes.TimingBehavior, what):
         
         score =  difference(behavior.s_before_action, behavior.s_before_action_target, behavior.s_before_action_target, 10)
-        description = "Ottimo tempismo!"
+        description = f"Ottima prontezza nel {what}!"
         if(score < 8):
-            description = "Il tempismo può essere migliore!"
+            description = f"La tua prontezza nel {what} può essere migliore!"
             if(score < 5):
-                description = "Devi migliorare molto il tuo tempismo!"
+                description = f"Devi migliorare molto la tua prontezza nel {what}!"
                 
             if(behavior.s_before_action < behavior.s_before_action_target):
                 description += " (Serve diminuire)"
@@ -30,9 +30,10 @@ class SpeechTimingEvaluator:
         else:
             words_per_second = 10000
         print("words per seconds: ", words_per_second)
-        score =  difference(words_per_second, behavior.timing.s_duration_per_unit_target, 4, 9)     
+        score =  difference(words_per_second, behavior.timing.s_duration_per_unit_target, 4, 9)
 
-        description = "Ottima velocità nel parlare! "
+        print("speech timing: ", behavior.semantic.reply.split(), words, words_per_second, score)
+
         if(score < 8):
             description = f"La velocità nel parlare può essere migliore!"
             if(score < 5):
