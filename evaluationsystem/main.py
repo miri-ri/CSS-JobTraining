@@ -7,6 +7,7 @@ from llama_cpp import Llama
 
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, BackgroundTasks
+from fastapi.middleware.cors import CORSMiddleware
 
 
 
@@ -23,6 +24,15 @@ else:
  
 
 app = FastAPI()
+# put everything in the same network and deactivate all firewalls from both computer
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.get("/willing")
 async def willing_response() -> CommonTypes.Truth:
