@@ -13,16 +13,19 @@ public class STTInterface : MonoBehaviour
     public event STTstoppedListening ListeningComplete;
 
     public void StartTTSListening(){
-        StartCoroutine(StartListening("http://localhost:8000/start-stt"));
+        Debug.LogError(JobTrainingManager.jobtrainerServer+"/start-stt");
+        StartCoroutine(StartListening(JobTrainingManager.jobtrainerServer+"/start-stt"));
     }
     public void GetUserDialog(){
-        StartCoroutine(GetData("http://localhost:8000/get-stt"));
+        StartCoroutine(GetData(JobTrainingManager.jobtrainerServer+"/get-stt"));
        
     }
 
     IEnumerator StartListening(string url)
     {
         using UnityWebRequest www = UnityWebRequest.Get(url);
+       // www.insecureHttpOption = UnityWebRequest.InsecureHttpOption.AlwaysAllowed;///does tis work????
+
         yield return www.SendWebRequest();
         if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
         { Debug.LogError(www.error); }
@@ -41,6 +44,7 @@ public class STTInterface : MonoBehaviour
     IEnumerator GetData(string url)
     {
         using UnityWebRequest www = UnityWebRequest.Get(url);
+        //www.insecureHttpOption = UnityWebRequest.InsecureHttpOption.AlwaysAllowed;
         yield return www.SendWebRequest();
         if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
         { Debug.LogError(www.error); }

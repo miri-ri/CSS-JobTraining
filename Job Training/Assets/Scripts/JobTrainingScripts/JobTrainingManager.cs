@@ -19,10 +19,10 @@ public class Targets{//make it task dependent
 }
 public delegate void generalTimer();
 
-public class JobTrainingManager:MonoBehaviour{
+public class JobTrainingManager:MonoBehaviour{//todo fast ---> resize eval, parametrize port amd ip
 
     public static JobTrainingManager instance;
-    public static bool noKinectDebug=true;
+    public static bool noKinectDebug=false;
     public static Targets EvaluationTargets=new(5,2,new(1,1), 1);//for only locate task todo
     public static Vector3 roomCenter=new (0,7,0);
     [SerializeField] ActivityManager ActivityManager;
@@ -32,6 +32,7 @@ public class JobTrainingManager:MonoBehaviour{
     public TTSInterface TTS{get; private set;}
     public List<AreaTriggerScript> TriggerableAreas;
     public AreaTriggerScript Triggerable;
+    public static string jobtrainerServer="http://10.0.0.12:8000";
 
 
     void Awake(){
@@ -45,12 +46,16 @@ public class JobTrainingManager:MonoBehaviour{
         speechTT=gameObject.AddComponent<STTInterface>();
         LLM=gameObject.AddComponent<LLMinterface>();
         TTS=gameObject.AddComponent<TTSInterface>();
-        
+        //PlayDialog("questoè un test per vedere se funziona il TTS della magic room", sksks);
+        //return;
         HideMicrophoneFeedback();
         LLM.SystemResponseInterpreted+=HideMicrophoneFeedback;
         speechTT.ListeningComplete+=HideMicrophoneFeedback;
         ChangeFrontWallBackground("start");
         ToggleTextUi(false);
+    }
+    void sksks(float sec){
+        Debug.Log("andato   t:"+sec);
     }
     
     //used to show on the wall that the system is actively listening to the user speech
@@ -170,6 +175,12 @@ public class JobTrainingManager:MonoBehaviour{
         WriteOnUi(textToTTS);
         TTS.PlayAudio(textToTTS);
     }
+     public void PlayDialog(string textToTTS, OnTTSPlaying handler, string voice){
+        TTS.TTsPlaying+=handler;
+        Debug.Log("playing voice -> "+textToTTS);
+        WriteOnUi(textToTTS);
+        TTS.PlayAudio(textToTTS);
+     }
     public void RemoveTTShandler(OnTTSPlaying handler){
         TTS.TTsPlaying-=handler;
     }

@@ -20,7 +20,7 @@ public class TaskLocateProduct : Task
     {
     }
 
-    public override string GetBackgroundImage()=>"market_produce";
+    public override string GetBackgroundImage()=>"Senza titolo";
 }
 class TaskDescription : InteractionState
 {
@@ -55,6 +55,7 @@ class FirstDialog:InteractionState{
     }
     public override void Setup()
     {
+        JobTrainingManager.instance.ToggleTextUi(false);
         JobTrainingManager.instance.ChangeFrontWallBackground(JobTrainingManager.instance.GetTaskManager().CurrentTask.GetBackgroundImage());
         JobTrainingManager.instance.PlaySound("supermarket-17823");
         JobTrainingManager.instance.PlayDialog(dialogText,handleTTS);// for dynamic first dialogue input from LLM API
@@ -62,7 +63,7 @@ class FirstDialog:InteractionState{
         JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().addResponse(dialogText, false);
     }
     public void handleTTS(float secondsNeeded){
-        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded,new AwaitUserInput());
+        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded+3,new AwaitUserInput());
     }
     public override void Dismantle()
     {
@@ -189,7 +190,7 @@ class PositiveTurnout : InteractionState
     }
     public void handleTTS(float secondsNeeded){
         //set waiting time before change state
-        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded, new FeedbackState());
+        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded+4, new FeedbackState());
     }
 }
 
@@ -222,7 +223,7 @@ class FeedbackState : InteractionState
         JobTrainingManager.instance.ChangeFrontWallBackground("waiting_eval");
         JobTrainingManager.instance.PlaySound("waiting-music");
         JobTrainingManager.instance.ToggleTextUi(false);
-        JobTrainingManager.instance.PlayDialog("Ben fatto, ora attendi qualche secondo per la valutazione ",handleTTS);
+        //JobTrainingManager.instance.PlayDialog("Ben fatto, ora attendi qualche secondo per la valutazione ",handleTTS);
     }
     void ShowFeedback(EvaluationResponse eval){
         
@@ -231,15 +232,40 @@ class FeedbackState : InteractionState
         JobTrainingManager.instance.ChangeFrontWallBackground("evaluation");
         
         JobTrainingManager.instance.showEvaluation(eval);
-        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(10, new EndingState());
+        string evalmin="";
+        string evalmax="";
+        double min = 11;
+        double max = -1;
+        foreach(Evaluation ee in eval.Evaluations){
+            Debug.Log(ee.Description);
+            if(ee.Score < min) {
+                min = ee.Score;
+                evalmin = ee.Description;
+            } 
+            else if(ee.Score > max) {
+                max = ee.Score;
+                evalmax = ee.Description;
+            }
+        }
+           
+        string result = System.Text.RegularExpressions.Regex.Replace(evalmax+" "+evalmin, @"\d", "");
+        result = result.Replace("\n", " ");
+        Debug.Log(result);
+        JobTrainingManager.instance.PlayDialog(result,handleTTS2);
+        
         //
         //todo on user input or after timer complete task
         
+    }
+    void handleTTS2(float sec){
+        Debug.Log(sec);
+        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(sec, new EndingState());
     }
     
     public override void Dismantle(){
         JobTrainingManager.instance.RemoveEvaluationHandler(ShowFeedback);
         JobTrainingManager.instance.RemoveTTShandler(handleTTS);
+        JobTrainingManager.instance.RemoveTTShandler(handleTTS2);
         JobTrainingManager.instance.hideEvaluation();
         JobTrainingManager.instance.StopAudioCurrentClip();
     }

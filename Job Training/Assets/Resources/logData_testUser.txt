@@ -277,3 +277,332 @@ ___
 partial score -> 10
 feedback -> Ottimo posizonamento!
 ___
+Log: User - testUser
+Start - 14/02/2025 12:17:59 
+ End - 14/02/2025 12:20:09
+Duration - -2.164671241:  Task taskName
+   Score - 7
+   Transcript :
+customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+user ->  eh solo sullo schermo prima quater irene si sposò verde onlus 
+
+Feedback - feedback
+Final Score -> 7.330943424767
+____ evaluations ____ 
+partial score -> 1
+feedback -> 1 (pessima)
+___
+partial score -> 6.45
+feedback -> Il tempismo può essere migliore! (Serve aumentare)
+___
+partial score -> 6.58653846153846
+feedback -> La velocità nel parlare può essere migliore! (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 9.94912208706352
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+Log: User - testUser
+Start - 14/02/2025 12:52:17 
+ End - 14/02/2025 12:54:45
+Duration - -2.456668521666671:  Task taskName
+   Score - 1
+   Transcript :
+customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+user ->  sì kit artistici 
+
+Feedback - feedback
+Final Score -> 1.15060532400384
+____ evaluations ____ 
+partial score -> 1
+feedback -> 1 (pessima)
+___
+partial score -> 0
+feedback -> Devi migliorare molto il tuo tempismo! (Serve diminuire)
+___
+partial score -> 0
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve diminuire la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 1.89479300177534
+feedback -> Devi migliorare di molto la tua velocità di movimento (Serve diminuire)
+___
+partial score -> -5.99116105775227
+feedback -> Devi migliorare di molto la tua posizione (Serve aumentare)
+___
+Log: User - testUser
+Start - 14/02/2025 16:05:34 
+ End - 14/02/2025 16:06:35
+Duration - -1.025177436666671:  Task taskName
+   Score - 4
+   Transcript :
+customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+user ->  s'avvicina adriano dichiarò poesia e laser a zaman sì ecco qui ci sono i pomodori esattamente dove sto conducendo 
+
+Feedback - feedback
+Final Score -> 4.52657850151311
+____ evaluations ____ 
+partial score -> 1
+feedback -> 1 (pessima) - Risposta del commeso è confusa e non risponde alla domanda, sembra parlare di cose diverse. 
+___
+partial score -> 9.45
+feedback -> Ottimo tempismo!
+___
+partial score -> 3.33047945205479
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 4.24156989274879
+feedback -> Devi migliorare di molto la tua velocità di movimento (Serve diminuire)
+___
+partial score -> -0.8625783357249
+feedback -> Devi migliorare di molto la tua posizione (Serve aumentare)
+___
+Log: User - testUser
+Start - 14/02/2025 17:05:01 
+ End - 14/02/2025 17:06:29
+Duration - -1.45719491:  Task taskName
+   Score - 3
+   Transcript :
+customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+user ->  sì moana arrivo 
+
+Feedback - feedback
+Final Score -> 3.72367887825674
+____ evaluations ____ 
+partial score -> 1
+feedback -> 1 (pessima)
+___
+partial score -> 7.95
+feedback -> Il tempismo può essere migliore! (Serve aumentare)
+___
+partial score -> 0.347222222222222
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 0
+feedback -> Devi migliorare di molto la tua velocità di movimento (Serve diminuire)
+___
+partial score -> 3.04485104731819
+feedback -> Posizionamento può essere migliore! (Serve diminuire)
+___
+Log: User - testUser
+Start - 14/02/2025 17:11:38 
+ End - 14/02/2025 17:13:18
+Duration - -1.6765377851:  Task taskName
+   Score - 3
+   Transcript :
+customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+user ->  sì c'è rimasto subito che i pomodori si trovano proprio qui 
+
+Feedback - feedback
+Final Score -> 3.64811390134723
+____ evaluations ____ 
+partial score -> 5
+feedback -> 5
+La risposta del commesso è breve ma non molto chiara. Non ha specificato se i pomodori sono in una sezione specifica del supermercato o se ci sono diversi tipi di pomodori. 
+___
+partial score -> 8.7
+feedback -> Ottimo tempismo!
+___
+partial score -> 4.23611111111111
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottimo tempismo!
+___
+partial score -> 2.79658667822667
+feedback -> Devi migliorare di molto la tua velocità di movimento (Serve diminuire)
+___
+partial score -> -8.8440143812544
+feedback -> Devi migliorare di molto la tua posizione (Serve aumentare)
+___
+Log: User - testUser
+Start - 14/02/2025 17:36:20 
+ End - 14/02/2025 17:38:07
+Duration - -1.782937596666671:  Task taskName
+   Score - 3
+   Transcript :
+customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+user ->  sì certo dimostra dove sono sono esattamente sul quinto scappa la sinistra che puoi trovare esattamente dove sto portando ora ecco qui 
+
+Feedback - feedback
+Final Score -> 3.80382998095496
+____ evaluations ____ 
+partial score -> 2
+feedback ->  (poco chiaro)
+___
+partial score -> 8.45
+feedback -> Ottima prontezza nel parlare!
+___
+partial score -> 4.5018115942029
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottima prontezza nel muoverti!
+___
+partial score -> 2.70864452580946
+feedback -> Devi migliorare di molto la tua velocità di movimento (Serve diminuire)
+___
+partial score -> -4.83747623428258
+feedback -> Devi migliorare di molto la tua posizione (Serve aumentare)
+___
+Log: User - testUser
+Start - 14/02/2025 17:45:16 
+ End - 14/02/2025 17:46:22
+Duration - -1.106172443333331:  Task taskName
+   Score - 4
+   Transcript :
+customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+user ->  no signorina certo vedere il suono su questo scaffale a sinistra sperimentato al terzo reich dal lago guarda avendovi diporto 
+
+Feedback - feedback
+Final Score -> 4.20508732756772
+____ evaluations ____ 
+partial score -> 1
+feedback ->  (pessima)
+___
+partial score -> 8.95
+feedback -> Ottima prontezza nel parlare!
+___
+partial score -> 2.04656862745098
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottima prontezza nel muoverti!
+___
+partial score -> 6.59853298200932
+feedback -> La velocità di movimento può essere migliore! (Serve diminuire)
+___
+partial score -> -3.36457764405399
+feedback -> Devi migliorare di molto la tua posizione (Serve aumentare)
+___
+Log: User - testUser
+Start - 14/02/2025 17:56:00 
+ End - 14/02/2025 17:58:23
+Duration - -2.3956858251:  Task taskName
+   Score - 2
+   Transcript :
+customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+user ->  che cosa sì c'è bacilieri subito non si trovano solo nella corsia di destra e adesso ti ci porto 
+
+Feedback - feedback
+Final Score -> 2.85782454430257
+____ evaluations ____ 
+partial score -> 1
+feedback ->  (pessima)
+___
+partial score -> 3.95
+feedback -> Devi migliorare molto la tua prontezza nel parlare! (Serve aumentare)
+___
+partial score -> 4.91071428571429
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottima prontezza nel muoverti!
+___
+partial score -> 6.66679798550846
+feedback -> La velocità di movimento può essere migliore! (Serve diminuire)
+___
+partial score -> -9.38056500540735
+feedback -> Devi migliorare di molto la tua posizione (Serve aumentare)
+___
+1:  Task taskName
+   Score - 2
+   Transcript :
+customer -> Scusa, sto cercando un punto informazioni, puoi aiutarmi?
+user ->  no quello proprio lasciato qua kate sì assolutamente ecco dove si trova dico poi strozzo pomodori 
+
+Feedback - feedback
+Final Score -> 2.18579451112032
+____ evaluations ____ 
+partial score -> 1
+feedback ->  (pessima)
+___
+partial score -> 6.325
+feedback -> La tua prontezza nel parlare può essere migliore! (Serve aumentare)
+___
+partial score -> 2.125
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottima prontezza nel muoverti!
+___
+partial score -> 4.78970806564415
+feedback -> Devi migliorare di molto la tua velocità di movimento (Serve diminuire)
+___
+partial score -> -11.1249409989222
+feedback -> Devi migliorare di molto la tua posizione (Serve aumentare)
+___
+Log: User - testUser
+Start - 14/02/2025 18:05:18 
+ End - 14/02/2025 18:06:25
+Duration - -1.119430091:  Task taskName
+   Score - 4
+   Transcript :
+customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+user ->  no chi è poki conversione ad addestrare dedicato grazie mille della domanda vi sembra disponibile a risolvere 
+
+Feedback - feedback
+Final Score -> 4.8382440602635
+____ evaluations ____ 
+partial score -> 1
+feedback ->  (pessima)
+___
+partial score -> 8.95
+feedback -> Ottima prontezza nel parlare!
+___
+partial score -> 3.60887096774194
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottima prontezza nel muoverti!
+___
+partial score -> 0.91969880030191
+feedback -> Devi migliorare di molto la tua velocità di movimento (Serve diminuire)
+___
+partial score -> 4.55089459353714
+feedback -> Posizionamento può essere migliore! (Serve diminuire)
+___
+Log: User - testUser
+Start - 14/02/2025 18:21:40 
+ End - 14/02/2025 18:22:45
+Duration - -1.091276481:  Task taskName
+   Score - 6
+   Transcript :
+customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+user ->  sono nella corsia di destra del supermercato nel quinto scaffale guarda anticipò sono esattamente qui 
+
+Feedback - feedback
+Final Score -> 6.74229229676502
+____ evaluations ____ 
+partial score -> 7
+feedback ->  (buona) 
+La risposta è dettagliata e indica la posizione esatta, ma potrebbe essere più utile se il commesso avesse detto "vai dritto, poi svoltare a destra, poi il quinto scaffale" per aiutare il cliente a raggiungere i pomodori. 
+___
+partial score -> 9.7
+feedback -> Ottima prontezza nel parlare!
+___
+partial score -> 3.48214285714286
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottima prontezza nel muoverti!
+___
+partial score -> 0.271610923447237
+feedback -> Devi migliorare di molto la tua velocità di movimento (Serve diminuire)
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___

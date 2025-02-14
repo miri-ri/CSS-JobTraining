@@ -55,8 +55,8 @@ public class EvalScript : MonoBehaviour
         {
 
             scoreList.Add( Instantiate(partialScore,  transform));
-            scoreList[j].transform.localPosition = Vector3.zero;
-            scoreList[j].transform.localScale = Vector3.one;
+           // scoreList[j].transform.localPosition = Vector3.zero;
+           // scoreList[j].transform.localScale = Vector3.one;
             Sprite temp=iconType[j];
             scoreList[j].transform.Find("type").GetComponent<Image>().sprite=temp;
             string txt=descr[j];
@@ -83,8 +83,12 @@ public class EvalScript : MonoBehaviour
             st.transform.localPosition = Vector3.zero;
             st.transform.localScale = Vector3.one;
             st.transform.localPosition=new(starPosX[i],58, 0);
+
+
+            //resize on resolution
+            
         }//58y 
-
-
+RectTransform canvasRect = gameObject.GetComponent<RectTransform>();
+        canvasRect.localScale = new Vector3(0.019f, 0.019f, 1);
     }
-}
+}//TODO resize on parent size

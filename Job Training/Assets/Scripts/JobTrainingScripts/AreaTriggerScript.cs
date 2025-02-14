@@ -7,7 +7,7 @@ public class AreaTriggerScript : MonoBehaviour
     private void OnTriggerEnter(Collider other){
         //send event entered area
         Debug.Log("entered area "+AreaName);
-        UserIn.Invoke(new(other.transform.position.x,other.transform.position.z),new(transform.position.x,transform.position.z), DateTime.Now);
+        UserIn?.Invoke(new(other.transform.position.x,other.transform.position.z),new(transform.position.x,transform.position.z), DateTime.Now);
     }
     public void OnTriggerExit(){
         //send event out of area

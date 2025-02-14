@@ -29,6 +29,7 @@ public class LLMinterface : MonoBehaviour
 
     IEnumerator PostData(string url, string jsonData){
         var request = new UnityWebRequest(url, "POST");
+        //request.InsecureHttpOption = UnityWebRequest.InsecureHttpOption.AlwaysAllowed;
         byte[] bodyRaw = new System.Text.UTF8Encoding().GetBytes(jsonData);
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = new DownloadHandlerBuffer();
@@ -49,22 +50,24 @@ public class LLMinterface : MonoBehaviour
       
         var jsonData=Newtonsoft.Json.Linq.JObject.FromObject(dataTask);
         Debug.Log(jsonData.ToString());
-        StartCoroutine(PostData("http://127.0.0.1:8000/evaluate/assistant", jsonData.ToString()));
+        StartCoroutine(PostData(JobTrainingManager.jobtrainerServer+"/evaluate/assistant", jsonData.ToString()));
 
                 
     }
     
     public void evaluateSystemAnswer(){//interaction user - system
-        StartCoroutine(GetData("http://localhost:8000/willing",true));
+        
+        StartCoroutine(GetData(JobTrainingManager.jobtrainerServer+"/willing",true));
 
     }
     //need api
     public void PrepareResponseToUser(string lastUserResponse){
-        StartCoroutine(GetData("http://localhost:8000/respond?",false));
+        StartCoroutine(GetData(JobTrainingManager.jobtrainerServer+"/respond?",false));
     }
     IEnumerator GetData(string url, bool systemic)
     {
         using UnityWebRequest www = UnityWebRequest.Get(url);
+        //www.InsecureHttpOption = UnityWebRequest.InsecureHttpOption.AlwaysAllowed;
         yield return www.SendWebRequest();
         if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
         { Debug.LogError(www.error); }
@@ -160,7 +163,7 @@ public class Positioning
 
     public Positioning(){
         area=new();
-        ok_radius=1;
+        ok_radius=3;
     }
 }
 
@@ -183,8 +186,8 @@ public class Area
     public float w { get; set; }
     public float h { get; set; }
     public Area(){
-        w=1;
-        h=1;
+        w=15;
+        h=7;
     }
 }
 
