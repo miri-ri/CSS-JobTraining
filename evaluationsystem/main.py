@@ -10,13 +10,13 @@ from fastapi import FastAPI, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 
 
-
 EFFICIENT_MODE = False
  
 if not EFFICIENT_MODE: 
     from speechToText import stt, willing
+    LLM = Llama(verbose=True, model_path="model.gguf", chat_format="chatml", n_gpu_layers=-1) #try to use as much gpu as possible n_gpu_layers=-1
+
     app_stt = stt.Stt()
-    LLM =  Llama(verbose=False, model_path="model.gguf", chat_format="chatml", n_gpu_layers=-1) #try to use as much gpu as possible n_gpu_layers=-1
 else: 
     app_stt = None
     LLM = None
@@ -32,7 +32,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 @app.get("/willing")
 async def willing_response() -> CommonTypes.Truth:
@@ -55,11 +54,11 @@ async def evaluate_role( role: CommonTypes.Role, behavior: CommonTypes.Behavior)
         if not EFFICIENT_MODE: 
             evaluations.append(llme.LlmEvaluator.assistant(LLM, behavior.speech.semantic))
 
-        evaluations.append(te.TimingBeforeEvaluator.evaluate_before(behavior.speech.timing))
+        evaluations.append(te.TimingBeforeEvaluator.evaluate_before(behavior.speech.timing, "parlare"))
 
         evaluations.append(te.SpeechTimingEvaluator.evaluate(behavior.speech))
 
-        evaluations.append(te.TimingBeforeEvaluator.evaluate_before(behavior.movement.timing))
+        evaluations.append(te.TimingBeforeEvaluator.evaluate_before(behavior.movement.timing, "muoverti"))
 
         evaluations.append(te.MovementTimingEvaluator.evaluate(behavior.movement))
 
@@ -114,5 +113,3 @@ async def getStt() ->  CommonTypes.SpeechBehavior:
         )
     ) 
 
-
-    
