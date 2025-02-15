@@ -3,27 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 //todo fix audio playing wrong sometimes + display all necessary feedback
-public class Targets{//make it task dependent
-    public float speechDuration;
-    public float speechBeforeStart;
-    public Position MovementTarget;
-    public float MovementOkRadius;
 
-    public Targets(float sD, float sB, Vector2 mT, float kR)
-    {
-        speechDuration=sD;
-        speechBeforeStart=sB;
-        MovementTarget=new(mT);
-        MovementOkRadius=kR;
-    }
-}
 public delegate void generalTimer();
 
 public class JobTrainingManager:MonoBehaviour{//todo fast ---> resize eval, parametrize port amd ip
 
     public static JobTrainingManager instance;
-    public static bool noKinectDebug=false;
-    public static Targets EvaluationTargets=new(5,2,new(1,1), 1);//for only locate task todo
+   
     public static Vector3 roomCenter=new (0,7,0);
     [SerializeField] ActivityManager ActivityManager;
     [SerializeField] TaskManagerScript TaskManager;
@@ -32,31 +18,25 @@ public class JobTrainingManager:MonoBehaviour{//todo fast ---> resize eval, para
     public TTSInterface TTS{get; private set;}
     public List<AreaTriggerScript> TriggerableAreas;
     public AreaTriggerScript Triggerable;
-    public static string jobtrainerServer="http://10.0.0.12:8000";
-
+public static string jobtrainerServer="http://localhost:8000";
+public static bool noKinectDebug=true;
 
     void Awake(){
         instance=this;
         TriggerableAreas=new();
-        //FeedbackUIRef.ToggleHide();
+        
         TriggerableAreas.Add(Triggerable);
-        /*Debug.Log("esiste??? " + Triggerable.AreaName);
-        foreach(var it in TriggerableAreas)
-         Debug.Log("areassssssss>>>" + it.AreaName);*/
+        
         speechTT=gameObject.AddComponent<STTInterface>();
         LLM=gameObject.AddComponent<LLMinterface>();
         TTS=gameObject.AddComponent<TTSInterface>();
-        //PlayDialog("questoè un test per vedere se funziona il TTS della magic room", sksks);
-        //return;
         HideMicrophoneFeedback();
         LLM.SystemResponseInterpreted+=HideMicrophoneFeedback;
         speechTT.ListeningComplete+=HideMicrophoneFeedback;
         ChangeFrontWallBackground("start");
         ToggleTextUi(false);
     }
-    void sksks(float sec){
-        Debug.Log("andato   t:"+sec);
-    }
+
     
     //used to show on the wall that the system is actively listening to the user speech
 
@@ -98,6 +78,10 @@ public class JobTrainingManager:MonoBehaviour{//todo fast ---> resize eval, para
         HideMicrophoneFeedback();
     }
 
+    public void ModifyTargetArea(){//enjeneiringg
+        Triggerable.modifyForNextTask();
+    }
+
     public void PlaySound(string soundName){
         if(RoomSpeakers != null){
             AudioClip cl=Resources.Load<AudioClip>("roomBKGNoise/"+soundName);
@@ -124,11 +108,6 @@ public class JobTrainingManager:MonoBehaviour{//todo fast ---> resize eval, para
             TextCloudUI.ShowTextUI();
         else TextCloudUI.HideTextUI();
     }
-    /*public void ShowFeedbackMessages(string feedbackMessage){//todo graphical display for multple points
-        FeedbackUIRef.ToggleHide();
-        FeedbackUIRef.setFeedback(feedbackMessage);
-
-    }*/
     public void SubscribeToAreaTrigger(string areaName, OnUserEnteredArea handler){
         foreach (var item in TriggerableAreas){
             if(item.AreaName==areaName){

@@ -16,6 +16,13 @@ public class AreaTriggerScript : MonoBehaviour
     void Start(){
         //JobTrainingManager.instance.TriggerableAreas.Add(this);
     }
+    public void modifyForNextTask(){
+        Sprite ss=Resources.Load<Sprite>("jobtraining/var");
+        gameObject.GetComponentInChildren<SpriteRenderer>().sprite=ss;
+        
+        transform.localScale= new Vector3(2.5f,1,2.5f);
+        transform.localPosition= new Vector3(-6, 0,0);
+    }
 
 }
 public delegate void OnUserEnteredArea(Vector2 userPosition, Vector2 targetPosition, DateTime arrival);

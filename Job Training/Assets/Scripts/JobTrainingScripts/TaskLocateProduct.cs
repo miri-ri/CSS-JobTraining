@@ -1,6 +1,4 @@
 using System;
-using System.Threading;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class TaskLocateProduct : Task
@@ -55,7 +53,10 @@ class FirstDialog:InteractionState{
     }
     public override void Setup()
     {
-        JobTrainingManager.instance.ToggleTextUi(false);
+        if(JobTrainingManager.noKinectDebug){
+            JobTrainingManager.instance.ToggleTextUi(true);
+        }else JobTrainingManager.instance.ToggleTextUi(false);
+        
         JobTrainingManager.instance.ChangeFrontWallBackground(JobTrainingManager.instance.GetTaskManager().CurrentTask.GetBackgroundImage());
         JobTrainingManager.instance.PlaySound("supermarket-17823");
         JobTrainingManager.instance.PlayDialog(dialogText,handleTTS);// for dynamic first dialogue input from LLM API
@@ -63,7 +64,7 @@ class FirstDialog:InteractionState{
         JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().addResponse(dialogText, false);
     }
     public void handleTTS(float secondsNeeded){
-        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded+3,new AwaitUserInput());
+        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded+2.5f,new AwaitUserInput());
     }
     public override void Dismantle()
     {
@@ -100,7 +101,7 @@ class AwaitUserInput : InteractionState
             movementFinished = true;//this should be false. true to bypass waiting WARNING
         else movementFinished = false;
         SpeechFinished=false;
-        JobTrainingManager.instance.SetTimer(20,HandleTimeOut);
+        JobTrainingManager.instance.SetTimer(25,HandleTimeOut);
         
        
     }
@@ -190,7 +191,7 @@ class PositiveTurnout : InteractionState
     }
     public void handleTTS(float secondsNeeded){
         //set waiting time before change state
-        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded+4, new FeedbackState());
+        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded+2, new FeedbackState());
     }
 }
 

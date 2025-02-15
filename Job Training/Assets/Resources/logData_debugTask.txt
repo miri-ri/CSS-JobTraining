@@ -1787,3 +1787,247 @@ partial score -> 10
 feedback -> Ottimo posizonamento!
 ___
 
+2/15/2025 2:54:43 PM-- customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+2/15/2025 2:55:00 PM-- user ->   
+feedback
+Final Score -> 6.1528644376668
+____ evaluations ____ 
+partial score -> 7
+feedback ->  (buona) 
+Il commesso ha risposto immediatamente e ha indicato la posizione dei pomodori. La risposta non è molto verbosa, ma è sufficiente per il cliente. 
+___
+partial score -> 0
+feedback -> Devi migliorare molto la tua prontezza nel parlare! (Serve diminuire)
+___
+partial score -> 0
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve diminuire la velocità)
+___
+partial score -> 10
+feedback -> Ottima prontezza nel muoverti!
+___
+partial score -> 9.9171866260008
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+
+2/15/2025 3:05:07 PM-- customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+2/15/2025 3:05:21 PM-- user ->  bene ego 
+feedback
+Final Score -> 7.1245510296378
+____ evaluations ____ 
+partial score -> 1
+feedback ->  (pessima)
+___
+partial score -> 7.075
+feedback -> La tua prontezza nel parlare può essere migliore! (Serve aumentare)
+___
+partial score -> 4.79166666666667
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottima prontezza nel muoverti!
+___
+partial score -> 9.88063951116016
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+
+2/15/2025 3:05:58 PM-- customer -> Scusa, sto cercando un punto informazioni, puoi aiutarmi?
+2/15/2025 3:06:17 PM-- user ->   prego 
+feedback
+Final Score -> 6.17467080231132
+____ evaluations ____ 
+partial score -> 5
+feedback ->  (buona) 
+La risposta è breve e diretta, ma potrebbe essere più utile se il commesso specificasse dove si trova il punto informazioni.
+___
+partial score -> 3.7
+feedback -> Devi migliorare molto la tua prontezza nel parlare! (Serve aumentare)
+___
+partial score -> 0.125
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottima prontezza nel muoverti!
+___
+partial score -> 8.22302481386789
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+
+2/15/2025 3:18:03 PM-- customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+2/15/2025 3:18:18 PM-- user ->  edwige 
+feedback
+Final Score -> 6.36727225322821
+____ evaluations ____ 
+partial score -> 1
+feedback ->  (pessima)
+___
+partial score -> 6.325
+feedback -> La tua prontezza nel parlare può essere migliore! (Serve aumentare)
+___
+partial score -> 0.982142857142857
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottima prontezza nel muoverti!
+___
+partial score -> 9.89649066222641
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+
+2/15/2025 3:20:58 PM-- customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+2/15/2025 3:21:13 PM-- user ->  ma certo li tengono nascosti nel calzino 
+feedback
+Final Score -> 7.23428884962747
+____ evaluations ____ 
+partial score -> 1
+feedback ->  (pessima)
+___
+partial score -> 9.2
+feedback -> Ottima prontezza nel parlare!
+___
+partial score -> 3.31018518518519
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottima prontezza nel muoverti!
+___
+partial score -> 9.89554791257964
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+
+2/15/2025 3:21:43 PM-- customer -> Scusa, sto cercando un punto informazioni, puoi aiutarmi?
+2/15/2025 3:21:58 PM-- user ->  certo ci porto subito 
+feedback
+Final Score -> 8.19033140363682
+____ evaluations ____ 
+partial score -> 8
+feedback ->  (buona) 
+Il commesso risponde prontamente e in modo positivo, mostrando di essere disponibile ad aiutare il cliente. Però, non si è mosso ancora, quindi non è ancora in azione, quindi non è un .
+___
+partial score -> 8.45
+feedback -> Ottima prontezza nel parlare!
+___
+partial score -> 2.83088235294118
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottima prontezza nel muoverti!
+___
+partial score -> 9.86110606887976
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+
+2/15/2025 3:27:14 PM-- customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+2/15/2025 3:27:28 PM-- user ->  bukowski va bene 
+feedback
+Final Score -> 7.50451341393398
+____ evaluations ____ 
+partial score -> 1
+feedback ->  (pessima)
+___
+partial score -> 7.45
+feedback -> La tua prontezza nel parlare può essere migliore! (Serve aumentare)
+___
+partial score -> 6.69642857142857
+feedback -> La velocità nel parlare può essere migliore! (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottima prontezza nel muoverti!
+___
+partial score -> 9.88065191217533
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+
+2/15/2025 3:30:06 PM-- customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+2/15/2025 3:30:19 PM-- user ->  sono nella tua testa 
+feedback
+Final Score -> 7.17314055228656
+____ evaluations ____ 
+partial score -> 1
+feedback ->  (pessima)
+___
+partial score -> 8.7
+feedback -> Ottima prontezza nel parlare!
+___
+partial score -> 3.45833333333333
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottima prontezza nel muoverti!
+___
+partial score -> 9.88050998038602
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+
+2/15/2025 3:30:54 PM-- customer -> Scusa, sto cercando un punto informazioni, puoi aiutarmi?
+2/15/2025 3:35:27 PM-- customer -> Ciao! Puoi mostrarmi dove sono i pomodori?
+2/15/2025 3:35:45 PM-- user ->   ovest 
+feedback
+Final Score -> 5.8331832451828
+____ evaluations ____ 
+partial score -> 1
+feedback ->  (pessima) - la risposta non è comprensibile senza contesto visivo. La risposta " ovest " non è un riferimento chiaro a un reparto del supermercato. 
+___
+partial score -> 3.45
+feedback -> Devi migliorare molto la tua prontezza nel parlare! (Serve aumentare)
+___
+partial score -> 0.625
+feedback -> Devi migliorare di molto la tua velocità nel parlare (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottima prontezza nel muoverti!
+___
+partial score -> 9.92409947109681
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+
+2/15/2025 3:36:36 PM-- customer -> Scusa, sto cercando un punto informazioni, puoi aiutarmi?
+2/15/2025 3:36:51 PM-- user ->  come non esiste 
+feedback
+Final Score -> 7.30565489225761
+____ evaluations ____ 
+partial score -> 1
+feedback ->  (pessima)
+___
+partial score -> 7.325
+feedback -> La tua prontezza nel parlare può essere migliore! (Serve aumentare)
+___
+partial score -> 5.625
+feedback -> La velocità nel parlare può essere migliore! (Serve aumentare la velocità)
+___
+partial score -> 10
+feedback -> Ottima prontezza nel muoverti!
+___
+partial score -> 9.88392935354564
+feedback -> Ottima velocità di movimento!
+___
+partial score -> 10
+feedback -> Ottimo posizonamento!
+___
+

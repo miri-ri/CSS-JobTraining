@@ -16,5 +16,5 @@ public class TaskShowInfopoint : Task
     {
     }
 
-    protected override string GetIntroduction()=>"UN cliente chiederà di essere indirizzato verso un infopoint, aiutalo rispondendo educatamente e mostrandogli dove si trova";
+    protected override string GetIntroduction()=>"Un cliente chiederà di essere indirizzato verso un infopoint, aiutalo rispondendo educatamente e mostrandogli dove si trova";
 }

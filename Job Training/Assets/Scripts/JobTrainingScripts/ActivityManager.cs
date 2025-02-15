@@ -150,6 +150,7 @@ class TaskState : ActivityState
             JobTrainingManager.instance.GetActivityManager().demoTaskRoutine = 1;
         } else if (JobTrainingManager.instance.GetActivityManager().demoTaskRoutine == 1){
             selectedTask = TaskList.ShowInfopoint;
+            JobTrainingManager.instance.ModifyTargetArea();
             JobTrainingManager.instance.GetActivityManager().demoTaskRoutine = 2;
         } else {
             stateMachine.CompleteState(new StopActivity());
@@ -192,12 +193,12 @@ class TaskCompleteState : ActivityState
     }
     void ProceedAfterTask(bool userInput){
         if(userInput){
-            JobTrainingManager.instance.PlayDialog("Alright, proceeding...",handleAfterRestart);
+            JobTrainingManager.instance.PlayDialog("Ottimo! Continuiamo",handleAfterRestart);
             JobTrainingManager.instance.ChangeFrontWallBackground("new_start");
         
             
         } else {
-            JobTrainingManager.instance.PlayDialog("Alright, stopping the activity!",handleAfterExit);
+            JobTrainingManager.instance.PlayDialog("OK, graziedi aver partecipato!",handleAfterExit);
             JobTrainingManager.instance.ChangeFrontWallBackground("bye_bye");
         
             
