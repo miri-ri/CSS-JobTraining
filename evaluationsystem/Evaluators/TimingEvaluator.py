@@ -7,6 +7,12 @@ class TimingBeforeEvaluator:
     def evaluate_before(behavior: CommonTypes.TimingBehavior, what):
         
         score =  difference(behavior.s_before_action, behavior.s_before_action_target, behavior.s_before_action_target, 10)
+
+        #for the movement the kinect have some calibration error and it detect some movement too early
+        #the score must be less important in that case and it is reduced to a maximum of 9 point instead of 10
+        if what == "muoverti":
+            score = (score / 10) * 9
+
         description = f"Ottima prontezza nel {what}!"
         if(score < 8):
             description = f"La tua prontezza nel {what} può essere migliore!"
