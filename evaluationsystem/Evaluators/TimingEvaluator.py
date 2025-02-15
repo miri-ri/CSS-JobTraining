@@ -62,7 +62,21 @@ class MovementTimingEvaluator:
         else:
             meters_per_second = 10000
 
-        score = difference(meters_per_second, behavior.timing.s_duration_per_unit_target, 0.6, 3)
+        #in the i3lab 1 unit of movement~=0.3333m
+        #that's because of the kinect calibration
+        #so the "targeted" value was wrong
+        #since this is a very sensible system, we prefer to leave in the api call the correct
+        #targeted value in meters, and multiply them by 3-scale factor for the evaluation
+        #the "meter_per_second" variable is actually in "unit_per_second" 
+        #it should be in meter, but it depends on the kinect. 
+        #in this way the evaluation is adjusted.
+        meters_to_i3lab_factor = 3
+        score = difference(
+            meters_per_second, 
+            behavior.timing.s_duration_per_unit_target * meters_to_i3lab_factor, 
+            0.6 * meters_to_i3lab_factor, 
+            3 * meters_to_i3lab_factor
+        )
                 
         description = "Ottima velocità di movimento!"
         if(score < 8):
