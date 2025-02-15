@@ -5,8 +5,12 @@ using UnityEngine.UI;
 //todo fix audio playing wrong sometimes + display all necessary feedback
 
 public delegate void generalTimer();
+public class StartValues{
+    public static string JTSaddress;
+    public static bool realMR=true;
+}
 
-public class JobTrainingManager:MonoBehaviour{//todo fast ---> resize eval, parametrize port amd ip
+public class JobTrainingManager:MonoBehaviour{
 
     public static JobTrainingManager instance;
    
@@ -19,10 +23,14 @@ public class JobTrainingManager:MonoBehaviour{//todo fast ---> resize eval, para
     public List<AreaTriggerScript> TriggerableAreas;
     public AreaTriggerScript Triggerable;
 public static string jobtrainerServer="http://localhost:8000";
-public static bool noKinectDebug=true;
+public static bool noKinectDebug=false;
 
     void Awake(){
         instance=this;
+        jobtrainerServer="http://"+StartValues.JTSaddress;
+        noKinectDebug=!StartValues.realMR;
+        Debug.Log("starting using server: "+jobtrainerServer);
+        Debug.Log("you are not in the magic room: "+noKinectDebug);
         TriggerableAreas=new();
         
         TriggerableAreas.Add(Triggerable);
