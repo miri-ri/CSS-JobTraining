@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -76,6 +76,7 @@ public class MagicRoomTextToSpeachManager : MonoBehaviour
 
     public bool GenerateAudioFromText(string text, Voices voice)
     {
+        Debug.LogWarning(isPlaying);
         if (isPlaying || voice == null)
         {
             return false;
@@ -85,13 +86,14 @@ public class MagicRoomTextToSpeachManager : MonoBehaviour
             action = "speechSynthesis",
             activityAddress = MagicRoomManager.instance.HttpListenerForMagiKRoom.Address + ":" + MagicRoomManager.instance.HttpListenerForMagiKRoom.Port + "/" + endpoint,
             text = text,
-            voice = voice.name
+            voice = voice.alias
         };
-        MagicRoomManager.instance.Logger.AddToLogNewLine("ServerTTSO", text + "," + voice.name + " started");
+        MagicRoomManager.instance.Logger.AddToLogNewLine("ServerTTSO", text + "," + voice.alias + " started");
         StartCoroutine(SendCommand(command, (body) =>
         {
             isPlaying = true;
             StartSpeak?.Invoke();
+            isPlaying = false;
         }, () =>
         {
             StartSpeak?.Invoke();
@@ -130,6 +132,7 @@ public class SpeachToTextCommand
     public string activityAddress;
     public string text;
     public string voice;
+    public double volume = 100;
 }
 
 [Serializable]
