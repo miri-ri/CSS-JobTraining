@@ -11,7 +11,7 @@ class LlmEvaluator:
         return LLM.create_chat_completion(messages=[
             {
                 "role": "system",
-                "content": "La conversazione avviene in un supermercato. Ogni risposta deve essere semplice, diretta anche per persone autistiche",
+                "content": "La conversazione avviene in un supermercato. Ogni risposta deve essere breve, diretta e gentile",
             },
             {"role": "user", "content":  content},
         ])["choices"][0]["message"]["content"]
@@ -21,8 +21,8 @@ class LlmEvaluator:
         print(text)
         answer = LlmEvaluator.answer(LLM, text)
         # answer = "8. Okay?"
-
-        return CommonTypes.Evaluation(score = first_int_in_string(answer), description = re.sub(r'\d+', '', answer))
+        description = "Per quanto riguarda la risposta ecco un feedback. "+  re.sub(r'\d+', '', answer, 1)
+        return CommonTypes.Evaluation(score = first_int_in_string(answer), description = description)
 
 
 if __name__ == "__main__":
