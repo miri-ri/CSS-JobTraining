@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -195,6 +196,21 @@ public class JobTrainingManager : MonoBehaviour
     {
         TTS.TTsPlaying += handler;
         Debug.Log("playing voice -> " + textToTTS);
+        WriteOnUi(textToTTS);
+        TTS.PlayAudio(textToTTS, voice);
+    }
+
+       public void PlayDialog(string textToTTS, Action handler)
+    {
+        Debug.Log("playing voice -> " + textToTTS);
+        MagicRoomManager.instance.MagicRoomTextToSpeachManager.EndSpeak+=handler;
+        WriteOnUi(textToTTS);
+        TTS.PlayAudio(textToTTS);
+    }
+    public void PlayDialog(string textToTTS, Action handler, string voice)
+    {
+        Debug.Log("playing voice -> " + textToTTS);
+        MagicRoomManager.instance.MagicRoomTextToSpeachManager.EndSpeak+=handler;
         WriteOnUi(textToTTS);
         TTS.PlayAudio(textToTTS, voice);
     }

@@ -46,6 +46,13 @@ class TaskDescription : InteractionState
     {
         JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded, new FirstDialog(FirstDialog));
     }
+     public void handleTTSv2()//TODO SWITCH (IN PLAYDIALOG) TO SEE IF ENDSPEAK OF LIBRARY WORKS
+    {
+        //set waiting time before change state
+        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(0.2f, new FirstDialog(FirstDialog));
+        MagicRoomManager.instance.MagicRoomTextToSpeachManager.EndSpeak-=handleTTSv2;
+
+    }
 }
 class FirstDialog : InteractionState
 {
@@ -74,6 +81,11 @@ class FirstDialog : InteractionState
     public void handleTTS(float secondsNeeded)
     {
         JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded + 2.5f, new AwaitUserInput());
+    }
+    public void handleTTSv2(){
+        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(0.2f, new AwaitUserInput());
+        MagicRoomManager.instance.MagicRoomTextToSpeachManager.EndSpeak-=handleTTSv2;
+
     }
     public override void Dismantle()
     {
@@ -215,6 +227,13 @@ class PositiveTurnout : InteractionState
         //set waiting time before change state
         JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(secondsNeeded + 2, new FeedbackState());
     }
+    public void handleTTSv2()
+    {
+        //set waiting time before change state
+        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(0.2f, new FeedbackState());
+        MagicRoomManager.instance.MagicRoomTextToSpeachManager.EndSpeak-=handleTTSv2;
+
+    }
 }
 
 
@@ -293,6 +312,11 @@ class FeedbackState : InteractionState
     {
         Debug.Log(sec);
         JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(sec, new EndingState());
+    }
+     void handleTTSv2()
+    {
+        JobTrainingManager.instance.GetTaskManager().ChangeStateOnTimer(0.2f, new EndingState());
+        MagicRoomManager.instance.MagicRoomTextToSpeachManager.EndSpeak-=handleTTSv2;
     }
 
     public override void Dismantle()
