@@ -73,7 +73,7 @@ class FirstDialog : InteractionState
         else JobTrainingManager.instance.ToggleTextUi(false);
 
         JobTrainingManager.instance.ChangeFrontWallBackground(JobTrainingManager.instance.GetTaskManager().CurrentTask.GetBackgroundImage());
-        JobTrainingManager.instance.PlaySound("supermarket-17823");
+        JobTrainingManager.instance.PlaySound("supermarket-17823",0.3f);
         JobTrainingManager.instance.PlayDialog(dialogText, handleTTS);// for dynamic first dialogue input from LLM API
         JobTrainingManager.instance.getCurrentTasksFeedbackData().speech.semantic.question = dialogText;// here we have to insert the question not FirstDialogInput
         JobTrainingManager.instance.PerformanceLog.getCurrentTaskData().addResponse(dialogText, false);
@@ -268,7 +268,7 @@ class FeedbackState : InteractionState
     {
         JobTrainingManager.instance.GetEvaluation(JobTrainingManager.instance.getCurrentTasksFeedbackData(), ShowFeedback);
         JobTrainingManager.instance.ChangeFrontWallBackground("waiting_eval");
-        JobTrainingManager.instance.PlaySound("waiting-music");
+        JobTrainingManager.instance.PlaySound("waiting-music",0.3f);
         JobTrainingManager.instance.ToggleTextUi(false);
         //JobTrainingManager.instance.PlayDialog("Ben fatto, ora attendi qualche secondo per la valutazione ",handleTTS);
     }

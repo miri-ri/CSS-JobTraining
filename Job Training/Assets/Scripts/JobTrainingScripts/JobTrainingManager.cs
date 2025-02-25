@@ -102,12 +102,13 @@ public class JobTrainingManager : MonoBehaviour
         Triggerable.modifyForNextTask();
     }
 
-    public void PlaySound(string soundName)
+    public void PlaySound(string soundName, float volume)
     {
         if (RoomSpeakers != null)
         {
             AudioClip cl = Resources.Load<AudioClip>("roomBKGNoise/" + soundName);
             if (cl == null) Debug.LogError("no clip audio -> " + soundName);
+            RoomSpeakers.volume=volume;
             RoomSpeakers.PlayOneShot(cl);
         }
     }
